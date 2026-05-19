@@ -1,6 +1,6 @@
 import { useState, useMemo } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { TrendingUp, TrendingDown, Minus } from 'lucide-react';
+import { TrendingUp, TrendingDown, Minus, Home, ChevronRight, Info, Leaf } from 'lucide-react';
 import { herbs } from '../../data/herbs';
 import { marketPrices, originPrices } from '../../data/prices';
 import { trades } from '../../data/trades';
@@ -32,9 +32,9 @@ const CATEGORY_MAP: Record<string, string> = {
 };
 
 function TrendIcon({ trend }: { trend: 'up' | 'down' | 'stable' }) {
-  if (trend === 'up') return <TrendingUp className="w-4 h-4 text-rise" />;
-  if (trend === 'down') return <TrendingDown className="w-4 h-4 text-fall" />;
-  return <Minus className="w-4 h-4 text-stable" />;
+  if (trend === 'up') return <TrendingUp className="w-5 h-5 text-rise" />;
+  if (trend === 'down') return <TrendingDown className="w-5 h-5 text-fall" />;
+  return <Minus className="w-5 h-5 text-stable" />;
 }
 
 export default function HerbDetail() {
@@ -75,191 +75,253 @@ export default function HerbDetail() {
 
   if (!herb) {
     return (
-      <div className="max-w-[1280px] mx-auto px-4 py-6">
-        <div className="bg-card rounded-lg border border-border p-8 shadow-sm text-center">
-          <p className="text-text-secondary text-lg">品种未找到</p>
-          <Link to="/" className="text-primary hover:underline mt-2 inline-block">
-            返回首页
-          </Link>
+      <div className="min-h-screen bg-bg py-16">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="bg-card rounded-2xl border border-border-light p-12 shadow-sm text-center">
+            <p className="text-text-secondary text-xl mb-4">品种未找到</p>
+            <Link to="/" className="inline-flex items-center gap-2 text-primary hover:text-primary-700 transition-colors">
+              <Home className="w-4 h-4" />
+              返回首页
+            </Link>
+          </div>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="max-w-[1280px] mx-auto px-4 py-6">
-      <nav className="text-sm text-text-secondary mb-4 flex items-center gap-1">
-        <Link to="/" className="hover:text-primary">首页</Link>
-        <span>/</span>
-        <Link to="/price" className="hover:text-primary">行情价格</Link>
-        <span>/</span>
-        <span className="text-text">{herb.name}</span>
-      </nav>
+    <div className="min-h-screen bg-bg py-10">
+      {/* Hero Section */}
+      <div className="gradient-hero text-white py-16 mb-10">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          {/* Breadcrumb */}
+          <nav className="flex items-center gap-2 text-sm text-primary-100 mb-6">
+            <Link to="/" className="hover:text-white transition-colors">首页</Link>
+            <ChevronRight className="w-4 h-4" />
+            <Link to="/price" className="hover:text-white transition-colors">行情价格</Link>
+            <ChevronRight className="w-4 h-4" />
+            <span className="text-white">{herb.name}</span>
+          </nav>
 
-      <div className="bg-card rounded-lg border border-border p-4 shadow-sm mb-4">
-        <div className="flex items-start gap-3 flex-wrap">
-          <h1 className="font-serif text-2xl font-bold text-text">
-            {herb.name}
-            {herb.alias.length > 0 && (
-              <span className="text-text-secondary text-base font-normal ml-2">
-                （{herb.alias.join('、')}）
-              </span>
+          <div className="flex items-start gap-6 flex-wrap">
+            <div className="w-20 h-20 bg-white/20 rounded-2xl flex items-center justify-center backdrop-blur-sm">
+              <Leaf className="w-10 h-10 text-white" />
+            </div>
+            <div className="flex-1">
+              <h1 className="font-serif text-4xl sm:text-5xl font-bold mb-2">
+                {herb.name}
+                {herb.alias.length > 0 && (
+                  <span className="text-primary-100 text-xl font-normal ml-3">
+                    （{herb.alias.join('、')}）
+                  </span>
+                )}
+              </h1>
+              <div className="flex items-center gap-4 text-sm text-primary-100">
+                <span className="bg-white/20 backdrop-blur-sm px-3 py-1 rounded-full">
+                  {CATEGORY_MAP[herb.category] || herb.category}
+                </span>
+                <span className="bg-white/20 backdrop-blur-sm px-3 py-1 rounded-full">
+                  {herb.family}
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Basic Info Card */}
+        <div className="bg-card rounded-2xl border border-border-light shadow-sm p-8 mb-8">
+          <div className="flex items-center gap-3 mb-4">
+            <Info className="w-5 h-5 text-primary" />
+            <h2 className="font-serif text-xl font-semibold text-text">药材介绍</h2>
+          </div>
+          <p className="text-text leading-relaxed mb-4">{herb.effect}</p>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+            <div className="flex items-center gap-2">
+              <span className="text-text-secondary">性味：</span>
+              <span className="text-text">{herb.nature}</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="text-text-secondary">归经：</span>
+              <span className="text-text">{herb.meridian}</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="text-text-secondary">主产地：</span>
+              <span className="text-text">{herb.origin.join('、')}</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="text-text-secondary">采收时间：</span>
+              <span className="text-text">{herb.harvestTime}</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Price Overview and Chart */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8">
+          {/* Price Overview */}
+          <div className="lg:col-span-1 space-y-4">
+            {/* Market Prices */}
+            {herbMarketPrices.length > 0 && (
+              <div className="bg-card rounded-2xl border border-border-light shadow-sm p-6">
+                <h3 className="font-serif text-lg font-semibold text-text mb-4">市场报价</h3>
+                <div className="space-y-3">
+                  {herbMarketPrices.map(p => (
+                    <div key={p.id} className="flex items-center justify-between p-4 bg-bg rounded-xl">
+                      <div>
+                        <div className="text-text font-medium">{p.market}</div>
+                        <div className="text-text-muted text-sm">{p.spec}</div>
+                      </div>
+                      <div className="flex items-center gap-3">
+                        <span className="font-mono text-lg font-semibold text-text">{formatPrice(p.currentPrice)}</span>
+                        <div className="flex items-center gap-1">
+                          <span className={`font-mono font-medium ${
+                            p.trend === 'up' ? 'text-rise' : p.trend === 'down' ? 'text-fall' : 'text-stable'
+                          }`}>
+                            {formatChange(p.monthlyChange)}
+                          </span>
+                          <TrendIcon trend={p.trend} />
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
             )}
-          </h1>
-          <span className="bg-primary-lightest/20 text-primary rounded px-2 py-0.5 text-xs">
-            {CATEGORY_MAP[herb.category] || herb.category}
-          </span>
-          <span className="bg-gold/20 text-gold rounded px-2 py-0.5 text-xs">
-            {herb.family}
-          </span>
-        </div>
-        <div className="mt-2 text-text-secondary text-sm">
-          性味：{herb.nature}　|　归经：{herb.meridian}
-        </div>
-        <p className="mt-2 text-sm text-text">{herb.effect}</p>
-      </div>
 
-      <div className="flex gap-4 mb-4 flex-col lg:flex-row">
-        <div className="w-full lg:w-[40%] bg-card rounded-lg border border-border p-4 shadow-sm">
-          <h2 className="text-base font-bold text-text mb-3">价格概览</h2>
-          {herbMarketPrices.length > 0 && (
-            <div className="mb-3">
-              <h3 className="text-sm font-medium text-text-secondary mb-1">市场报价</h3>
-              {herbMarketPrices.map(p => (
-                <div key={p.id} className="flex items-center justify-between py-1.5 border-b border-divider last:border-b-0 text-sm">
-                  <span className="text-text">{p.market} · {p.spec}</span>
-                  <div className="flex items-center gap-2">
-                    <span className="font-medium">{formatPrice(p.currentPrice)}</span>
-                    <span className={p.trend === 'up' ? 'text-rise' : p.trend === 'down' ? 'text-fall' : 'text-stable'}>
-                      {formatChange(p.monthlyChange)}
-                    </span>
-                    <TrendIcon trend={p.trend} />
-                  </div>
+            {/* Origin Prices */}
+            {herbOriginPrices.length > 0 && (
+              <div className="bg-card rounded-2xl border border-border-light shadow-sm p-6">
+                <h3 className="font-serif text-lg font-semibold text-text mb-4">产地报价</h3>
+                <div className="space-y-3">
+                  {herbOriginPrices.map(p => (
+                    <div key={p.id} className="flex items-center justify-between p-4 bg-bg rounded-xl">
+                      <div>
+                        <div className="text-text font-medium">{p.origin}</div>
+                        <div className="text-text-muted text-sm">{p.spec}</div>
+                      </div>
+                      <div className="flex items-center gap-3">
+                        <span className="font-mono text-lg font-semibold text-text">{formatPrice(p.currentPrice)}</span>
+                        <div className="flex items-center gap-1">
+                          <span className={`font-mono font-medium ${
+                            p.trend === 'up' ? 'text-rise' : p.trend === 'down' ? 'text-fall' : 'text-stable'
+                          }`}>
+                            {formatChange(p.monthlyChange)}
+                          </span>
+                          <TrendIcon trend={p.trend} />
+                        </div>
+                      </div>
+                    </div>
+                  ))}
                 </div>
-              ))}
-            </div>
-          )}
-          {herbOriginPrices.length > 0 && (
-            <div>
-              <h3 className="text-sm font-medium text-text-secondary mb-1">产地报价</h3>
-              {herbOriginPrices.map(p => (
-                <div key={p.id} className="flex items-center justify-between py-1.5 border-b border-divider last:border-b-0 text-sm">
-                  <span className="text-text">{p.origin} · {p.spec}</span>
-                  <div className="flex items-center gap-2">
-                    <span className="font-medium">{formatPrice(p.currentPrice)}</span>
-                    <span className={p.trend === 'up' ? 'text-rise' : p.trend === 'down' ? 'text-fall' : 'text-stable'}>
-                      {formatChange(p.monthlyChange)}
-                    </span>
-                    <TrendIcon trend={p.trend} />
-                  </div>
-                </div>
-              ))}
-            </div>
-          )}
-          {herbMarketPrices.length === 0 && herbOriginPrices.length === 0 && (
-            <p className="text-text-secondary text-sm">暂无报价数据</p>
-          )}
+              </div>
+            )}
+          </div>
+
+          {/* Price Chart */}
+          <div className="lg:col-span-2">
+            {chartData.length > 0 ? (
+              <PriceChart history={chartData} herbName={herb.name} />
+            ) : (
+              <div className="bg-card rounded-2xl border border-border-light shadow-sm p-12 text-center">
+                <p className="text-text-secondary">暂无走势数据</p>
+              </div>
+            )}
+          </div>
         </div>
 
-        <div className="w-full lg:w-[60%] bg-card rounded-lg border border-border p-4 shadow-sm">
-          <h2 className="text-base font-bold text-text mb-3">价格走势</h2>
-          {chartData.length > 0 ? (
-            <PriceChart history={chartData} herbName={herb.name} />
-          ) : (
-            <p className="text-text-secondary text-sm">暂无走势数据</p>
-          )}
+        {/* Tab Content */}
+        <div className="mb-8">
+          <TabNav tabs={TABS} activeKey={activeTab} onTabChange={setActiveTab} />
         </div>
-      </div>
 
-      <div className="bg-card rounded-lg border border-border shadow-sm">
-        <TabNav tabs={TABS} activeKey={activeTab} onTabChange={setActiveTab} />
-
-        <div className="p-4">
+        <div className="bg-card rounded-2xl border border-border-light shadow-sm p-8">
+          {/* Supply Info */}
           {activeTab === 'supply' && (
             supplyTrades.length > 0 ? (
-              <table className="w-full text-sm">
-                <thead>
-                  <tr className="border-b border-border text-text-secondary">
-                    <th className="text-left py-2 font-medium">品名</th>
-                    <th className="text-left py-2 font-medium">规格</th>
-                    <th className="text-left py-2 font-medium">产地</th>
-                    <th className="text-left py-2 font-medium">数量</th>
-                    <th className="text-left py-2 font-medium">价格</th>
-                    <th className="text-left py-2 font-medium">日期</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {supplyTrades.map(t => (
-                    <tr key={t.id} className="border-b border-divider last:border-b-0">
-                      <td className="py-2 text-text">{t.herbName}</td>
-                      <td className="py-2 text-text-secondary">{t.spec}</td>
-                      <td className="py-2 text-text-secondary">{t.origin}</td>
-                      <td className="py-2 text-text-secondary">{t.quantity}</td>
-                      <td className="py-2 text-primary font-medium">{t.price}</td>
-                      <td className="py-2 text-text-secondary">{formatDate(t.createdAt)}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
+              <div className="space-y-4">
+                {supplyTrades.map(t => (
+                  <div key={t.id} className="flex items-center justify-between p-6 bg-bg rounded-xl hover:bg-primary-50 transition-colors">
+                    <div className="flex-1">
+                      <div className="text-text font-medium mb-1">{t.herbName}</div>
+                      <div className="text-text-muted text-sm mb-2">{t.spec}</div>
+                      <div className="flex items-center gap-4 text-sm text-text-muted">
+                        <span>产地：{t.origin}</span>
+                        <span>数量：{t.quantity}</span>
+                        <span>{formatDate(t.createdAt)}</span>
+                      </div>
+                    </div>
+                    <div className="text-right">
+                      <div className="text-2xl font-semibold text-primary font-mono">{t.price}</div>
+                    </div>
+                  </div>
+                ))}
+              </div>
             ) : (
-              <p className="text-text-secondary text-sm py-4 text-center">暂无供应信息</p>
+              <div className="text-center py-12 text-text-secondary">
+                暂无供应信息
+              </div>
             )
           )}
 
+          {/* Demand Info */}
           {activeTab === 'demand' && (
             demandTrades.length > 0 ? (
-              <table className="w-full text-sm">
-                <thead>
-                  <tr className="border-b border-border text-text-secondary">
-                    <th className="text-left py-2 font-medium">品名</th>
-                    <th className="text-left py-2 font-medium">规格</th>
-                    <th className="text-left py-2 font-medium">数量</th>
-                    <th className="text-left py-2 font-medium">报价人数</th>
-                    <th className="text-left py-2 font-medium">剩余天数</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {demandTrades.map(t => (
-                    <tr key={t.id} className="border-b border-divider last:border-b-0">
-                      <td className="py-2 text-text">{t.herbName}</td>
-                      <td className="py-2 text-text-secondary">{t.spec}</td>
-                      <td className="py-2 text-text-secondary">{t.quantity}</td>
-                      <td className="py-2 text-text-secondary">{t.quoteCount || 0}人</td>
-                      <td className="py-2 text-text-secondary">{t.remainingDays || 0}天</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
+              <div className="space-y-4">
+                {demandTrades.map(t => (
+                  <div key={t.id} className="flex items-center justify-between p-6 bg-bg rounded-xl hover:bg-primary-50 transition-colors">
+                    <div className="flex-1">
+                      <div className="text-text font-medium mb-1">{t.herbName}</div>
+                      <div className="text-text-muted text-sm mb-2">{t.spec}</div>
+                      <div className="flex items-center gap-4 text-sm text-text-muted">
+                        <span>数量：{t.quantity}</span>
+                        <span>报价：{t.quoteCount || 0}人</span>
+                        <span>剩余：{t.remainingDays || 0}天</span>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
             ) : (
-              <p className="text-text-secondary text-sm py-4 text-center">暂无求购信息</p>
+              <div className="text-center py-12 text-text-secondary">
+                暂无求购信息
+              </div>
             )
           )}
 
+          {/* Related News */}
           {activeTab === 'news' && (
             relatedNews.length > 0 ? (
-              <ul className="divide-y divide-divider">
+              <div className="space-y-4">
                 {relatedNews.map(n => (
-                  <li key={n.id} className="py-3 first:pt-0 last:pb-0">
-                    <Link to={`/news/${n.id}`} className="flex items-start justify-between gap-4">
+                  <Link
+                    key={n.id}
+                    to={`/news/${n.id}`}
+                    className="block p-6 bg-bg rounded-xl hover:bg-primary-50 transition-colors"
+                  >
+                    <div className="flex items-start justify-between gap-4">
                       <div className="flex-1 min-w-0">
-                        <h4 className="text-sm font-medium text-text hover:text-primary truncate">{n.title}</h4>
-                        <p className="text-xs text-text-secondary mt-1 line-clamp-1">{n.summary}</p>
+                        <h4 className="text-text font-medium mb-2 hover:text-primary transition-colors">{n.title}</h4>
+                        <p className="text-text-muted text-sm line-clamp-2">{n.summary}</p>
                       </div>
                       <div className="text-right shrink-0">
-                        <div className="text-xs text-text-secondary">{formatDate(n.createdAt)}</div>
-                        <div className="text-xs text-text-secondary mt-1">{n.views} 阅读</div>
+                        <div className="text-text-muted text-sm">{formatDate(n.createdAt)}</div>
+                        <div className="text-text-muted text-xs mt-1">{n.views} 阅读</div>
                       </div>
-                    </Link>
-                  </li>
+                    </div>
+                  </Link>
                 ))}
-              </ul>
+              </div>
             ) : (
-              <p className="text-text-secondary text-sm py-4 text-center">暂无相关资讯</p>
+              <div className="text-center py-12 text-text-secondary">
+                暂无相关资讯
+              </div>
             )
           )}
 
+          {/* Knowledge */}
           {activeTab === 'knowledge' && (
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-2">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-6">
               {[
                 ['品名', herb.name],
                 ['别名', herb.alias.join('、')],
@@ -271,35 +333,13 @@ export default function HerbDetail() {
                 ['常见规格', herb.spec.join('、')],
                 ['采收时间', herb.harvestTime],
               ].map(([label, value]) => (
-                <div key={label} className="flex py-2 border-b border-divider">
-                  <span className="w-20 shrink-0 text-text-secondary text-sm">{label}</span>
-                  <span className="text-sm text-text">{value}</span>
+                <div key={label} className="flex items-start gap-4 p-4 bg-bg rounded-xl">
+                  <span className="text-text-secondary text-sm font-medium w-24 shrink-0">{label}</span>
+                  <span className="text-text">{value}</span>
                 </div>
               ))}
             </div>
           )}
-        </div>
-      </div>
-
-      <div className="bg-card rounded-lg border border-border p-4 shadow-sm mt-4">
-        <h2 className="text-base font-bold text-text mb-3">基本信息</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-2">
-          {[
-            ['品名', herb.name],
-            ['别名', herb.alias.join('、')],
-            ['科属', herb.family],
-            ['性味', herb.nature],
-            ['归经', herb.meridian],
-            ['功效', herb.effect],
-            ['主产地', herb.origin.join('、')],
-            ['常见规格', herb.spec.join('、')],
-            ['采收时间', herb.harvestTime],
-          ].map(([label, value]) => (
-            <div key={label} className="flex py-2 border-b border-divider">
-              <span className="w-20 shrink-0 text-text-secondary text-sm">{label}</span>
-              <span className="text-sm text-text">{value}</span>
-            </div>
-          ))}
         </div>
       </div>
     </div>

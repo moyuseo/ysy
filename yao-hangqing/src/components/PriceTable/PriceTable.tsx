@@ -11,56 +11,56 @@ interface PriceTableProps {
 
 export default function PriceTable({ prices, showMarket = true, showOrigin = true }: PriceTableProps) {
   return (
-    <div className="overflow-x-auto">
+    <div className="overflow-x-auto -mx-1">
       <table className="w-full text-sm">
         <thead>
-          <tr className="bg-primary text-white">
-            <th className="px-3 py-2.5 text-left font-medium">品种</th>
-            <th className="px-3 py-2.5 text-left font-medium">规格</th>
-            {showMarket && <th className="px-3 py-2.5 text-left font-medium">市场</th>}
-            {showOrigin && <th className="px-3 py-2.5 text-left font-medium">产地</th>}
-            <th className="px-3 py-2.5 text-right font-medium">今日价</th>
-            <th className="px-3 py-2.5 text-right font-medium">月涨跌</th>
-            <th className="px-3 py-2.5 text-center font-medium">走势</th>
+          <tr className="bg-primary-50 text-text">
+            <th className="px-3 py-3 text-left font-semibold font-serif">品种</th>
+            <th className="px-3 py-3 text-left font-semibold font-serif">规格</th>
+            {showMarket && <th className="px-3 py-3 text-left font-semibold font-serif">市场</th>}
+            {showOrigin && <th className="px-3 py-3 text-left font-semibold font-serif">产地</th>}
+            <th className="px-3 py-3 text-right font-semibold font-serif">今日价</th>
+            <th className="px-3 py-3 text-right font-semibold font-serif">月涨跌</th>
+            <th className="px-3 py-3 text-center font-semibold font-serif">走势</th>
           </tr>
         </thead>
         <tbody>
           {prices.map((price, idx) => (
             <tr
               key={price.id}
-              className={`border-b border-divider hover:bg-row-hover transition-colors ${
-                idx % 2 === 1 ? 'bg-row-alt' : 'bg-card'
+              className={`border-t border-border-light hover:bg-primary-50/50 transition-colors ${
+                idx % 2 === 1 ? 'bg-bg-alt/30' : ''
               }`}
             >
-              <td className="px-3 py-2.5">
+              <td className="px-3 py-3.5">
                 <Link
                   to={`/herb/${price.herbId}`}
-                  className="text-primary hover:underline font-medium"
+                  className="text-text hover:text-primary font-medium transition-colors"
                 >
                   {price.herbName}
                 </Link>
               </td>
-              <td className="px-3 py-2.5 text-text-secondary">{price.spec}</td>
-              {showMarket && <td className="px-3 py-2.5 text-text-secondary">{price.market}</td>}
-              {showOrigin && <td className="px-3 py-2.5 text-text-secondary">{price.origin}</td>}
-              <td className="px-3 py-2.5 text-right font-mono font-medium">
+              <td className="px-3 py-3.5 text-text-muted">{price.spec}</td>
+              {showMarket && <td className="px-3 py-3.5 text-text-muted">{price.market}</td>}
+              {showOrigin && <td className="px-3 py-3.5 text-text-muted">{price.origin}</td>}
+              <td className="px-3 py-3.5 text-right font-mono font-semibold text-text">
                 {formatPrice(price.currentPrice)}
               </td>
               <td
-                className={`px-3 py-2.5 text-right font-mono font-medium ${
+                className={`px-3 py-3.5 text-right font-mono font-semibold ${
                   price.monthlyChange > 0
                     ? 'text-rise'
                     : price.monthlyChange < 0
                     ? 'text-fall'
-                    : 'text-stable'
+                    : 'text-text-muted'
                 }`}
               >
-                {formatChange(price.monthlyChange)}
+                {price.monthlyChange > 0 ? '+' : ''}{formatChange(price.monthlyChange)}
               </td>
-              <td className="px-3 py-2.5 text-center">
+              <td className="px-3 py-3.5 text-center">
                 {price.trend === 'up' && <TrendingUp className="inline w-4 h-4 text-rise" />}
                 {price.trend === 'down' && <TrendingDown className="inline w-4 h-4 text-fall" />}
-                {price.trend === 'stable' && <Minus className="inline w-4 h-4 text-stable" />}
+                {price.trend === 'stable' && <Minus className="inline w-4 h-4 text-text-muted" />}
               </td>
             </tr>
           ))}

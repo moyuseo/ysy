@@ -1,4 +1,5 @@
 import { useState, useMemo } from 'react';
+import { BookOpen } from 'lucide-react';
 import { wikiArticles } from '../../data/wiki';
 import TabNav from '../../components/TabNav/TabNav';
 import Pagination from '../../components/Pagination/Pagination';
@@ -18,7 +19,7 @@ const CATEGORY_LABELS: Record<string, string> = {
 
 const PAGE_SIZE = 10;
 
-export default function Wiki() {
+export default function WikiPage() {
   const [activeTab, setActiveTab] = useState('knowledge');
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedCategory, setSelectedCategory] = useState('');
@@ -51,87 +52,109 @@ export default function Wiki() {
   };
 
   return (
-    <div className="max-w-[1280px] mx-auto px-4 py-6">
-      <h1 className="font-serif text-2xl font-bold text-text mb-6">知识百科</h1>
-
-      <div className="mb-6">
-        <TabNav tabs={TABS} activeKey={activeTab} onTabChange={handleTabChange} />
-      </div>
-
-      <div className="flex flex-col lg:flex-row gap-6">
-        <div className="w-full lg:w-[25%]">
-          <div className="bg-card rounded-lg border border-border p-4 shadow-sm sticky top-20">
-            <h2 className="font-serif text-base border-l-4 border-primary pl-3 mb-4">分类目录</h2>
-            <ul className="space-y-1">
-              <li>
-                <button
-                  onClick={() => { setSelectedCategory(''); setCurrentPage(1); }}
-                  className={`w-full text-left px-3 py-2 rounded text-sm transition-colors ${
-                    selectedCategory === ''
-                      ? 'bg-fall-bg text-primary font-medium'
-                      : 'text-text-secondary hover:bg-row-hover'
-                  }`}
-                >
-                  全部文章
-                </button>
-              </li>
-              {articleHerbNames.map(name => (
-                <li key={name}>
-                  <button
-                    onClick={() => { setSelectedCategory(name); setCurrentPage(1); }}
-                    className={`w-full text-left px-3 py-2 rounded text-sm transition-colors ${
-                      selectedCategory === name
-                        ? 'bg-fall-bg text-primary font-medium'
-                        : 'text-text-secondary hover:bg-row-hover'
-                    }`}
-                  >
-                    {name}
-                  </button>
-                </li>
-              ))}
-            </ul>
+    <div className="min-h-screen bg-bg py-10">
+      {/* Hero Section */}
+      <div className="gradient-hero text-white py-16 mb-10">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center">
+            <h1 className="font-serif text-4xl sm:text-5xl font-bold mb-4">知识百科</h1>
+            <p className="text-lg text-primary-100 max-w-2xl mx-auto">
+              专业的药材知识库，汇集种植技术、行业法规、药材知识
+            </p>
           </div>
         </div>
+      </div>
 
-        <div className="w-full lg:w-[75%]">
-          {pagedArticles.length > 0 ? (
-            <div className="space-y-4">
-              {pagedArticles.map(article => (
-                <div
-                  key={article.id}
-                  className="bg-card rounded-lg border border-border p-5 shadow-sm hover:shadow-md transition-shadow"
-                >
-                  <div className="flex items-center gap-2 mb-2">
-                    <span className="text-xs px-2 py-0.5 rounded bg-fall-bg text-primary font-medium">
-                      {CATEGORY_LABELS[article.category]}
-                    </span>
-                    {article.herbName && (
-                      <span className="text-xs px-2 py-0.5 rounded bg-gold/10 text-gold font-medium">
-                        {article.herbName}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Tab Navigation */}
+        <div className="mb-8">
+          <TabNav tabs={TABS} activeKey={activeTab} onTabChange={handleTabChange} />
+        </div>
+
+        <div className="flex flex-col lg:flex-row gap-8">
+          {/* Sidebar - Category Tree */}
+          <div className="w-full lg:w-1/4">
+            <div className="bg-card rounded-2xl border border-border-light shadow-sm p-6 sticky top-6">
+              <h2 className="font-serif text-xl font-semibold text-text border-l-4 border-primary pl-3 mb-6 flex items-center gap-2">
+                <BookOpen className="w-5 h-5" />
+                分类目录
+              </h2>
+              <ul className="space-y-1.5">
+                <li>
+                  <button
+                    onClick={() => { setSelectedCategory(''); setCurrentPage(1); }}
+                    className={`w-full text-left px-4 py-3 rounded-xl text-sm transition-all duration-300 font-medium ${
+                      selectedCategory === ''
+                        ? 'bg-primary/10 text-primary'
+                        : 'text-text-muted hover:bg-bg hover:text-text'
+                    }`}
+                  >
+                    全部文章
+                  </button>
+                </li>
+                {articleHerbNames.map(name => (
+                  <li key={name}>
+                    <button
+                      onClick={() => { setSelectedCategory(name); setCurrentPage(1); }}
+                      className={`w-full text-left px-4 py-3 rounded-xl text-sm transition-all duration-300 font-medium ${
+                        selectedCategory === name
+                          ? 'bg-primary/10 text-primary'
+                          : 'text-text-muted hover:bg-bg hover:text-text'
+                      }`}
+                    >
+                      {name}
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+
+          {/* Main Content */}
+          <div className="w-full lg:w-3/4">
+            {pagedArticles.length > 0 ? (
+              <div className="space-y-6">
+                {pagedArticles.map(article => (
+                  <div
+                    key={article.id}
+                    className="bg-card rounded-2xl border border-border-light shadow-sm p-6 hover:shadow-md transition-all duration-300"
+                  >
+                    <div className="flex items-center gap-3 mb-4 flex-wrap">
+                      <span className="text-xs px-3 py-1 rounded-full bg-primary/10 text-primary font-medium">
+                        {CATEGORY_LABELS[article.category]}
                       </span>
-                    )}
+                      {article.herbName && (
+                        <span className="text-xs px-3 py-1 rounded-full bg-gold/10 text-gold font-medium">
+                          {article.herbName}
+                        </span>
+                      )}
+                    </div>
+                    <h3 className="text-xl font-semibold text-text mb-3">{article.title}</h3>
+                    <p className="text-text-secondary leading-relaxed mb-4 line-clamp-2">
+                      {article.summary}
+                    </p>
+                    <div className="flex items-center gap-4 text-sm text-text-muted">
+                      <span>{formatDate(article.createdAt)}</span>
+                      <span>{article.views} 次浏览</span>
+                    </div>
                   </div>
-                  <h3 className="text-base font-medium text-text mb-2">{article.title}</h3>
-                  <p className="text-sm text-text-secondary line-clamp-2 mb-3">{article.summary}</p>
-                  <div className="flex items-center gap-4 text-xs text-text-secondary">
-                    <span>{formatDate(article.createdAt)}</span>
-                    <span>{article.views} 次浏览</span>
-                  </div>
-                </div>
-              ))}
-            </div>
-          ) : (
-            <div className="bg-card rounded-lg border border-border p-8 shadow-sm text-center">
-              <p className="text-text-secondary">暂无相关文章</p>
-            </div>
-          )}
+                ))}
+              </div>
+            ) : (
+              <div className="bg-card rounded-2xl border border-border-light p-12 shadow-sm text-center">
+                <p className="text-text-secondary">暂无相关文章</p>
+              </div>
+            )}
 
-          <Pagination
-            current={currentPage}
-            total={filteredArticles.length}
-            pageSize={PAGE_SIZE}
-            onChange={setCurrentPage}
-          />
+            <div className="mt-8">
+              <Pagination
+                current={currentPage}
+                total={filteredArticles.length}
+                pageSize={PAGE_SIZE}
+                onChange={setCurrentPage}
+              />
+            </div>
+          </div>
         </div>
       </div>
     </div>
