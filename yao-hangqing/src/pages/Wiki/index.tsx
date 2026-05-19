@@ -14,6 +14,15 @@ const CATEGORIES = [
 
 const PAGE_SIZE = 12;
 
+const CATEGORY_BADGE: Record<string, string> = {
+  basic: 'badge-tag',
+  identification: 'badge-up',
+  processing: 'badge-warn',
+  storage: 'badge-tag',
+};
+
+const DELAY_CLASSES = ['d1', 'd2', 'd3', 'd4', 'd5', 'd6', 'd7', 'd8'];
+
 export default function WikiPage() {
   const [category, setCategory] = useState('');
   const [searchQuery, setSearchQuery] = useState('');
@@ -47,37 +56,33 @@ export default function WikiPage() {
   const hotHerbs = herbs.slice(0, 8);
 
   return (
-    <div className="max-w-[1400px] mx-auto px-6 py-10">
+    <div className="container py-10">
       <div className="mb-10">
-        <h1 className="font-serif text-4xl text-ink tracking-wide mb-2">药材百科</h1>
-        <p className="text-ink-light">中药材知识宝库，传承千年智慧</p>
+        <h1 className="section-title mb-2">药材百科</h1>
+        <p className="text-slate-500">中药材知识宝库，传承千年智慧</p>
       </div>
 
       <div className="flex flex-col lg:flex-row gap-8">
-        <div className="flex-1">
-          <div className="flex gap-3 mb-8 items-center">
+        <div className="lg:w-[70%]">
+          <div className="flex gap-3 mb-8 items-center flex-wrap">
             {CATEGORIES.map(cat => (
               <button
                 key={cat.key}
                 onClick={() => { setCategory(cat.key); setCurrentPage(1); }}
-                className={`px-4 py-2 text-sm font-medium rounded transition-all ${
-                  category === cat.key
-                    ? 'bg-indigo text-white shadow-md'
-                    : 'bg-paper-warm text-ink-light border border-paper-dark hover:border-indigo hover:text-ink'
-                }`}
+                className={`btn ${category === cat.key ? 'btn-p' : 'btn-s'}`}
               >
                 {cat.label}
               </button>
             ))}
 
             <div className="relative ml-auto">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-ink-muted pointer-events-none" />
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 pointer-events-none" />
               <input
                 type="text"
                 value={searchQuery}
                 onChange={e => { setSearchQuery(e.target.value); setCurrentPage(1); }}
                 placeholder="搜索知识..."
-                className="input-antique pl-10 w-60"
+                className="inp pl-10 w-60"
               />
             </div>
           </div>
@@ -87,29 +92,24 @@ export default function WikiPage() {
               <Link
                 key={wiki.id}
                 to={`/wiki/${wiki.id}`}
-                className="paper-card p-6 group animate-fade-in"
-                style={{ animationDelay: `${idx * 0.05}s` }}
+                className={`card card-body group anim-up ${DELAY_CLASSES[idx % 8] || ''}`}
               >
                 <div className="flex items-start gap-4">
-                  <div className="shrink-0 w-12 h-12 bg-indigo-muted rounded flex items-center justify-center group-hover:bg-indigo transition-colors">
-                    <BookOpen className="w-6 h-6 text-indigo group-hover:text-white" />
+                  <div className="shrink-0 w-12 h-12 bg-green-50 rounded-xl flex items-center justify-center group-hover:bg-green-700 transition-colors">
+                    <BookOpen className="w-6 h-6 text-green-700 group-hover:text-white" />
                   </div>
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2 mb-2">
-                      <span className={`badge-antique text-[10px] ${
-                        wiki.category === 'basic' ? 'badge-indigo' :
-                        wiki.category === 'identification' ? 'badge-cinnabar' :
-                        wiki.category === 'processing' ? 'badge-ochre' : 'badge-jade'
-                      }`}>
+                      <span className={`badge ${CATEGORY_BADGE[wiki.category] || 'badge-tag'}`}>
                         {CATEGORIES.find(c => c.key === wiki.category)?.label || '知识'}
                       </span>
                     </div>
-                    <h3 className="font-serif text-lg text-ink group-hover:text-indigo transition-colors mb-2">
+                    <h3 className="font-serif text-lg text-slate-800 group-hover:text-green-700 transition-colors mb-2">
                       {wiki.title}
                     </h3>
-                    <p className="text-sm text-ink-light line-clamp-2">{wiki.summary}</p>
+                    <p className="text-sm text-slate-600 line-clamp-2">{wiki.summary}</p>
                     {wiki.relatedHerbs.length > 0 && (
-                      <div className="flex items-center gap-2 mt-3 text-xs text-ink-muted">
+                      <div className="flex items-center gap-2 mt-3 text-xs text-slate-500">
                         <Tag className="w-3 h-3" />
                         <span>{wiki.relatedHerbs.slice(0, 3).join('、')}</span>
                       </div>
@@ -121,7 +121,7 @@ export default function WikiPage() {
           </div>
 
           {pagedWiki.length === 0 && (
-            <div className="text-center py-16 text-ink-muted">暂无相关知识</div>
+            <div className="text-center py-16 text-slate-400">暂无相关知识</div>
           )}
 
           {totalPages > 1 && (
@@ -129,7 +129,7 @@ export default function WikiPage() {
               <button
                 onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
                 disabled={currentPage === 1}
-                className="px-4 py-2 text-sm font-medium rounded border-2 border-paper-dark disabled:opacity-40 disabled:cursor-not-allowed hover:border-indigo hover:text-indigo transition-colors bg-paper"
+                className="btn btn-s disabled:opacity-40 disabled:cursor-not-allowed"
               >
                 上一页
               </button>
@@ -148,11 +148,7 @@ export default function WikiPage() {
                   <button
                     key={page}
                     onClick={() => setCurrentPage(page)}
-                    className={`px-4 py-2 text-sm font-medium rounded border-2 transition-all ${
-                      currentPage === page
-                        ? 'bg-indigo text-white border-indigo shadow-md'
-                        : 'border-paper-dark hover:border-indigo hover:text-indigo bg-paper'
-                    }`}
+                    className={`btn ${currentPage === page ? 'btn-p' : 'btn-s'}`}
                   >
                     {page}
                   </button>
@@ -161,7 +157,7 @@ export default function WikiPage() {
               <button
                 onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
                 disabled={currentPage === totalPages}
-                className="px-4 py-2 text-sm font-medium rounded border-2 border-paper-dark disabled:opacity-40 disabled:cursor-not-allowed hover:border-indigo hover:text-indigo transition-colors bg-paper"
+                className="btn btn-s disabled:opacity-40 disabled:cursor-not-allowed"
               >
                 下一页
               </button>
@@ -169,43 +165,51 @@ export default function WikiPage() {
           )}
         </div>
 
-        <div className="w-full lg:w-80 shrink-0">
-          <div className="paper-card p-6 mb-6">
-            <h3 className="font-serif text-lg text-ink font-semibold mb-4 flex items-center gap-2">
-              <Leaf className="w-5 h-5 text-jade" />
-              热门药材
-            </h3>
-            <div className="space-y-3">
-              {hotHerbs.map(herb => (
-                <Link
-                  key={herb.id}
-                  to={`/herb/${herb.id}`}
-                  className="flex items-center justify-between py-2 border-b border-paper-dark last:border-0 group"
-                >
-                  <span className="text-sm text-ink group-hover:text-indigo transition-colors font-medium">
-                    {herb.name}
-                  </span>
-                  <span className="text-xs text-ink-muted">{herb.family}</span>
-                </Link>
-              ))}
+        <div className="lg:w-[30%] shrink-0">
+          <div className="card mb-6">
+            <div className="card-head">
+              <h3 className="font-serif text-base text-slate-800 font-semibold flex items-center gap-2">
+                <Leaf className="w-5 h-5 text-green-700" />
+                热门药材
+              </h3>
+            </div>
+            <div className="card-body">
+              <div className="space-y-0">
+                {hotHerbs.map(herb => (
+                  <Link
+                    key={herb.id}
+                    to={`/herb/${herb.id}`}
+                    className="flex items-center justify-between py-2.5 group"
+                  >
+                    <span className="text-sm text-slate-700 group-hover:text-green-700 transition-colors font-medium">
+                      {herb.name}
+                    </span>
+                    <span className="text-xs text-slate-400">{herb.family}</span>
+                  </Link>
+                ))}
+              </div>
             </div>
           </div>
 
-          <div className="paper-card p-6">
-            <h3 className="font-serif text-lg text-ink font-semibold mb-4 flex items-center gap-2">
-              <BookOpen className="w-5 h-5 text-indigo" />
-              知识分类
-            </h3>
-            <div className="space-y-2">
-              {CATEGORIES.filter(c => c.key).map(cat => (
-                <button
-                  key={cat.key}
-                  onClick={() => setCategory(cat.key)}
-                  className="w-full text-left px-4 py-3 text-sm bg-paper-warm border border-paper-dark rounded hover:border-indigo hover:text-indigo transition-colors"
-                >
-                  {cat.label}
-                </button>
-              ))}
+          <div className="card">
+            <div className="card-head">
+              <h3 className="font-serif text-base text-slate-800 font-semibold flex items-center gap-2">
+                <BookOpen className="w-5 h-5 text-green-700" />
+                知识分类
+              </h3>
+            </div>
+            <div className="card-body">
+              <div className="space-y-2">
+                {CATEGORIES.filter(c => c.key).map(cat => (
+                  <button
+                    key={cat.key}
+                    onClick={() => setCategory(cat.key)}
+                    className="w-full text-left btn btn-s justify-start"
+                  >
+                    {cat.label}
+                  </button>
+                ))}
+              </div>
             </div>
           </div>
         </div>

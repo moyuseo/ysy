@@ -15,6 +15,16 @@ const CATEGORIES = [
 
 const PAGE_SIZE = 12;
 
+const CATEGORY_BADGE: Record<string, string> = {
+  analysis: 'badge-up',
+  dynamic: 'badge-tag',
+  origin: 'badge-warn',
+  policy: 'badge-tag',
+  review: 'badge-up',
+};
+
+const DELAY_CLASSES = ['d1', 'd2', 'd3', 'd4', 'd5', 'd6', 'd7', 'd8'];
+
 export default function NewsPage() {
   const [category, setCategory] = useState('');
   const [searchQuery, setSearchQuery] = useState('');
@@ -49,77 +59,73 @@ export default function NewsPage() {
   const recentNews = filteredNews.slice(1, 5);
 
   return (
-    <div className="max-w-[1400px] mx-auto px-6 py-10">
+    <div className="container py-10">
       <div className="mb-10">
-        <h1 className="font-serif text-4xl text-ink tracking-wide mb-2">资讯动态</h1>
-        <p className="text-ink-light">中药材行业最新资讯，把握市场脉搏</p>
+        <h1 className="section-title mb-2">资讯动态</h1>
+        <p className="text-slate-500">中药材行业最新资讯，把握市场脉搏</p>
       </div>
 
-      <div className="flex gap-3 mb-8 items-center">
+      <div className="flex gap-3 mb-8 items-center flex-wrap">
         {CATEGORIES.map(cat => (
           <button
             key={cat.key}
             onClick={() => { setCategory(cat.key); setCurrentPage(1); }}
-            className={`px-4 py-2 text-sm font-medium rounded transition-all ${
-              category === cat.key
-                ? 'bg-indigo text-white shadow-md'
-                : 'bg-paper-warm text-ink-light border border-paper-dark hover:border-indigo hover:text-ink'
-            }`}
+            className={`btn ${category === cat.key ? 'btn-p' : 'btn-s'}`}
           >
             {cat.label}
           </button>
         ))}
 
         <div className="relative ml-auto">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-ink-muted pointer-events-none" />
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 pointer-events-none" />
           <input
             type="text"
             value={searchQuery}
             onChange={e => { setSearchQuery(e.target.value); setCurrentPage(1); }}
             placeholder="搜索资讯..."
-            className="input-antique pl-10 w-60"
+            className="inp pl-10 w-60"
           />
         </div>
       </div>
 
       {currentPage === 1 && !category && !searchQuery && featuredNews && (
-        <div className="mb-10">
-          <div className="paper-card p-8">
+        <div className="mb-10 anim-up d1">
+          <div className="card p-8">
             <div className="flex flex-col lg:flex-row gap-8">
               <div className="flex-1">
                 <div className="flex items-center gap-3 mb-4">
-                  <span className="badge-antique badge-cinnabar">头条</span>
-                  <span className="text-xs text-ink-muted flex items-center gap-1">
+                  <span className="badge badge-up">头条</span>
+                  <span className="text-xs text-slate-400 flex items-center gap-1">
                     <Calendar className="w-3 h-3" />
                     {formatDate(featuredNews.createdAt)}
                   </span>
                 </div>
                 <Link to={`/news/${featuredNews.id}`}>
-                  <h2 className="font-serif text-2xl text-ink hover:text-indigo transition-colors mb-4 leading-relaxed">
+                  <h2 className="font-serif text-2xl text-slate-800 hover:text-green-700 transition-colors mb-4 leading-relaxed">
                     {featuredNews.title}
                   </h2>
                 </Link>
-                <p className="text-ink-light leading-relaxed mb-4">{featuredNews.summary}</p>
-                <div className="flex items-center gap-4 text-sm text-ink-muted">
+                <p className="text-slate-600 leading-relaxed mb-4">{featuredNews.summary}</p>
+                <div className="flex items-center gap-4 text-sm text-slate-500">
                   <span className="flex items-center gap-1">
                     <Eye className="w-4 h-4" />
                     {featuredNews.views} 阅读
                   </span>
-                  <Link to={`/news/${featuredNews.id}`} className="text-indigo hover:text-indigo-dark font-medium transition-colors">
+                  <Link to={`/news/${featuredNews.id}`} className="text-green-700 hover:text-green-800 font-medium transition-colors">
                     阅读全文 →
                   </Link>
                 </div>
               </div>
               <div className="w-full lg:w-80 shrink-0">
                 <div className="grid grid-cols-2 gap-3">
-                  {recentNews.map(news => (
+                  {recentNews.map((news, idx) => (
                     <Link
                       key={news.id}
                       to={`/news/${news.id}`}
-                      className="p-4 bg-paper-warm border border-paper-dark rounded hover:border-indigo transition-colors group"
+                      className={`p-4 bg-green-50 border border-green-100 rounded-lg hover:border-green-400 transition-colors group anim-up ${DELAY_CLASSES[idx] || ''}`}
                     >
-                      <div className="text-xs text-ink-muted mb-2">{formatDate(news.createdAt)}</div>
-                      <h3 className="text-sm text-ink group-hover:text-indigo transition-colors line-clamp-2 font-medium">
+                      <div className="text-xs text-slate-400 mb-2">{formatDate(news.createdAt)}</div>
+                      <h3 className="text-sm text-slate-700 group-hover:text-green-700 transition-colors line-clamp-2 font-medium">
                         {news.title}
                       </h3>
                     </Link>
@@ -136,28 +142,23 @@ export default function NewsPage() {
           <Link
             key={news.id}
             to={`/news/${news.id}`}
-            className="paper-card p-6 group animate-fade-in"
-            style={{ animationDelay: `${idx * 0.05}s` }}
+            className={`card card-body group anim-up ${DELAY_CLASSES[idx % 8] || ''}`}
           >
             <div className="flex items-center gap-3 mb-4">
-              <span className={`badge-antique ${
-                news.category === 'analysis' ? 'badge-cinnabar' :
-                news.category === 'dynamic' ? 'badge-indigo' :
-                news.category === 'origin' ? 'badge-ochre' :
-                news.category === 'policy' ? 'badge-jade' : 'badge-indigo'
-              }`}>
+              <span className={`badge ${CATEGORY_BADGE[news.category] || 'badge-tag'}`}>
                 {CATEGORIES.find(c => c.key === news.category)?.label || '资讯'}
               </span>
-              <span className="text-xs text-ink-muted flex items-center gap-1">
+              <span className="text-xs text-slate-400 flex items-center gap-1">
                 <Calendar className="w-3 h-3" />
                 {formatDate(news.createdAt)}
               </span>
             </div>
-            <h3 className="font-serif text-lg text-ink group-hover:text-indigo transition-colors mb-3 line-clamp-2">
+            <h3 className="font-serif text-lg text-slate-800 group-hover:text-green-700 transition-colors mb-3 line-clamp-2">
               {news.title}
             </h3>
-            <p className="text-sm text-ink-light line-clamp-2 mb-4">{news.summary}</p>
-            <div className="flex items-center justify-between text-xs text-ink-muted">
+            <p className="text-sm text-slate-600 line-clamp-2 mb-4">{news.summary}</p>
+            <div className="divider mb-4" />
+            <div className="flex items-center justify-between text-xs text-slate-500">
               <span className="flex items-center gap-1">
                 <Eye className="w-3.5 h-3.5" />
                 {news.views} 阅读
@@ -174,7 +175,7 @@ export default function NewsPage() {
       </div>
 
       {pagedNews.length === 0 && (
-        <div className="text-center py-16 text-ink-muted">暂无相关资讯</div>
+        <div className="text-center py-16 text-slate-400">暂无相关资讯</div>
       )}
 
       {totalPages > 1 && (
@@ -182,7 +183,7 @@ export default function NewsPage() {
           <button
             onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
             disabled={currentPage === 1}
-            className="px-4 py-2 text-sm font-medium rounded border-2 border-paper-dark disabled:opacity-40 disabled:cursor-not-allowed hover:border-indigo hover:text-indigo transition-colors bg-paper"
+            className="btn btn-s disabled:opacity-40 disabled:cursor-not-allowed"
           >
             上一页
           </button>
@@ -201,11 +202,7 @@ export default function NewsPage() {
               <button
                 key={page}
                 onClick={() => setCurrentPage(page)}
-                className={`px-4 py-2 text-sm font-medium rounded border-2 transition-all ${
-                  currentPage === page
-                    ? 'bg-indigo text-white border-indigo shadow-md'
-                    : 'border-paper-dark hover:border-indigo hover:text-indigo bg-paper'
-                }`}
+                className={`btn ${currentPage === page ? 'btn-p' : 'btn-s'}`}
               >
                 {page}
               </button>
@@ -214,7 +211,7 @@ export default function NewsPage() {
           <button
             onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
             disabled={currentPage === totalPages}
-            className="px-4 py-2 text-sm font-medium rounded border-2 border-paper-dark disabled:opacity-40 disabled:cursor-not-allowed hover:border-indigo hover:text-indigo transition-colors bg-paper"
+            className="btn btn-s disabled:opacity-40 disabled:cursor-not-allowed"
           >
             下一页
           </button>

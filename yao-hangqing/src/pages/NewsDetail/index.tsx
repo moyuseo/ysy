@@ -21,13 +21,13 @@ export default function NewsDetail() {
 
   if (!news) {
     return (
-      <div className="max-w-[1400px] mx-auto px-6 py-10">
+      <div className="container py-10">
         <div className="py-16 text-center">
-          <BookOpen className="w-16 h-16 text-paper-dark mx-auto mb-6" />
-          <p className="font-serif text-xl text-ink-light mb-4">资讯未找到</p>
+          <BookOpen className="w-16 h-16 text-slate-300 mx-auto mb-6" />
+          <p className="font-serif text-xl text-slate-500 mb-4">资讯未找到</p>
           <Link
             to="/news"
-            className="btn-primary inline-flex items-center gap-2"
+            className="btn btn-p inline-flex items-center gap-2"
           >
             <ArrowLeft className="w-4 h-4" />
             返回资讯中心
@@ -43,38 +43,38 @@ export default function NewsDetail() {
     .slice(0, 4);
 
   return (
-    <div className="max-w-[1400px] mx-auto px-6 py-10">
-      <nav className="text-sm text-ink-muted mb-8 flex items-center gap-2">
-        <Link to="/" className="hover:text-indigo transition-colors">首页</Link>
-        <span className="text-paper-dark">/</span>
-        <Link to="/news" className="hover:text-indigo transition-colors">资讯中心</Link>
-        <span className="text-paper-dark">/</span>
-        <span className="text-ink font-medium">{CATEGORY_LABELS[news.category] || '资讯'}</span>
+    <div className="container py-10">
+      <nav className="text-sm text-slate-500 mb-8 flex items-center gap-2 anim-up">
+        <Link to="/" className="hover:text-green-700 transition-colors">首页</Link>
+        <span className="text-slate-300">/</span>
+        <Link to="/news" className="hover:text-green-700 transition-colors">资讯中心</Link>
+        <span className="text-slate-300">/</span>
+        <span className="text-slate-900 font-medium">{CATEGORY_LABELS[news.category] || '资讯'}</span>
       </nav>
 
       <div className="flex flex-col lg:flex-row gap-8">
-        <div className="w-full lg:w-[70%]">
-          <div className="paper-card p-8">
+        <div className="w-full lg:w-[70%] anim-up d1">
+          <div className="card p-8">
             <div className="flex items-center gap-3 mb-6">
-              <span className="badge-antique badge-cinnabar">
+              <span className="badge badge-up">
                 {CATEGORY_LABELS[news.category] || '资讯'}
               </span>
-              <span className="text-sm text-ink-muted flex items-center gap-1">
+              <span className="text-sm text-slate-500 flex items-center gap-1">
                 <Calendar className="w-4 h-4" />
                 {formatDateTime(news.createdAt)}
               </span>
-              <span className="text-sm text-ink-muted flex items-center gap-1">
+              <span className="text-sm text-slate-500 flex items-center gap-1">
                 <Eye className="w-4 h-4" />
                 {news.views} 阅读
               </span>
             </div>
-            <h1 className="font-serif text-3xl text-ink mb-8 leading-relaxed tracking-wide">
+            <h1 className="font-serif text-3xl text-slate-900 mb-8 leading-relaxed tracking-wide">
               {news.title}
             </h1>
-            <div className="ink-divider mb-8" />
+            <div className="divider mb-8" />
             <div className="space-y-6">
               {news.content.split('\n\n').map((paragraph, idx) => (
-                <p key={idx} className="text-ink-light leading-relaxed text-base">
+                <p key={idx} className="text-slate-600 leading-relaxed text-base">
                   {paragraph}
                 </p>
               ))}
@@ -82,46 +82,54 @@ export default function NewsDetail() {
           </div>
         </div>
 
-        <div className="w-full lg:w-[30%]">
+        <div className="w-full lg:w-[30%] anim-up d2">
           {relatedHerbs.length > 0 && (
-            <div className="paper-card p-6 mb-6">
-              <h2 className="font-serif text-base text-ink font-semibold mb-4 flex items-center gap-2">
-                <Tag className="w-4 h-4 text-indigo" />
-                关联品种
-              </h2>
-              <div className="flex flex-wrap gap-2">
-                {relatedHerbs.map(herb => (
-                  <Link
-                    key={herb.id}
-                    to={`/herb/${herb.id}`}
-                    className="px-3 py-1.5 text-sm text-indigo bg-indigo-muted rounded hover:bg-indigo hover:text-white transition-colors"
-                  >
-                    {herb.name}
-                  </Link>
-                ))}
+            <div className="card mb-6">
+              <div className="card-head">
+                <h2 className="section-title text-base flex items-center gap-2">
+                  <Tag className="w-4 h-4 text-green-700" />
+                  关联品种
+                </h2>
+              </div>
+              <div className="card-body">
+                <div className="flex flex-wrap gap-2">
+                  {relatedHerbs.map(herb => (
+                    <Link
+                      key={herb.id}
+                      to={`/herb/${herb.id}`}
+                      className="badge badge-tag hover:bg-green-200 transition-colors cursor-pointer"
+                    >
+                      {herb.name}
+                    </Link>
+                  ))}
+                </div>
               </div>
             </div>
           )}
 
           {relatedNews.length > 0 && (
-            <div className="paper-card p-6">
-              <h2 className="font-serif text-base text-ink font-semibold mb-4">相关资讯</h2>
-              <ul className="space-y-4">
-                {relatedNews.map(n => (
-                  <li key={n.id} className="border-b border-paper-dark pb-4 last:border-0 last:pb-0">
-                    <Link
-                      to={`/news/${n.id}`}
-                      className="text-sm text-ink hover:text-indigo transition-colors line-clamp-2 block mb-2 font-medium"
-                    >
-                      {n.title}
-                    </Link>
-                    <div className="flex items-center gap-3 text-xs text-ink-muted">
-                      <span>{formatDateTime(n.createdAt)}</span>
-                      <span>{n.views} 阅读</span>
-                    </div>
-                  </li>
-                ))}
-              </ul>
+            <div className="card">
+              <div className="card-head">
+                <h2 className="section-title text-base">相关资讯</h2>
+              </div>
+              <div className="card-body">
+                <ul className="space-y-4">
+                  {relatedNews.map(n => (
+                    <li key={n.id} className="border-b border-slate-100 pb-4 last:border-0 last:pb-0">
+                      <Link
+                        to={`/news/${n.id}`}
+                        className="text-sm text-slate-900 hover:text-green-700 transition-colors line-clamp-2 block mb-2 font-medium"
+                      >
+                        {n.title}
+                      </Link>
+                      <div className="flex items-center gap-3 text-xs text-slate-400">
+                        <span>{formatDateTime(n.createdAt)}</span>
+                        <span>{n.views} 阅读</span>
+                      </div>
+                    </li>
+                  ))}
+                </ul>
+              </div>
             </div>
           )}
         </div>

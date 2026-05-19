@@ -48,18 +48,15 @@ export default function Header() {
   };
 
   return (
-    <header className="sticky top-0 z-50 bg-white border-b border-gray-200">
+    <header className="sticky top-0 z-50 bg-white border-b border-slate-200 h-16">
       <div className="container">
-        <div className="flex items-center justify-between h-[68px]">
+        <div className="flex items-center justify-between h-16">
           <div className="flex items-center gap-8">
             <Link to="/" className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-primary rounded-lg flex items-center justify-center">
+              <div className="w-10 h-10 bg-green-800 rounded-lg flex items-center justify-center">
                 <span className="text-white text-lg font-serif font-bold">药</span>
               </div>
-              <div>
-                <span className="font-serif text-xl font-semibold text-gray-900">药行情</span>
-                <span className="hidden sm:block text-xs text-gray-500 -mt-1">中药材行情中心</span>
-              </div>
+              <span className="font-serif text-xl font-bold text-slate-800">药行情</span>
             </Link>
 
             <nav className="hidden lg:flex items-center gap-1">
@@ -69,8 +66,8 @@ export default function Header() {
                   to={item.path}
                   className={`px-4 py-2 text-sm font-medium rounded transition-colors ${
                     isActive(item.path)
-                      ? 'bg-primary-muted text-primary'
-                      : 'text-gray-600 hover:text-primary hover:bg-gray-50'
+                      ? 'bg-green-50 text-green-800'
+                      : 'text-slate-500 hover:text-green-700 hover:bg-slate-50'
                   }`}
                 >
                   {item.label}
@@ -93,22 +90,22 @@ export default function Header() {
                     onFocus={() => setShowSuggestions(true)}
                     onBlur={() => setTimeout(() => setShowSuggestions(false), 150)}
                     placeholder="搜索药材..."
-                    className="w-56 pl-10 pr-4 py-2 text-sm bg-gray-50 border border-gray-200 rounded-lg focus:bg-white focus:border-primary focus:ring-2 focus:ring-primary-muted transition-all"
+                    className="inp w-56 pl-10 pr-4 py-2"
                   />
-                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
                 </div>
               </form>
 
               {showSuggestions && suggestions.length > 0 && (
-                <div className="absolute top-full left-0 right-0 mt-2 bg-white border border-gray-200 rounded-lg shadow-lg z-50 overflow-hidden">
+                <div className="absolute top-full left-0 right-0 mt-2 bg-white border border-slate-200 rounded-lg shadow-lg z-50 overflow-hidden">
                   {suggestions.map((herb) => (
                     <Link
                       key={herb.id}
                       to={`/herb/${herb.id}`}
-                      className="flex items-center justify-between px-4 py-3 hover:bg-gray-50 text-gray-900 text-sm transition-colors border-b border-gray-100 last:border-b-0"
+                      className="flex items-center justify-between px-4 py-3 hover:bg-green-50 text-slate-800 text-sm transition-colors border-b border-slate-100 last:border-b-0"
                     >
                       <span className="font-medium">{herb.name}</span>
-                      <span className="text-gray-400 text-xs">{herb.family}</span>
+                      <span className="badge-tag">{herb.family}</span>
                     </Link>
                   ))}
                 </div>
@@ -116,7 +113,7 @@ export default function Header() {
             </div>
 
             <button
-              className="lg:hidden p-2 text-gray-600 hover:text-primary hover:bg-gray-50 rounded-lg transition-colors"
+              className="lg:hidden p-2 text-slate-500 hover:text-green-700 hover:bg-slate-50 rounded-lg transition-colors"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             >
               {mobileMenuOpen ? (
@@ -130,7 +127,7 @@ export default function Header() {
       </div>
 
       {mobileMenuOpen && (
-        <div className="lg:hidden border-t border-gray-200 bg-white animate-fade-in-down">
+        <div className="lg:hidden border-t border-slate-200 bg-white">
           <nav className="container py-4">
             <div className="flex flex-col gap-1">
               {NAV_ITEMS.map((item) => (
@@ -140,8 +137,8 @@ export default function Header() {
                   onClick={() => setMobileMenuOpen(false)}
                   className={`px-4 py-3 text-sm font-medium rounded-lg transition-colors ${
                     isActive(item.path)
-                      ? 'bg-primary-muted text-primary'
-                      : 'text-gray-600 hover:text-primary hover:bg-gray-50'
+                      ? 'bg-green-50 text-green-800'
+                      : 'text-slate-500 hover:text-green-700 hover:bg-slate-50'
                   }`}
                 >
                   {item.label}
@@ -155,9 +152,9 @@ export default function Header() {
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   placeholder="搜索药材..."
-                  className="w-full pl-10 pr-4 py-3 text-sm bg-gray-50 border border-gray-200 rounded-lg"
+                  className="inp w-full pl-10 pr-4 py-3"
                 />
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
               </div>
             </form>
           </nav>
