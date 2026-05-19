@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { TrendingUp, TrendingDown, ArrowRight, Search, Leaf, Sparkles, Clock } from 'lucide-react';
+import { TrendingUp, TrendingDown, ArrowRight, Search, Leaf, Clock } from 'lucide-react';
 import { marketPrices } from '../../data/prices';
 import { trades } from '../../data/trades';
 import { newsList } from '../../data/news';
@@ -26,84 +26,80 @@ const fallCount = marketPrices.filter(p => p.monthlyChange < 0).length;
 export default function Home() {
   return (
     <div className="min-h-screen">
-      <section className="relative overflow-hidden bg-gradient-to-b from-indigo-muted/40 via-paper to-paper">
-        <div className="absolute inset-0 opacity-30">
-          <div className="absolute top-20 left-10 w-64 h-64 bg-cinnabar/10 rounded-full blur-3xl" />
-          <div className="absolute bottom-10 right-20 w-80 h-80 bg-ochre/10 rounded-full blur-3xl" />
-          <div className="absolute top-40 right-40 w-48 h-48 bg-indigo/10 rounded-full blur-3xl" />
-        </div>
-        
-        <div className="relative max-w-[1400px] mx-auto px-6 py-16">
-          <div className="text-center mb-12 animate-fade-in-up">
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-paper border border-paper-dark rounded-full text-xs text-ink-muted mb-6">
-              <Sparkles className="w-3 h-3 text-ochre" />
-              <span>传承千年智慧，服务药材行业</span>
-            </div>
-            <h1 className="font-serif text-5xl md:text-6xl text-ink mb-4 tracking-wide">
-              中药材<span className="text-cinnabar">行情</span>中心
+      <section className="bg-forest text-white">
+        <div className="max-w-7xl mx-auto px-6 py-20">
+          <div className="max-w-2xl animate-fade-in-up">
+            <h1 className="font-serif text-5xl font-bold mb-4 tracking-tight">
+              中药材行情中心
             </h1>
-            <p className="text-ink-light text-lg max-w-xl mx-auto leading-relaxed">
+            <p className="text-lg text-white/80 mb-8 leading-relaxed">
               实时掌握药材市场动态，精准把握价格走势
             </p>
-          </div>
-
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 animate-fade-in-up stagger-2">
-            <div className="paper-card p-6 group">
-              <div className="flex items-center gap-3 mb-3">
-                <div className="w-10 h-10 bg-indigo-muted rounded flex items-center justify-center group-hover:bg-indigo group-hover:text-white transition-colors">
-                  <Leaf className="w-5 h-5 text-indigo group-hover:text-white" />
-                </div>
-              </div>
-              <div className="font-serif text-3xl text-ink mb-1">{herbs.length}</div>
-              <div className="text-xs text-ink-muted tracking-wider uppercase">覆盖品种</div>
-            </div>
-            <div className="paper-card p-6 group">
-              <div className="flex items-center gap-3 mb-3">
-                <div className="w-10 h-10 bg-indigo-muted rounded flex items-center justify-center group-hover:bg-indigo group-hover:text-white transition-colors">
-                  <Clock className="w-5 h-5 text-indigo group-hover:text-white" />
-                </div>
-              </div>
-              <div className="font-serif text-3xl text-ink mb-1">{marketPrices.length}</div>
-              <div className="text-xs text-ink-muted tracking-wider uppercase">今日更新</div>
-            </div>
-            <div className="paper-card p-6 group">
-              <div className="flex items-center gap-3 mb-3">
-                <div className="w-10 h-10 bg-cinnabar-muted rounded flex items-center justify-center group-hover:bg-cinnabar group-hover:text-white transition-colors">
-                  <TrendingUp className="w-5 h-5 text-cinnabar group-hover:text-white" />
-                </div>
-              </div>
-              <div className="font-serif text-3xl text-cinnabar mb-1">{riseCount}</div>
-              <div className="text-xs text-ink-muted tracking-wider uppercase">上涨品种</div>
-            </div>
-            <div className="paper-card p-6 group">
-              <div className="flex items-center gap-3 mb-3">
-                <div className="w-10 h-10 bg-jade-muted rounded flex items-center justify-center group-hover:bg-jade group-hover:text-white transition-colors">
-                  <TrendingDown className="w-5 h-5 text-jade group-hover:text-white" />
-                </div>
-              </div>
-              <div className="font-serif text-3xl text-jade mb-1">{fallCount}</div>
-              <div className="text-xs text-ink-muted tracking-wider uppercase">下跌品种</div>
+            <div className="flex gap-4">
+              <Link to="/price" className="btn-primary bg-white text-forest hover:bg-mint-light">
+                查看行情
+              </Link>
+              <Link to="/trade" className="btn-secondary border-white text-white hover:bg-white/10">
+                供求对接
+              </Link>
             </div>
           </div>
         </div>
       </section>
 
-      <section className="max-w-[1400px] mx-auto px-6 py-12">
+      <section className="max-w-7xl mx-auto px-6 -mt-8 relative z-10">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 animate-fade-in-up stagger-2">
+          <div className="card p-6">
+            <div className="flex items-center gap-3 mb-3">
+              <div className="w-10 h-10 bg-forest-muted rounded-lg flex items-center justify-center">
+                <Leaf className="w-5 h-5 text-forest" />
+              </div>
+            </div>
+            <div className="kpi-value">{herbs.length}</div>
+            <div className="text-sm text-slate-light">覆盖品种</div>
+          </div>
+          <div className="card p-6">
+            <div className="flex items-center gap-3 mb-3">
+              <div className="w-10 h-10 bg-forest-muted rounded-lg flex items-center justify-center">
+                <Clock className="w-5 h-5 text-forest" />
+              </div>
+            </div>
+            <div className="kpi-value">{marketPrices.length}</div>
+            <div className="text-sm text-slate-light">今日更新</div>
+          </div>
+          <div className="card p-6">
+            <div className="flex items-center gap-3 mb-3">
+              <div className="w-10 h-10 bg-coral-muted rounded-lg flex items-center justify-center">
+                <TrendingUp className="w-5 h-5 text-coral" />
+              </div>
+            </div>
+            <div className="font-serif text-3xl font-bold text-coral">{riseCount}</div>
+            <div className="text-sm text-slate-light">上涨品种</div>
+          </div>
+          <div className="card p-6">
+            <div className="flex items-center gap-3 mb-3">
+              <div className="w-10 h-10 bg-forest-muted rounded-lg flex items-center justify-center">
+                <TrendingDown className="w-5 h-5 text-forest" />
+              </div>
+            </div>
+            <div className="kpi-value">{fallCount}</div>
+            <div className="text-sm text-slate-light">下跌品种</div>
+          </div>
+        </div>
+      </section>
+
+      <section className="max-w-7xl mx-auto px-6 py-12">
         <div className="flex flex-col lg:flex-row gap-8">
           <div className="w-full lg:w-[65%]">
-            <div className="paper-card p-6 mb-8 animate-fade-in-up stagger-3">
+            <div className="card-flat p-6 mb-8 animate-fade-in-up stagger-3">
               <div className="flex items-center justify-between mb-6">
-                <h2 className="font-serif text-xl text-ink flex items-center gap-3">
-                  <span className="w-1 h-6 bg-cinnabar rounded-full" />
-                  今日行情
-                </h2>
-                <Link to="/price" className="text-sm text-indigo hover:text-indigo-dark flex items-center gap-1 transition-colors group">
-                  查看更多 
-                  <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+                <h2 className="font-serif text-xl font-bold text-slate">今日行情</h2>
+                <Link to="/price" className="text-sm text-forest hover:text-forest-light flex items-center gap-1 transition-colors">
+                  查看更多 <ArrowRight className="w-3.5 h-3.5" />
                 </Link>
               </div>
               <div className="overflow-x-auto">
-                <table className="w-full table-antique">
+                <table className="table-modern">
                   <thead>
                     <tr>
                       <th className="py-3 px-4">品种</th>
@@ -117,18 +113,18 @@ export default function Home() {
                     {latestPrices.map((price, idx) => (
                       <tr key={price.id} className="animate-fade-in" style={{ animationDelay: `${0.3 + idx * 0.05}s` }}>
                         <td className="py-3 px-4">
-                          <Link to={`/herb/${price.herbId}`} className="text-ink hover:text-indigo font-medium transition-colors">
+                          <Link to={`/herb/${price.herbId}`} className="text-forest hover:text-forest-light font-medium transition-colors">
                             {price.herbName}
                           </Link>
                         </td>
-                        <td className="py-3 px-4 text-ink-light text-sm">{price.spec}</td>
-                        <td className="py-3 px-4 text-ink-light text-sm">{price.market}</td>
-                        <td className="py-3 px-4 text-right font-mono font-semibold text-ink">
-                          {formatPrice(price.currentPrice)}
+                        <td className="py-3 px-4 text-slate-light text-sm">{price.spec}</td>
+                        <td className="py-3 px-4 text-slate-light text-sm">{price.market}</td>
+                        <td className="py-3 px-4 text-right">
+                          <span className="price-text text-slate">{formatPrice(price.currentPrice)}</span>
                         </td>
-                        <td className={`py-3 px-4 text-right font-mono text-sm font-semibold ${
-                          price.monthlyChange > 0 ? 'text-cinnabar' : 
-                          price.monthlyChange < 0 ? 'text-jade' : 'text-ink-muted'
+                        <td className={`py-3 px-4 text-right text-sm font-semibold ${
+                          price.monthlyChange > 0 ? 'text-coral' : 
+                          price.monthlyChange < 0 ? 'text-forest' : 'text-slate-muted'
                         }`}>
                           {formatChange(price.monthlyChange)}
                         </td>
@@ -139,52 +135,49 @@ export default function Home() {
               </div>
             </div>
 
-            <div className="paper-card p-6 animate-fade-in-up stagger-4">
-              <h2 className="font-serif text-xl text-ink flex items-center gap-3 mb-6">
-                <span className="w-1 h-6 bg-ochre rounded-full" />
-                供求速递
-              </h2>
+            <div className="card-flat p-6 animate-fade-in-up stagger-4">
+              <h2 className="font-serif text-xl font-bold text-slate mb-6">供求速递</h2>
               <div className="flex flex-col md:flex-row gap-8">
                 <div className="flex-1">
                   <div className="flex items-center justify-between mb-4">
-                    <span className="text-sm font-semibold text-ink tracking-wider">供应信息</span>
-                    <Link to="/trade" className="text-xs text-ink-muted hover:text-indigo transition-colors">更多</Link>
+                    <span className="text-sm font-semibold text-slate">供应信息</span>
+                    <Link to="/trade" className="text-xs text-slate-muted hover:text-forest transition-colors">更多</Link>
                   </div>
                   <div className="space-y-3">
                     {supplyTrades.map((trade) => (
-                      <div key={trade.id} className="flex items-center justify-between py-3 border-b border-paper-dark last:border-0 group">
+                      <div key={trade.id} className="flex items-center justify-between py-3 border-b border-cream-dark last:border-0 group">
                         <div>
-                          <Link to="/trade" className="text-sm text-ink group-hover:text-indigo transition-colors font-medium">
+                          <Link to="/trade" className="text-sm text-slate group-hover:text-forest transition-colors font-medium">
                             {trade.herbName}
                           </Link>
-                          <span className="text-xs text-ink-muted ml-2">{trade.spec}</span>
+                          <span className="text-xs text-slate-muted ml-2">{trade.spec}</span>
                         </div>
                         <div className="text-right">
-                          <div className="font-mono text-sm text-cinnabar font-semibold">{trade.price}</div>
-                          <div className="text-xs text-ink-muted">{trade.quantity}</div>
+                          <div className="font-mono text-sm text-coral font-semibold">{trade.price}</div>
+                          <div className="text-xs text-slate-muted">{trade.quantity}</div>
                         </div>
                       </div>
                     ))}
                   </div>
                 </div>
-                <div className="hidden md:block w-px bg-gradient-to-b from-transparent via-paper-dark to-transparent" />
+                <div className="hidden md:block w-px bg-cream-dark" />
                 <div className="flex-1">
                   <div className="flex items-center justify-between mb-4">
-                    <span className="text-sm font-semibold text-ink tracking-wider">求购信息</span>
-                    <Link to="/trade" className="text-xs text-ink-muted hover:text-indigo transition-colors">更多</Link>
+                    <span className="text-sm font-semibold text-slate">求购信息</span>
+                    <Link to="/trade" className="text-xs text-slate-muted hover:text-forest transition-colors">更多</Link>
                   </div>
                   <div className="space-y-3">
                     {demandTrades.map((trade) => (
-                      <div key={trade.id} className="flex items-center justify-between py-3 border-b border-paper-dark last:border-0 group">
+                      <div key={trade.id} className="flex items-center justify-between py-3 border-b border-cream-dark last:border-0 group">
                         <div>
-                          <Link to="/trade" className="text-sm text-ink group-hover:text-indigo transition-colors font-medium">
+                          <Link to="/trade" className="text-sm text-slate group-hover:text-forest transition-colors font-medium">
                             {trade.herbName}
                           </Link>
-                          <span className="text-xs text-ink-muted ml-2">{trade.spec}</span>
+                          <span className="text-xs text-slate-muted ml-2">{trade.spec}</span>
                         </div>
                         <div className="text-right">
-                          <div className="font-mono text-sm text-ink font-semibold">{trade.price}</div>
-                          <div className="text-xs text-ink-muted">{trade.quoteCount}条报价</div>
+                          <div className="font-mono text-sm text-slate font-semibold">{trade.price}</div>
+                          <div className="text-xs text-slate-muted">{trade.quoteCount}条报价</div>
                         </div>
                       </div>
                     ))}
@@ -195,49 +188,46 @@ export default function Home() {
           </div>
 
           <div className="w-full lg:w-[35%]">
-            <div className="paper-card p-6 mb-6 animate-fade-in-up stagger-3">
-              <h2 className="font-serif text-xl text-ink flex items-center gap-3 mb-6">
-                <span className="w-1 h-6 bg-indigo rounded-full" />
-                涨跌榜
-              </h2>
+            <div className="card-flat p-6 mb-6 animate-fade-in-up stagger-3">
+              <h2 className="font-serif text-xl font-bold text-slate mb-6">涨跌榜</h2>
               <div className="space-y-6">
                 <div>
                   <div className="flex items-center gap-2 mb-4">
-                    <TrendingUp className="w-4 h-4 text-cinnabar" />
-                    <span className="text-sm font-semibold text-cinnabar tracking-wider">涨幅榜</span>
+                    <TrendingUp className="w-4 h-4 text-coral" />
+                    <span className="text-sm font-semibold text-coral">涨幅榜</span>
                   </div>
                   <div className="space-y-2">
                     {topRisers.map((item, idx) => (
                       <div key={item.id} className="flex items-center gap-3 py-1.5">
-                        <span className={`seal ${idx < 3 ? 'seal-rise' : 'bg-cinnabar-muted text-cinnabar'}`}>
+                        <span className={`badge ${idx < 3 ? 'badge-rise' : 'bg-coral-muted text-coral'}`}>
                           {idx + 1}
                         </span>
-                        <Link to={`/herb/${item.herbId}`} className="text-sm text-ink hover:text-indigo flex-1 truncate transition-colors">
+                        <Link to={`/herb/${item.herbId}`} className="text-sm text-slate hover:text-forest flex-1 truncate transition-colors">
                           {item.herbName}
                         </Link>
-                        <span className="font-mono text-sm text-cinnabar font-semibold">
+                        <span className="font-mono text-sm text-coral font-semibold">
                           {formatChange(item.monthlyChange)}
                         </span>
                       </div>
                     ))}
                   </div>
                 </div>
-                <div className="ink-divider" />
+                <div className="divider" />
                 <div>
                   <div className="flex items-center gap-2 mb-4">
-                    <TrendingDown className="w-4 h-4 text-jade" />
-                    <span className="text-sm font-semibold text-jade tracking-wider">跌幅榜</span>
+                    <TrendingDown className="w-4 h-4 text-forest" />
+                    <span className="text-sm font-semibold text-forest">跌幅榜</span>
                   </div>
                   <div className="space-y-2">
                     {topFallers.map((item, idx) => (
                       <div key={item.id} className="flex items-center gap-3 py-1.5">
-                        <span className={`seal ${idx < 3 ? 'seal-fall' : 'bg-jade-muted text-jade'}`}>
+                        <span className={`badge ${idx < 3 ? 'badge-fall' : 'bg-forest-muted text-forest'}`}>
                           {idx + 1}
                         </span>
-                        <Link to={`/herb/${item.herbId}`} className="text-sm text-ink hover:text-indigo flex-1 truncate transition-colors">
+                        <Link to={`/herb/${item.herbId}`} className="text-sm text-slate hover:text-forest flex-1 truncate transition-colors">
                           {item.herbName}
                         </Link>
-                        <span className="font-mono text-sm text-jade font-semibold">
+                        <span className="font-mono text-sm text-forest font-semibold">
                           {formatChange(item.monthlyChange)}
                         </span>
                       </div>
@@ -247,17 +237,14 @@ export default function Home() {
               </div>
             </div>
 
-            <div className="paper-card p-6 mb-6 animate-fade-in-up stagger-4">
-              <h2 className="font-serif text-xl text-ink flex items-center gap-3 mb-6">
-                <span className="w-1 h-6 bg-ochre rounded-full" />
-                热门品种
-              </h2>
+            <div className="card-flat p-6 mb-6 animate-fade-in-up stagger-4">
+              <h2 className="font-serif text-xl font-bold text-slate mb-6">热门品种</h2>
               <div className="flex flex-wrap gap-2">
                 {hotHerbs.map((herb) => (
                   <Link
                     key={herb.id}
                     to={`/herb/${herb.id}`}
-                    className="px-4 py-2 text-sm bg-paper-warm border border-paper-dark text-ink rounded hover:border-indigo hover:text-indigo transition-all"
+                    className="px-4 py-2 text-sm bg-cream border border-cream-dark text-slate rounded-lg hover:border-forest hover:text-forest transition-all"
                   >
                     {herb.name}
                   </Link>
@@ -265,21 +252,18 @@ export default function Home() {
               </div>
             </div>
 
-            <div className="paper-card p-6 animate-fade-in-up stagger-5">
+            <div className="card-flat p-6 animate-fade-in-up stagger-5">
               <div className="flex items-center justify-between mb-6">
-                <h2 className="font-serif text-xl text-ink flex items-center gap-3">
-                  <span className="w-1 h-6 bg-cinnabar rounded-full" />
-                  最新资讯
-                </h2>
-                <Link to="/news" className="text-sm text-indigo hover:text-indigo-dark transition-colors">更多</Link>
+                <h2 className="font-serif text-xl font-bold text-slate">最新资讯</h2>
+                <Link to="/news" className="text-sm text-forest hover:text-forest-light transition-colors">更多</Link>
               </div>
               <div className="space-y-4">
                 {latestNews.map((news) => (
-                  <Link key={news.id} to={`/news/${news.id}`} className="block py-3 border-b border-paper-dark last:border-0 group">
-                    <div className="text-sm text-ink group-hover:text-indigo transition-colors font-medium line-clamp-1 mb-1">
+                  <Link key={news.id} to={`/news/${news.id}`} className="block py-3 border-b border-cream-dark last:border-0 group">
+                    <div className="text-sm text-slate group-hover:text-forest transition-colors font-medium line-clamp-1 mb-1">
                       {news.title}
                     </div>
-                    <div className="text-xs text-ink-muted">{formatDate(news.createdAt)}</div>
+                    <div className="text-xs text-slate-muted">{formatDate(news.createdAt)}</div>
                   </Link>
                 ))}
               </div>
@@ -288,22 +272,22 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="bg-paper-aged border-t-2 border-paper-dark">
-        <div className="max-w-[1400px] mx-auto px-6 py-8">
+      <section className="bg-forest-muted">
+        <div className="max-w-7xl mx-auto px-6 py-8">
           <div className="flex flex-col md:flex-row items-center justify-between gap-6">
             <div className="relative w-full md:w-96">
-              <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-ink-muted" />
+              <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-muted" />
               <input
                 type="text"
                 placeholder="搜索品种、规格、产地..."
-                className="w-full pl-11 pr-4 py-3 bg-paper border-2 border-paper-dark rounded text-sm focus:outline-none focus:border-indigo transition-colors"
+                className="w-full pl-11 pr-4 py-3 bg-white border border-cream-dark rounded-lg text-sm focus:outline-none focus:border-forest transition-colors"
               />
             </div>
             <div className="flex items-center gap-8 text-sm">
-              <Link to="/price" className="text-ink-light hover:text-indigo transition-colors font-medium">行情中心</Link>
-              <Link to="/trade" className="text-ink-light hover:text-indigo transition-colors font-medium">供求信息</Link>
-              <Link to="/rank" className="text-ink-light hover:text-indigo transition-colors font-medium">价格排行</Link>
-              <Link to="/news" className="text-ink-light hover:text-indigo transition-colors font-medium">资讯动态</Link>
+              <Link to="/price" className="text-slate-light hover:text-forest transition-colors font-medium">行情中心</Link>
+              <Link to="/trade" className="text-slate-light hover:text-forest transition-colors font-medium">供求信息</Link>
+              <Link to="/rank" className="text-slate-light hover:text-forest transition-colors font-medium">价格排行</Link>
+              <Link to="/news" className="text-slate-light hover:text-forest transition-colors font-medium">资讯动态</Link>
             </div>
           </div>
         </div>
