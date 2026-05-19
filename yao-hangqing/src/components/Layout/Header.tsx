@@ -5,11 +5,11 @@ import { herbs } from '../../data/herbs';
 
 const NAV_ITEMS = [
   { path: '/', label: '首页' },
-  { path: '/price', label: '行情' },
-  { path: '/trade', label: '供求' },
-  { path: '/rank', label: '排行' },
-  { path: '/news', label: '资讯' },
-  { path: '/wiki', label: '百科' },
+  { path: '/price', label: '行情中心' },
+  { path: '/trade', label: '供求信息' },
+  { path: '/rank', label: '价格排行' },
+  { path: '/news', label: '资讯动态' },
+  { path: '/wiki', label: '药材百科' },
 ];
 
 export default function Header() {
