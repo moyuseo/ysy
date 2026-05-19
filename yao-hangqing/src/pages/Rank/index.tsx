@@ -25,8 +25,8 @@ const PAGE_SIZE = 20;
 
 const RANK_ICONS = [
   { icon: Trophy, cls: 'text-gold bg-gold/10' },
-  { icon: Medal, cls: 'text-gray-400 bg-gray-100' },
-  { icon: Award, cls: 'text-amber-700 bg-amber-50' },
+  { icon: Medal, cls: 'text-text-secondary bg-row-alt' },
+  { icon: Award, cls: 'text-primary-light bg-fall-bg' },
 ];
 
 export default function RankPage() {

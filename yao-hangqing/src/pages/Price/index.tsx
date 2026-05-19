@@ -3,7 +3,7 @@ import { Search, Filter, ArrowUpDown } from 'lucide-react';
 import { marketPrices, originPrices } from '../../data/prices';
 import { herbs } from '../../data/herbs';
 import { CATEGORIES, MARKETS } from '../../utils/constants';
-import PriceTable from '../../components/PriceTable/PriceTable';
+import PriceTable from '../../components/PriceTable';
 import TabNav from '../../components/TabNav/TabNav';
 import Pagination from '../../components/Pagination/Pagination';
 

@@ -238,7 +238,7 @@ export default function TradePage() {
                     {formatDate(trade.createdAt)}
                   </span>
                   <Link
-                    to={`/trade/${trade.id}`}
+                    to="/trade"
                     className="text-xs text-primary hover:text-primary-light transition-colors"
                   >
                     查看详情 →

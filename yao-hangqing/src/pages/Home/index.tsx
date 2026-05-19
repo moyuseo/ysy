@@ -4,7 +4,7 @@ import { marketPrices } from '../../data/prices';
 import { trades } from '../../data/trades';
 import { newsList } from '../../data/news';
 import { herbs } from '../../data/herbs';
-import PriceTable from '../../components/PriceTable/PriceTable';
+import PriceTable from '../../components/PriceTable';
 import { formatChange, formatDate } from '../../utils/format';
 
 const topRisers = [...marketPrices]
