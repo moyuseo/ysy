@@ -28,8 +28,8 @@ export default function PriceTable({ prices, showMarket = true, showOrigin = tru
           {prices.map((price, idx) => (
             <tr
               key={price.id}
-              className={`border-b border-border/50 hover:bg-fall-bg/50 transition-colors ${
-                idx % 2 === 0 ? 'bg-white' : 'bg-gray-50/50'
+              className={`border-b border-divider hover:bg-row-hover transition-colors ${
+                idx % 2 === 1 ? 'bg-row-alt' : 'bg-card'
               }`}
             >
               <td className="px-3 py-2.5">
@@ -49,18 +49,18 @@ export default function PriceTable({ prices, showMarket = true, showOrigin = tru
               <td
                 className={`px-3 py-2.5 text-right font-mono font-medium ${
                   price.monthlyChange > 0
-                    ? 'text-red-600'
+                    ? 'text-rise'
                     : price.monthlyChange < 0
-                    ? 'text-green-600'
-                    : 'text-text-secondary'
+                    ? 'text-fall'
+                    : 'text-stable'
                 }`}
               >
                 {formatChange(price.monthlyChange)}
               </td>
               <td className="px-3 py-2.5 text-center">
-                {price.trend === 'up' && <TrendingUp className="inline w-4 h-4 text-red-600" />}
-                {price.trend === 'down' && <TrendingDown className="inline w-4 h-4 text-green-600" />}
-                {price.trend === 'stable' && <Minus className="inline w-4 h-4 text-text-secondary" />}
+                {price.trend === 'up' && <TrendingUp className="inline w-4 h-4 text-rise" />}
+                {price.trend === 'down' && <TrendingDown className="inline w-4 h-4 text-fall" />}
+                {price.trend === 'stable' && <Minus className="inline w-4 h-4 text-stable" />}
               </td>
             </tr>
           ))}

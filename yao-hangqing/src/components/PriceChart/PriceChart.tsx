@@ -51,7 +51,7 @@ export default function PriceChart({ history, specs, herbName }: PriceChartProps
               className={`px-2 py-0.5 text-xs rounded transition-colors ${
                 timeRange === r.key
                   ? 'bg-primary text-white'
-                  : 'bg-gray-100 text-text-secondary hover:bg-gray-200'
+                  : 'bg-row-alt text-text-secondary hover:bg-row-hover'
               }`}
             >
               {r.label}

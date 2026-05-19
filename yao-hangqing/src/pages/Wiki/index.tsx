@@ -69,7 +69,7 @@ export default function Wiki() {
                   className={`w-full text-left px-3 py-2 rounded text-sm transition-colors ${
                     selectedCategory === ''
                       ? 'bg-fall-bg text-primary font-medium'
-                      : 'text-text-secondary hover:bg-gray-50'
+                      : 'text-text-secondary hover:bg-row-hover'
                   }`}
                 >
                   全部文章
@@ -82,7 +82,7 @@ export default function Wiki() {
                     className={`w-full text-left px-3 py-2 rounded text-sm transition-colors ${
                       selectedCategory === name
                         ? 'bg-fall-bg text-primary font-medium'
-                        : 'text-text-secondary hover:bg-gray-50'
+                        : 'text-text-secondary hover:bg-row-hover'
                     }`}
                   >
                     {name}

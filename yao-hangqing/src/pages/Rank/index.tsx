@@ -103,7 +103,7 @@ export default function RankPage() {
               {pagedRiseData.map((item, idx) => {
                 const globalIdx = (currentPage - 1) * PAGE_SIZE + idx;
                 return (
-                  <tr key={item.id} className="border-b border-border/50 hover:bg-bg/50 transition-colors">
+                  <tr key={item.id} className="border-b border-divider hover:bg-row-hover transition-colors">
                     <td className="px-4 py-3">
                       {globalIdx < 3 ? (
                         <span className="text-lg">{RANK_MEDALS[globalIdx]}</span>
@@ -156,7 +156,7 @@ export default function RankPage() {
               {pagedFallData.map((item, idx) => {
                 const globalIdx = (currentPage - 1) * PAGE_SIZE + idx;
                 return (
-                  <tr key={item.id} className="border-b border-border/50 hover:bg-bg/50 transition-colors">
+                  <tr key={item.id} className="border-b border-divider hover:bg-row-hover transition-colors">
                     <td className="px-4 py-3">
                       {globalIdx < 3 ? (
                         <span className="text-lg">{RANK_MEDALS[globalIdx]}</span>
@@ -208,7 +208,7 @@ export default function RankPage() {
                 const priceEntry = marketPrices.find(p => p.herbId === herb.id);
                 const fireCount = Math.max(1, 5 - Math.floor(idx / 3));
                 return (
-                  <tr key={herb.id} className="border-b border-border/50 hover:bg-bg/50 transition-colors">
+                  <tr key={herb.id} className="border-b border-divider hover:bg-row-hover transition-colors">
                     <td className="px-4 py-3">
                       {idx < 3 ? (
                         <span className="text-lg">{RANK_MEDALS[idx]}</span>

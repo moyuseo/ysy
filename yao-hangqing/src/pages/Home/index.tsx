@@ -4,7 +4,7 @@ import { marketPrices } from '../../data/prices';
 import { trades } from '../../data/trades';
 import { newsList } from '../../data/news';
 import { herbs } from '../../data/herbs';
-import PriceTable from '../../components/PriceTable';
+import PriceTable from '../../components/PriceTable/PriceTable';
 import { formatChange, formatDate } from '../../utils/format';
 
 const topRisers = [...marketPrices]
@@ -16,12 +16,9 @@ const topFallers = [...marketPrices]
   .slice(0, 5);
 
 const hotHerbs = herbs.slice(0, 15);
-
 const latestPrices = marketPrices.slice(0, 8);
-
 const supplyTrades = trades.filter(t => t.type === 'supply').slice(0, 4);
 const demandTrades = trades.filter(t => t.type === 'demand').slice(0, 4);
-
 const latestNews = newsList.slice(0, 4);
 
 const categoryLabels: Record<string, string> = {
@@ -47,31 +44,31 @@ export default function Home() {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             <div className="bg-white/10 backdrop-blur-sm rounded-lg px-4 py-3">
               <div className="flex items-center gap-2 mb-1">
-                <Leaf className="w-4 h-4 text-primary-lighter" />
+                <Leaf className="w-4 h-4 text-primary-lightest" />
                 <span className="text-white/70 text-sm">覆盖品种</span>
               </div>
               <div className="text-2xl font-bold">{herbs.length}<span className="text-sm font-normal ml-1">种</span></div>
             </div>
             <div className="bg-white/10 backdrop-blur-sm rounded-lg px-4 py-3">
               <div className="flex items-center gap-2 mb-1">
-                <Newspaper className="w-4 h-4 text-primary-lighter" />
+                <Newspaper className="w-4 h-4 text-primary-lightest" />
                 <span className="text-white/70 text-sm">今日更新</span>
               </div>
               <div className="text-2xl font-bold">{marketPrices.length}<span className="text-sm font-normal ml-1">条</span></div>
             </div>
             <div className="bg-white/10 backdrop-blur-sm rounded-lg px-4 py-3">
               <div className="flex items-center gap-2 mb-1">
-                <TrendingUp className="w-4 h-4 text-red-300" />
+                <TrendingUp className="w-4 h-4 text-rise-bg" />
                 <span className="text-white/70 text-sm">涨</span>
               </div>
-              <div className="text-2xl font-bold text-red-300">{riseCount}<span className="text-sm font-normal ml-1">种</span></div>
+              <div className="text-2xl font-bold text-rise-bg">{riseCount}<span className="text-sm font-normal ml-1">种</span></div>
             </div>
             <div className="bg-white/10 backdrop-blur-sm rounded-lg px-4 py-3">
               <div className="flex items-center gap-2 mb-1">
-                <TrendingDown className="w-4 h-4 text-green-300" />
+                <TrendingDown className="w-4 h-4 text-primary-lightest" />
                 <span className="text-white/70 text-sm">跌</span>
               </div>
-              <div className="text-2xl font-bold text-green-300">{fallCount}<span className="text-sm font-normal ml-1">种</span></div>
+              <div className="text-2xl font-bold text-primary-lightest">{fallCount}<span className="text-sm font-normal ml-1">种</span></div>
             </div>
           </div>
         </div>
@@ -85,8 +82,8 @@ export default function Home() {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                   <div className="flex items-center gap-1.5 mb-3">
-                    <TrendingUp className="w-4 h-4 text-red-600" />
-                    <span className="text-sm font-medium text-red-600">涨幅榜</span>
+                    <TrendingUp className="w-4 h-4 text-rise" />
+                    <span className="text-sm font-medium text-rise">涨幅榜</span>
                   </div>
                   <ul className="space-y-2">
                     {topRisers.map((item) => (
@@ -95,15 +92,15 @@ export default function Home() {
                           {item.herbName}
                           <span className="text-text-secondary ml-1 text-xs">{item.spec}</span>
                         </Link>
-                        <span className="text-red-600 font-mono font-medium">{formatChange(item.monthlyChange)}</span>
+                        <span className="text-rise font-mono font-medium">{formatChange(item.monthlyChange)}</span>
                       </li>
                     ))}
                   </ul>
                 </div>
                 <div>
                   <div className="flex items-center gap-1.5 mb-3">
-                    <TrendingDown className="w-4 h-4 text-green-600" />
-                    <span className="text-sm font-medium text-green-600">跌幅榜</span>
+                    <TrendingDown className="w-4 h-4 text-fall" />
+                    <span className="text-sm font-medium text-fall">跌幅榜</span>
                   </div>
                   <ul className="space-y-2">
                     {topFallers.map((item) => (
@@ -112,7 +109,7 @@ export default function Home() {
                           {item.herbName}
                           <span className="text-text-secondary ml-1 text-xs">{item.spec}</span>
                         </Link>
-                        <span className="text-green-600 font-mono font-medium">{formatChange(item.monthlyChange)}</span>
+                        <span className="text-fall font-mono font-medium">{formatChange(item.monthlyChange)}</span>
                       </li>
                     ))}
                   </ul>
@@ -129,7 +126,7 @@ export default function Home() {
                   <Link
                     key={herb.id}
                     to={`/herb/${herb.id}`}
-                    className="inline-block px-3 py-1.5 text-sm bg-fall-bg text-primary rounded-full border border-primary/20 hover:bg-primary hover:text-white transition-colors"
+                    className="inline-block px-3 py-1.5 text-sm bg-fall-bg text-primary rounded-full border border-primary-lighter hover:bg-primary hover:text-white transition-colors"
                   >
                     {herb.name}
                   </Link>
@@ -164,9 +161,9 @@ export default function Home() {
               </div>
               <ul className="space-y-3">
                 {supplyTrades.map(trade => (
-                  <li key={trade.id} className="border-b border-border/50 pb-3 last:border-0 last:pb-0">
+                  <li key={trade.id} className="border-b border-divider pb-3 last:border-0 last:pb-0">
                     <div className="flex items-start justify-between mb-1">
-                      <Link to={`/trade/${trade.id}`} className="font-medium text-text hover:text-primary transition-colors">
+                      <Link to="/trade" className="font-medium text-text hover:text-primary transition-colors">
                         {trade.herbName}
                         <span className="text-text-secondary text-xs ml-1.5">{trade.spec}</span>
                       </Link>
@@ -195,9 +192,9 @@ export default function Home() {
               </div>
               <ul className="space-y-3">
                 {demandTrades.map(trade => (
-                  <li key={trade.id} className="border-b border-border/50 pb-3 last:border-0 last:pb-0">
+                  <li key={trade.id} className="border-b border-divider pb-3 last:border-0 last:pb-0">
                     <div className="flex items-start justify-between mb-1">
-                      <Link to={`/trade/${trade.id}`} className="font-medium text-text hover:text-primary transition-colors">
+                      <Link to="/trade" className="font-medium text-text hover:text-primary transition-colors">
                         {trade.herbName}
                         <span className="text-text-secondary text-xs ml-1.5">{trade.spec}</span>
                       </Link>

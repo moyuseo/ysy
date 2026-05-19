@@ -17,6 +17,8 @@
   --color-border: #E0E0E0;
   --color-gold: #C9A96E;
   --color-divider: #F0F0E8;
+  --color-row-alt: #F5F5F0;
+  --color-row-hover: #E8F5E9;
   --font-serif: 'Noto Serif SC', serif;
   --font-sans: 'Noto Sans SC', sans-serif;
   --font-mono: 'JetBrains Mono', monospace;
@@ -56,14 +58,6 @@ body {
   color: var(--color-stable);
 }
 
-.bg-rise {
-  background-color: var(--color-rise-bg);
-}
-
-.bg-fall {
-  background-color: var(--color-fall-bg);
-}
-
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
@@ -76,4 +70,28 @@ body {
 
 ::-webkit-scrollbar-track {
   background: transparent;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+th {
+  text-align: left;
+  font-weight: 500;
+}
+
+.line-clamp-1 {
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }

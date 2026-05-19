@@ -148,7 +148,7 @@ export default function TradePage() {
             </thead>
             <tbody>
               {pagedTrades.map(trade => (
-                <tr key={trade.id} className="border-b border-border/50 hover:bg-bg/50 transition-colors">
+                <tr key={trade.id} className="border-b border-divider hover:bg-row-hover transition-colors">
                   <td className="px-4 py-3">
                     <Link to={`/herb/${trade.herbId}`} className="text-text hover:text-primary transition-colors font-medium">
                       {trade.herbName}

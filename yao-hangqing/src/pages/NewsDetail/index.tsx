@@ -88,7 +88,7 @@ export default function NewsDetail() {
               <h2 className="font-serif text-lg border-l-4 border-primary pl-3 mb-4">相关资讯</h2>
               <ul className="space-y-3">
                 {relatedNews.map(n => (
-                  <li key={n.id} className="border-b border-border/50 pb-3 last:border-0 last:pb-0">
+                  <li key={n.id} className="border-b border-divider pb-3 last:border-0 last:pb-0">
                     <Link
                       to={`/news/${n.id}`}
                       className="text-sm text-text hover:text-primary transition-colors line-clamp-2 block mb-1"
