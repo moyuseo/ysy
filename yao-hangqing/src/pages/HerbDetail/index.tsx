@@ -1,6 +1,6 @@
 import { useState, useMemo } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { TrendingUp, TrendingDown, Minus, ArrowLeft } from 'lucide-react';
+import { TrendingUp, TrendingDown, ArrowLeft, Leaf, Clock, MapPin } from 'lucide-react';
 import { herbs } from '../../data/herbs';
 import { marketPrices, originPrices } from '../../data/prices';
 import { trades } from '../../data/trades';
@@ -68,10 +68,10 @@ export default function HerbDetail() {
 
   if (!herb) {
     return (
-      <div className="max-w-7xl mx-auto px-6 py-8">
-        <div className="text-center py-16">
-          <p className="text-text-secondary text-lg mb-4">品种未找到</p>
-          <Link to="/price" className="text-accent hover:underline inline-flex items-center gap-1">
+      <div className="max-w-[1400px] mx-auto px-6 py-8">
+        <div className="text-center py-20">
+          <p className="text-ink-light text-lg mb-6">品种未找到</p>
+          <Link to="/price" className="btn-primary inline-flex items-center gap-2">
             <ArrowLeft className="w-4 h-4" />
             返回行情列表
           </Link>
@@ -93,122 +93,133 @@ export default function HerbDetail() {
   ];
 
   return (
-    <div className="max-w-7xl mx-auto px-6 py-8">
-      <nav className="text-sm text-text-secondary mb-4 flex items-center gap-1.5">
-        <Link to="/" className="hover:text-accent transition-colors">首页</Link>
-        <span className="text-border">/</span>
-        <Link to="/price" className="hover:text-accent transition-colors">行情</Link>
-        <span className="text-border">/</span>
-        <span className="text-text">{herb.name}</span>
+    <div className="max-w-[1400px] mx-auto px-6 py-10">
+      <nav className="text-sm text-ink-muted mb-8 flex items-center gap-2">
+        <Link to="/" className="hover:text-indigo transition-colors">首页</Link>
+        <span className="text-paper-dark">/</span>
+        <Link to="/price" className="hover:text-indigo transition-colors">行情</Link>
+        <span className="text-paper-dark">/</span>
+        <span className="text-ink font-medium">{herb.name}</span>
       </nav>
 
-      <div className="mb-6">
-        <div className="flex items-start gap-3 flex-wrap mb-3">
-          <h1 className="font-display text-3xl text-text">{herb.name}</h1>
+      <div className="paper-card p-8 mb-8">
+        <div className="flex items-start gap-6 flex-wrap mb-6">
+          <h1 className="font-serif text-5xl text-ink tracking-wide">{herb.name}</h1>
           {herb.alias.length > 0 && (
-            <span className="text-text-secondary text-base mt-1.5">
+            <span className="text-ink-light text-lg mt-3">
               （{herb.alias.join('、')}）
             </span>
           )}
         </div>
-        <div className="flex items-center gap-2 flex-wrap mb-3">
-          <span className="bg-accent-muted text-accent px-3 py-1 rounded text-sm">
+        <div className="flex items-center gap-3 flex-wrap mb-6">
+          <span className="badge-antique badge-indigo">
             {CATEGORY_MAP[herb.category] || herb.category}
           </span>
-          <span className="bg-accent-muted text-accent px-3 py-1 rounded text-sm">
+          <span className="badge-antique badge-ochre">
             {herb.family}
           </span>
         </div>
-        <div className="text-text-secondary text-sm">
+        <div className="text-ink-light leading-relaxed max-w-3xl">
           {herb.effect}
         </div>
       </div>
 
-      <div className="flex gap-6 mb-6 flex-col lg:flex-row">
+      <div className="flex flex-col lg:flex-row gap-8 mb-8">
         <div className="w-full lg:w-[60%]">
-          <div className="mb-6">
-            <h2 className="text-base font-medium text-text mb-4">价格走势</h2>
+          <div className="paper-card p-6 mb-6">
+            <h2 className="font-serif text-xl text-ink flex items-center gap-3 mb-6">
+              <span className="w-1 h-6 bg-indigo rounded-full" />
+              价格走势
+            </h2>
             {chartData.length > 0 ? (
-              <ResponsiveContainer width="100%" height={280}>
+              <ResponsiveContainer width="100%" height={300}>
                 <LineChart data={chartData}>
-                  <CartesianGrid strokeDasharray="3 3" stroke="#E5E5E5" />
+                  <CartesianGrid strokeDasharray="3 3" stroke="#E5DFD0" />
                   <XAxis
                     dataKey="date"
-                    tick={{ fontSize: 11, fill: '#737373' }}
+                    tick={{ fontSize: 11, fill: '#8A8A8A', fontFamily: 'JetBrains Mono' }}
                     tickFormatter={(v: string) => v.slice(5)}
                   />
                   <YAxis
-                    tick={{ fontSize: 11, fill: '#737373' }}
+                    tick={{ fontSize: 11, fill: '#8A8A8A', fontFamily: 'JetBrains Mono' }}
                     tickFormatter={(v: number) => `¥${v}`}
                   />
                   <Tooltip
                     formatter={(value: unknown) => [`¥${value}`, herb.name]}
                     labelFormatter={(label: unknown) => `日期: ${String(label)}`}
+                    contentStyle={{
+                      backgroundColor: '#F7F4ED',
+                      border: '2px solid #E5DFD0',
+                      borderRadius: '4px',
+                      fontFamily: 'Noto Serif SC',
+                    }}
                   />
                   <Line
                     type="monotone"
                     dataKey="price"
-                    stroke="#059669"
-                    strokeWidth={2}
+                    stroke="#3D5A80"
+                    strokeWidth={2.5}
                     dot={false}
-                    activeDot={{ r: 4 }}
+                    activeDot={{ r: 5, fill: '#3D5A80', strokeWidth: 0 }}
                   />
                 </LineChart>
               </ResponsiveContainer>
             ) : (
-              <p className="text-text-secondary text-sm py-8 text-center">暂无走势数据</p>
+              <p className="text-ink-muted text-sm py-12 text-center">暂无走势数据</p>
             )}
           </div>
 
-          <div>
-            <h2 className="text-base font-medium text-text mb-4">价格明细</h2>
+          <div className="paper-card overflow-hidden">
+            <div className="px-6 py-4 bg-paper-aged border-b-2 border-paper-dark">
+              <h2 className="font-serif text-lg text-ink font-semibold">价格明细</h2>
+            </div>
             <div className="overflow-x-auto">
-              <table className="w-full text-sm">
+              <table className="table-antique">
                 <thead>
-                  <tr className="bg-surface">
-                    <th className="px-3 py-2.5 text-left font-medium">规格</th>
-                    <th className="px-3 py-2.5 text-left font-medium">市场/产地</th>
-                    <th className="px-3 py-2.5 text-right font-medium">今日价</th>
-                    <th className="px-3 py-2.5 text-right font-medium">月涨跌</th>
-                    <th className="px-3 py-2.5 text-center font-medium">走势</th>
+                  <tr>
+                    <th className="px-5 py-3">规格</th>
+                    <th className="px-5 py-3">市场/产地</th>
+                    <th className="px-5 py-3 text-right">今日价</th>
+                    <th className="px-5 py-3 text-right">月涨跌</th>
+                    <th className="px-5 py-3 text-center">走势</th>
                   </tr>
                 </thead>
                 <tbody>
                   {herbMarketPrices.map(p => (
-                    <tr key={p.id} className="border-b border-border-subtle hover:bg-accent-muted transition-colors">
-                      <td className="px-3 py-2.5 text-text-secondary">{p.spec}</td>
-                      <td className="px-3 py-2.5 text-text-secondary">{p.market}</td>
-                      <td className="px-3 py-2.5 text-right font-mono font-medium text-text">
-                        {formatPrice(p.currentPrice)}
+                    <tr key={p.id}>
+                      <td className="px-5 py-3 text-ink-light">{p.spec}</td>
+                      <td className="px-5 py-3 text-ink-light">{p.market}</td>
+                      <td className="px-5 py-3 text-right">
+                        <span className="price-display text-ink">{formatPrice(p.currentPrice)}</span>
                       </td>
-                      <td className={`px-3 py-2.5 text-right font-mono font-medium ${
-                        p.monthlyChange > 0 ? 'text-rise' : p.monthlyChange < 0 ? 'text-fall' : 'text-text-secondary'
-                      }`}>
-                        {formatChange(p.monthlyChange)}
+                      <td className="px-5 py-3 text-right">
+                        <span className={`change-badge ${p.monthlyChange > 0 ? 'rise' : p.monthlyChange < 0 ? 'fall' : ''}`}>
+                          {formatChange(p.monthlyChange)}
+                        </span>
                       </td>
-                      <td className="px-3 py-2.5 text-center">
-                        {p.trend === 'up' && <TrendingUp className="inline w-4 h-4 text-rise" />}
-                        {p.trend === 'down' && <TrendingDown className="inline w-4 h-4 text-fall" />}
-                        {p.trend === 'stable' && <Minus className="inline w-4 h-4 text-text-tertiary" />}
+                      <td className="px-5 py-3 text-center">
+                        {p.trend === 'up' && <span className="seal seal-rise"><TrendingUp className="w-3 h-3" /></span>}
+                        {p.trend === 'down' && <span className="seal seal-fall"><TrendingDown className="w-3 h-3" /></span>}
+                        {p.trend === 'stable' && <span className="seal seal-stable">—</span>}
                       </td>
                     </tr>
                   ))}
                   {herbOriginPrices.map(p => (
-                    <tr key={p.id} className="border-b border-border-subtle hover:bg-accent-muted transition-colors">
-                      <td className="px-3 py-2.5 text-text-secondary">{p.spec}</td>
-                      <td className="px-3 py-2.5 text-text-secondary">{p.origin}</td>
-                      <td className="px-3 py-2.5 text-right font-mono font-medium text-text">
-                        {formatPrice(p.currentPrice)}
+                    <tr key={p.id}>
+                      <td className="px-5 py-3 text-ink-light">{p.spec}</td>
+                      <td className="px-5 py-3 text-ink-light">{p.origin}</td>
+                      <td className="px-5 py-3 text-right">
+                        <span className="price-display text-ink">{formatPrice(p.currentPrice)}</span>
                       </td>
-                      <td className={`px-3 py-2.5 text-right font-mono font-medium ${
-                        p.monthlyChange > 0 ? 'text-rise' : p.monthlyChange < 0 ? 'text-fall' : 'text-text-secondary'
-                      }`}>
-                        {formatChange(p.monthlyChange)}
+                      <td className="px-5 py-3 text-right">
+                        <span className={`change-badge ${p.monthlyChange > 0 ? 'rise' : p.monthlyChange < 0 ? 'fall' : ''}`}>
+                          {formatChange(p.monthlyChange)}
+                        </span>
                       </td>
-                      <td className="px-3 py-2.5 text-center">
-                        {p.trend === 'up' && <TrendingUp className="inline w-4 h-4 text-rise" />}
-                        {p.trend === 'down' && <TrendingDown className="inline w-4 h-4 text-fall" />}
-                        {p.trend === 'stable' && <Minus className="inline w-4 h-4 text-text-tertiary" />}
+                      <td className="px-5 py-3 text-center">
+                        {p.trend === 'up' && <span className="seal seal-rise"><TrendingUp className="w-3 h-3" /></span>}
+                        {p.trend === 'down' && <span className="seal seal-fall"><TrendingDown className="w-3 h-3" /></span>}
+                        {p.trend === 'stable' && <span className="seal seal-stable">—</span>}
                       </td>
                     </tr>
                   ))}
@@ -220,25 +231,26 @@ export default function HerbDetail() {
 
         <div className="w-full lg:w-[40%]">
           {herbMarketPrices.length > 0 && (
-            <div className="mb-6">
-              <h3 className="text-sm font-medium text-text mb-3">市场报价</h3>
-              <div className="divide-y divide-border-subtle">
+            <div className="paper-card p-6 mb-6">
+              <h3 className="font-serif text-base text-ink font-semibold mb-4 flex items-center gap-2">
+                <Clock className="w-4 h-4 text-indigo" />
+                市场报价
+              </h3>
+              <div className="divide-y divide-paper-dark">
                 {herbMarketPrices.map(p => (
-                  <div key={p.id} className="flex items-center justify-between py-2.5 text-sm">
+                  <div key={p.id} className="flex items-center justify-between py-4 text-sm">
                     <div className="min-w-0">
-                      <div className="text-text font-medium">{p.market}</div>
-                      <div className="text-text-secondary text-xs">{p.spec}</div>
+                      <div className="text-ink font-medium">{p.market}</div>
+                      <div className="text-ink-muted text-xs mt-0.5">{p.spec}</div>
                     </div>
                     <div className="flex items-center gap-3 shrink-0">
-                      <span className="font-mono font-medium text-text">{formatPrice(p.currentPrice)}</span>
-                      <span className={`font-mono text-sm ${
-                        p.monthlyChange > 0 ? 'text-rise' : p.monthlyChange < 0 ? 'text-fall' : 'text-text-secondary'
-                      }`}>
+                      <span className="price-display text-ink">{formatPrice(p.currentPrice)}</span>
+                      <span className={`font-mono text-sm ${p.monthlyChange > 0 ? 'text-cinnabar' : p.monthlyChange < 0 ? 'text-jade' : 'text-ink-muted'}`}>
                         {formatChange(p.monthlyChange)}
                       </span>
-                      {p.trend === 'up' && <TrendingUp className="w-4 h-4 text-rise" />}
-                      {p.trend === 'down' && <TrendingDown className="w-4 h-4 text-fall" />}
-                      {p.trend === 'stable' && <Minus className="w-4 h-4 text-text-tertiary" />}
+                      {p.trend === 'up' && <span className="seal seal-rise text-xs">涨</span>}
+                      {p.trend === 'down' && <span className="seal seal-fall text-xs">跌</span>}
+                      {p.trend === 'stable' && <span className="text-ink-muted text-xs">稳</span>}
                     </div>
                   </div>
                 ))}
@@ -247,25 +259,26 @@ export default function HerbDetail() {
           )}
 
           {herbOriginPrices.length > 0 && (
-            <div>
-              <h3 className="text-sm font-medium text-text mb-3">产地报价</h3>
-              <div className="divide-y divide-border-subtle">
+            <div className="paper-card p-6">
+              <h3 className="font-serif text-base text-ink font-semibold mb-4 flex items-center gap-2">
+                <MapPin className="w-4 h-4 text-ochre" />
+                产地报价
+              </h3>
+              <div className="divide-y divide-paper-dark">
                 {herbOriginPrices.map(p => (
-                  <div key={p.id} className="flex items-center justify-between py-2.5 text-sm">
+                  <div key={p.id} className="flex items-center justify-between py-4 text-sm">
                     <div className="min-w-0">
-                      <div className="text-text font-medium">{p.origin}</div>
-                      <div className="text-text-secondary text-xs">{p.spec}</div>
+                      <div className="text-ink font-medium">{p.origin}</div>
+                      <div className="text-ink-muted text-xs mt-0.5">{p.spec}</div>
                     </div>
                     <div className="flex items-center gap-3 shrink-0">
-                      <span className="font-mono font-medium text-text">{formatPrice(p.currentPrice)}</span>
-                      <span className={`font-mono text-sm ${
-                        p.monthlyChange > 0 ? 'text-rise' : p.monthlyChange < 0 ? 'text-fall' : 'text-text-secondary'
-                      }`}>
+                      <span className="price-display text-ink">{formatPrice(p.currentPrice)}</span>
+                      <span className={`font-mono text-sm ${p.monthlyChange > 0 ? 'text-cinnabar' : p.monthlyChange < 0 ? 'text-jade' : 'text-ink-muted'}`}>
                         {formatChange(p.monthlyChange)}
                       </span>
-                      {p.trend === 'up' && <TrendingUp className="w-4 h-4 text-rise" />}
-                      {p.trend === 'down' && <TrendingDown className="w-4 h-4 text-fall" />}
-                      {p.trend === 'stable' && <Minus className="w-4 h-4 text-text-tertiary" />}
+                      {p.trend === 'up' && <span className="seal seal-rise text-xs">涨</span>}
+                      {p.trend === 'down' && <span className="seal seal-fall text-xs">跌</span>}
+                      {p.trend === 'stable' && <span className="text-ink-muted text-xs">稳</span>}
                     </div>
                   </div>
                 ))}
@@ -275,121 +288,115 @@ export default function HerbDetail() {
         </div>
       </div>
 
-      <div className="mb-6">
-        <div className="flex border-b border-border">
+      <div className="paper-card mb-8">
+        <div className="flex border-b-2 border-paper-dark">
           {TABS.map(tab => (
             <button
               key={tab.key}
               onClick={() => setActiveTab(tab.key)}
-              className={`px-4 py-2.5 text-sm font-medium transition-colors relative ${
-                activeTab === tab.key
-                  ? 'text-accent border-b-2 border-accent'
-                  : 'text-text-secondary hover:text-accent'
-              }`}
+              className={`tab-antique ${activeTab === tab.key ? 'active' : ''}`}
             >
               {tab.label}
             </button>
           ))}
         </div>
 
-        <div className="py-5">
+        <div className="p-6">
           {activeTab === 'supply' && (
             supplyTrades.length > 0 ? (
               <div className="overflow-x-auto">
-                <table className="w-full text-sm">
+                <table className="table-antique">
                   <thead>
-                    <tr className="border-b border-border">
-                      <th className="text-left py-2.5 font-medium text-text-secondary">品名</th>
-                      <th className="text-left py-2.5 font-medium text-text-secondary">规格</th>
-                      <th className="text-left py-2.5 font-medium text-text-secondary">产地</th>
-                      <th className="text-left py-2.5 font-medium text-text-secondary">数量</th>
-                      <th className="text-left py-2.5 font-medium text-text-secondary">价格</th>
-                      <th className="text-left py-2.5 font-medium text-text-secondary">日期</th>
+                    <tr>
+                      <th className="py-3 px-4">品名</th>
+                      <th className="py-3 px-4">规格</th>
+                      <th className="py-3 px-4">产地</th>
+                      <th className="py-3 px-4">数量</th>
+                      <th className="py-3 px-4">价格</th>
+                      <th className="py-3 px-4">日期</th>
                     </tr>
                   </thead>
                   <tbody>
                     {supplyTrades.map(t => (
-                      <tr key={t.id} className="border-b border-border-subtle hover:bg-accent-muted transition-colors">
-                        <td className="py-2.5 text-text font-medium">{t.herbName}</td>
-                        <td className="py-2.5 text-text-secondary">{t.spec}</td>
-                        <td className="py-2.5 text-text-secondary">{t.origin}</td>
-                        <td className="py-2.5 text-text-secondary">{t.quantity}</td>
-                        <td className="py-2.5 text-accent font-medium">{t.price}</td>
-                        <td className="py-2.5 text-text-secondary">{formatDate(t.createdAt)}</td>
+                      <tr key={t.id}>
+                        <td className="py-3 px-4 text-ink font-medium">{t.herbName}</td>
+                        <td className="py-3 px-4 text-ink-light">{t.spec}</td>
+                        <td className="py-3 px-4 text-ink-light">{t.origin}</td>
+                        <td className="py-3 px-4 text-ink-light">{t.quantity}</td>
+                        <td className="py-3 px-4 text-cinnabar font-semibold">{t.price}</td>
+                        <td className="py-3 px-4 text-ink-muted">{formatDate(t.createdAt)}</td>
                       </tr>
                     ))}
                   </tbody>
                 </table>
               </div>
             ) : (
-              <p className="text-text-secondary text-sm py-6 text-center">暂无供应信息</p>
+              <p className="text-ink-muted text-sm py-12 text-center">暂无供应信息</p>
             )
           )}
 
           {activeTab === 'demand' && (
             demandTrades.length > 0 ? (
               <div className="overflow-x-auto">
-                <table className="w-full text-sm">
+                <table className="table-antique">
                   <thead>
-                    <tr className="border-b border-border">
-                      <th className="text-left py-2.5 font-medium text-text-secondary">品名</th>
-                      <th className="text-left py-2.5 font-medium text-text-secondary">规格</th>
-                      <th className="text-left py-2.5 font-medium text-text-secondary">数量</th>
-                      <th className="text-left py-2.5 font-medium text-text-secondary">报价人数</th>
-                      <th className="text-left py-2.5 font-medium text-text-secondary">剩余天数</th>
+                    <tr>
+                      <th className="py-3 px-4">品名</th>
+                      <th className="py-3 px-4">规格</th>
+                      <th className="py-3 px-4">数量</th>
+                      <th className="py-3 px-4">报价人数</th>
+                      <th className="py-3 px-4">剩余天数</th>
                     </tr>
                   </thead>
                   <tbody>
                     {demandTrades.map(t => (
-                      <tr key={t.id} className="border-b border-border-subtle hover:bg-accent-muted transition-colors">
-                        <td className="py-2.5 text-text font-medium">{t.herbName}</td>
-                        <td className="py-2.5 text-text-secondary">{t.spec}</td>
-                        <td className="py-2.5 text-text-secondary">{t.quantity}</td>
-                        <td className="py-2.5 text-text-secondary">{t.quoteCount || 0}人</td>
-                        <td className="py-2.5 text-text-secondary">{t.remainingDays || 0}天</td>
+                      <tr key={t.id}>
+                        <td className="py-3 px-4 text-ink font-medium">{t.herbName}</td>
+                        <td className="py-3 px-4 text-ink-light">{t.spec}</td>
+                        <td className="py-3 px-4 text-ink-light">{t.quantity}</td>
+                        <td className="py-3 px-4 text-indigo font-medium">{t.quoteCount || 0}人</td>
+                        <td className="py-3 px-4 text-ink-light">{t.remainingDays || 0}天</td>
                       </tr>
                     ))}
                   </tbody>
                 </table>
               </div>
             ) : (
-              <p className="text-text-secondary text-sm py-6 text-center">暂无求购信息</p>
+              <p className="text-ink-muted text-sm py-12 text-center">暂无求购信息</p>
             )
           )}
 
           {activeTab === 'news' && (
             relatedNews.length > 0 ? (
-              <ul className="divide-y divide-border-subtle">
+              <ul className="divide-y divide-paper-dark">
                 {relatedNews.map(n => (
-                  <li key={n.id} className="py-3.5 first:pt-0 last:pb-0">
+                  <li key={n.id} className="py-4 first:pt-0 last:pb-0">
                     <Link to={`/news/${n.id}`} className="flex items-start justify-between gap-4 group">
                       <div className="flex-1 min-w-0">
-                        <h4 className="text-sm font-medium text-text group-hover:text-accent transition-colors truncate">{n.title}</h4>
-                        <p className="text-xs text-text-secondary mt-1 line-clamp-1">{n.summary}</p>
+                        <h4 className="text-sm font-medium text-ink group-hover:text-indigo transition-colors truncate">{n.title}</h4>
+                        <p className="text-xs text-ink-light mt-1 line-clamp-1">{n.summary}</p>
                       </div>
                       <div className="text-right shrink-0">
-                        <div className="text-xs text-text-secondary">
-                          {formatDate(n.createdAt)}
-                        </div>
-                        <div className="text-xs text-text-tertiary mt-1">{n.views} 阅读</div>
+                        <div className="text-xs text-ink-muted">{formatDate(n.createdAt)}</div>
+                        <div className="text-xs text-ink-muted mt-1">{n.views} 阅读</div>
                       </div>
                     </Link>
                   </li>
                 ))}
               </ul>
             ) : (
-              <p className="text-text-secondary text-sm py-6 text-center">暂无相关资讯</p>
+              <p className="text-ink-muted text-sm py-12 text-center">暂无相关资讯</p>
             )
           )}
 
           {activeTab === 'knowledge' && (
-            <div className="space-y-3">
-              <p className="text-sm text-text leading-relaxed">{herb.description}</p>
+            <div className="space-y-6">
+              <p className="text-sm text-ink leading-relaxed">{herb.description}</p>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-0 pt-2">
                 {infoItems.map(([label, value]) => (
-                  <div key={label} className="flex py-2.5 border-b border-border-subtle">
-                    <span className="w-20 shrink-0 text-text-secondary text-sm">{label}</span>
-                    <span className="text-sm text-text">{value}</span>
+                  <div key={label} className="flex py-3 border-b border-paper-dark">
+                    <span className="w-28 shrink-0 text-ink-light text-sm font-medium">{label}</span>
+                    <span className="text-sm text-ink">{value}</span>
                   </div>
                 ))}
               </div>
@@ -398,15 +405,22 @@ export default function HerbDetail() {
         </div>
       </div>
 
-      <div>
-        <h2 className="text-base font-medium text-text mb-4">基本信息</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-0">
-          {infoItems.map(([label, value]) => (
-            <div key={label} className="flex py-2.5 border-b border-border-subtle">
-              <span className="w-20 shrink-0 text-text-secondary text-sm">{label}</span>
-              <span className="text-sm text-text">{value}</span>
-            </div>
-          ))}
+      <div className="paper-card overflow-hidden">
+        <div className="px-6 py-4 bg-paper-aged border-b-2 border-paper-dark">
+          <h2 className="font-serif text-lg text-ink font-semibold flex items-center gap-2">
+            <Leaf className="w-4 h-4 text-jade" />
+            基本信息
+          </h2>
+        </div>
+        <div className="p-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-0">
+            {infoItems.map(([label, value]) => (
+              <div key={label} className="flex py-3 border-b border-paper-dark">
+                <span className="w-28 shrink-0 text-ink-light text-sm font-medium">{label}</span>
+                <span className="text-sm text-ink">{value}</span>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </div>

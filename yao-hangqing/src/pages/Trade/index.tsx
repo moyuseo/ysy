@@ -1,6 +1,6 @@
 import { useState, useMemo } from 'react';
 import { Link } from 'react-router-dom';
-import { Search, Filter } from 'lucide-react';
+import { Search, Phone, MapPin, Package, Star, Plus } from 'lucide-react';
 import { trades } from '../../data/trades';
 import { CATEGORIES } from '../../utils/constants';
 import { formatDate } from '../../utils/format';
@@ -82,27 +82,27 @@ export default function TradePage() {
     }
 
     return (
-      <div className="flex items-center justify-between pt-4 border-t border-border-subtle">
-        <span className="text-xs text-text-tertiary">共 {filteredTrades.length} 条</span>
+      <div className="flex items-center justify-between pt-6 border-t-2 border-paper-dark">
+        <span className="text-sm text-ink-muted">共 <span className="font-semibold text-ink">{filteredTrades.length}</span> 条</span>
         <div className="flex items-center gap-1">
           <button
             onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
             disabled={currentPage === 1}
-            className="px-2.5 py-1 text-xs rounded border border-border disabled:opacity-40 disabled:cursor-not-allowed hover:bg-surface-raised transition-colors"
+            className="px-3 py-1.5 text-sm font-medium rounded border-2 border-paper-dark disabled:opacity-40 disabled:cursor-not-allowed hover:border-indigo hover:text-indigo transition-colors bg-paper"
           >
             上一页
           </button>
           {pages.map((p, i) =>
             typeof p === 'string' ? (
-              <span key={`e-${i}`} className="px-1.5 text-text-tertiary text-xs">...</span>
+              <span key={`e-${i}`} className="px-2 text-ink-muted text-sm">...</span>
             ) : (
               <button
                 key={p}
                 onClick={() => setCurrentPage(p)}
-                className={`px-2.5 py-1 text-xs rounded border transition-colors ${
+                className={`px-3 py-1.5 text-sm font-medium rounded border-2 transition-all ${
                   currentPage === p
-                    ? 'bg-accent text-white border-accent'
-                    : 'border-border hover:bg-surface-raised'
+                    ? 'bg-indigo text-white border-indigo shadow-md'
+                    : 'border-paper-dark hover:border-indigo hover:text-indigo bg-paper'
                 }`}
               >
                 {p}
@@ -112,7 +112,7 @@ export default function TradePage() {
           <button
             onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
             disabled={currentPage === totalPages}
-            className="px-2.5 py-1 text-xs rounded border border-border disabled:opacity-40 disabled:cursor-not-allowed hover:bg-surface-raised transition-colors"
+            className="px-3 py-1.5 text-sm font-medium rounded border-2 border-paper-dark disabled:opacity-40 disabled:cursor-not-allowed hover:border-indigo hover:text-indigo transition-colors bg-paper"
           >
             下一页
           </button>
@@ -122,122 +122,137 @@ export default function TradePage() {
   };
 
   return (
-    <div className="max-w-7xl mx-auto px-6 py-8">
-      <h1 className="font-display text-2xl text-text mb-6">供求信息</h1>
+    <div className="max-w-[1400px] mx-auto px-6 py-10">
+      <div className="flex items-center justify-between mb-10">
+        <div>
+          <h1 className="font-serif text-4xl text-ink tracking-wide mb-2">供求信息</h1>
+          <p className="text-ink-light">药材供求对接平台，快速匹配交易需求</p>
+        </div>
+        <button className="btn-seal flex items-center gap-2">
+          <Plus className="w-4 h-4" />
+          发布信息
+        </button>
+      </div>
 
-      <div className="flex items-center justify-between mb-4 border-b border-border">
+      <div className="flex border-b-2 border-paper-dark mb-8">
         {TABS.map(tab => (
           <button
             key={tab.key}
             onClick={() => handleTabChange(tab.key)}
-            className={`px-4 py-2.5 text-sm font-medium transition-colors relative -mb-px ${
-              activeTab === tab.key
-                ? 'text-accent border-b-2 border-accent'
-                : 'text-text-secondary hover:text-text'
-            }`}
+            className={`tab-antique ${activeTab === tab.key ? 'active' : ''}`}
           >
             {tab.label}
           </button>
         ))}
       </div>
 
-      <div className="flex gap-3 mb-4 items-center">
-        <div className="relative">
-          <Filter className="absolute left-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-text-tertiary pointer-events-none" />
-          <select
-            value={category}
-            onChange={e => { setCategory(e.target.value); setCurrentPage(1); }}
-            className="appearance-none border border-border rounded pl-7 pr-6 py-1.5 text-xs bg-surface-raised text-text cursor-pointer hover:border-text-tertiary transition-colors"
-          >
-            <option value="">全部品类</option>
-            {CATEGORIES.map(c => (
-              <option key={c.key} value={c.key}>{c.label}</option>
-            ))}
-          </select>
-        </div>
+      <div className="flex gap-3 mb-8 items-center">
+        <select
+          value={category}
+          onChange={e => { setCategory(e.target.value); setCurrentPage(1); }}
+          className="select-antique"
+        >
+          <option value="">全部品类</option>
+          {CATEGORIES.map(c => (
+            <option key={c.key} value={c.key}>{c.label}</option>
+          ))}
+        </select>
 
         <div className="relative flex-1 max-w-xs">
-          <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-text-tertiary pointer-events-none" />
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-ink-muted pointer-events-none" />
           <input
             type="text"
             value={searchQuery}
             onChange={e => { setSearchQuery(e.target.value); setCurrentPage(1); }}
             placeholder="搜索品名、规格、产地"
-            className="w-full border border-border rounded pl-7 pr-3 py-1.5 text-xs bg-surface-raised text-text placeholder:text-text-tertiary focus:outline-none focus:border-text-tertiary transition-colors"
+            className="input-antique pl-10"
           />
         </div>
       </div>
 
       {activeTab === 'supply' && (
-        <div className="overflow-x-auto">
-          <table className="w-full text-sm">
-            <thead>
-              <tr className="border-b border-border-subtle">
-                <th className="px-3 py-2 text-left font-medium text-text-secondary">品名</th>
-                <th className="px-3 py-2 text-left font-medium text-text-secondary">规格</th>
-                <th className="px-3 py-2 text-left font-medium text-text-secondary">产地</th>
-                <th className="px-3 py-2 text-left font-medium text-text-secondary">数量</th>
-                <th className="px-3 py-2 text-left font-medium text-text-secondary">价格</th>
-                <th className="px-3 py-2 text-left font-medium text-text-secondary">联系方式</th>
-                <th className="px-3 py-2 text-left font-medium text-text-secondary">日期</th>
-              </tr>
-            </thead>
-            <tbody>
-              {pagedTrades.map(trade => (
-                <tr key={trade.id} className="border-b border-border-subtle hover:bg-surface-raised transition-colors">
-                  <td className="px-3 py-2.5">
-                    <Link to={`/herb/${trade.herbId}`} className="text-text hover:text-accent transition-colors font-medium">
+        <div className="paper-card p-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {pagedTrades.map((trade, idx) => (
+              <div 
+                key={trade.id} 
+                className="p-5 border-2 border-paper-dark rounded bg-paper hover:border-indigo transition-colors group animate-fade-in"
+                style={{ animationDelay: `${idx * 0.05}s` }}
+              >
+                <div className="flex items-start justify-between mb-3">
+                  <div className="flex items-center gap-2">
+                    <Link to={`/herb/${trade.herbId}`} className="font-serif text-xl text-ink group-hover:text-indigo transition-colors font-semibold">
                       {trade.herbName}
                     </Link>
-                  </td>
-                  <td className="px-3 py-2.5 text-text-secondary">{trade.spec}</td>
-                  <td className="px-3 py-2.5 text-text-secondary">{trade.origin}</td>
-                  <td className="px-3 py-2.5 text-text-secondary">{trade.quantity}</td>
-                  <td className="px-3 py-2.5 text-accent font-mono font-medium">{trade.price}</td>
-                  <td className="px-3 py-2.5 text-text-secondary font-mono">{maskPhone(trade.contact)}</td>
-                  <td className="px-3 py-2.5 text-text-tertiary">{formatDate(trade.createdAt)}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+                    <span className="badge-antique badge-jade text-[10px]">
+                      {trade.spec}
+                    </span>
+                  </div>
+                  {trade.isPromoted && (
+                    <Star className="w-4 h-4 text-ochre fill-ochre" />
+                  )}
+                </div>
+                <div className="font-mono text-cinnabar text-xl font-bold mb-3">
+                  {trade.price}
+                </div>
+                <div className="space-y-2 text-sm text-ink-light">
+                  <div className="flex items-center gap-2">
+                    <MapPin className="w-4 h-4 text-ink-muted" />
+                    <span>{trade.origin}</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <Package className="w-4 h-4 text-ink-muted" />
+                    <span>{trade.quantity}</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <Phone className="w-4 h-4 text-ink-muted" />
+                    <span className="font-mono">{maskPhone(trade.contact)}</span>
+                  </div>
+                </div>
+                <div className="mt-3 pt-3 border-t border-paper-dark text-xs text-ink-muted">
+                  {formatDate(trade.createdAt)}
+                </div>
+              </div>
+            ))}
+          </div>
           {pagedTrades.length === 0 && (
-            <div className="text-center py-12 text-text-tertiary text-sm">暂无相关信息</div>
+            <div className="text-center py-16 text-ink-muted">暂无相关信息</div>
           )}
           {renderPagination()}
         </div>
       )}
 
       {activeTab === 'demand' && (
-        <div className="overflow-x-auto">
-          <table className="w-full text-sm">
+        <div className="paper-card p-6 overflow-x-auto">
+          <table className="table-antique">
             <thead>
-              <tr className="border-b border-border-subtle">
-                <th className="px-3 py-2 text-left font-medium text-text-secondary">品名</th>
-                <th className="px-3 py-2 text-left font-medium text-text-secondary">规格</th>
-                <th className="px-3 py-2 text-left font-medium text-text-secondary">数量</th>
-                <th className="px-3 py-2 text-left font-medium text-text-secondary">报价人数</th>
-                <th className="px-3 py-2 text-left font-medium text-text-secondary">剩余天数</th>
-                <th className="px-3 py-2 text-left font-medium text-text-secondary">操作</th>
+              <tr>
+                <th className="px-4 py-3">品名</th>
+                <th className="px-4 py-3">规格</th>
+                <th className="px-4 py-3">数量</th>
+                <th className="px-4 py-3">报价人数</th>
+                <th className="px-4 py-3">剩余天数</th>
+                <th className="px-4 py-3">操作</th>
               </tr>
             </thead>
             <tbody>
-              {pagedTrades.map(trade => (
-                <tr key={trade.id} className="border-b border-border-subtle hover:bg-surface-raised transition-colors">
-                  <td className="px-3 py-2.5">
-                    <Link to={`/herb/${trade.herbId}`} className="text-text hover:text-accent transition-colors font-medium">
+              {pagedTrades.map((trade, idx) => (
+                <tr key={trade.id} className="animate-fade-in" style={{ animationDelay: `${idx * 0.03}s` }}>
+                  <td className="px-4 py-4">
+                    <Link to={`/herb/${trade.herbId}`} className="text-indigo hover:text-indigo-dark font-semibold transition-colors">
                       {trade.herbName}
                     </Link>
                   </td>
-                  <td className="px-3 py-2.5 text-text-secondary">{trade.spec}</td>
-                  <td className="px-3 py-2.5 text-text-secondary">{trade.quantity}</td>
-                  <td className="px-3 py-2.5 text-accent">{trade.quoteCount ?? 0}</td>
-                  <td className="px-3 py-2.5">
-                    <span className={trade.remainingDays && trade.remainingDays <= 5 ? 'text-rise font-medium' : 'text-text-secondary'}>
+                  <td className="px-4 py-4 text-ink-light">{trade.spec}</td>
+                  <td className="px-4 py-4 text-ink-light">{trade.quantity}</td>
+                  <td className="px-4 py-4 text-indigo font-semibold">{trade.quoteCount ?? 0}</td>
+                  <td className="px-4 py-4">
+                    <span className={trade.remainingDays && trade.remainingDays <= 5 ? 'text-cinnabar font-semibold' : 'text-ink-light'}>
                       {trade.remainingDays ? `${trade.remainingDays}天` : '-'}
                     </span>
                   </td>
-                  <td className="px-3 py-2.5">
-                    <button className="px-3 py-1 text-xs rounded bg-accent text-white hover:bg-accent/90 transition-colors">
+                  <td className="px-4 py-4">
+                    <button className="btn-primary text-xs py-2 px-4">
                       抢先报价
                     </button>
                   </td>
@@ -246,79 +261,93 @@ export default function TradePage() {
             </tbody>
           </table>
           {pagedTrades.length === 0 && (
-            <div className="text-center py-12 text-text-tertiary text-sm">暂无相关信息</div>
+            <div className="text-center py-16 text-ink-muted">暂无相关信息</div>
           )}
           {renderPagination()}
         </div>
       )}
 
       {activeTab === 'bidding' && (
-        <div className="space-y-0">
+        <div className="paper-card p-6">
           {pagedTrades.map((trade, idx) => (
-            <div key={trade.id} className={`py-3 flex items-start justify-between ${idx > 0 ? 'border-t border-border-subtle' : ''}`}>
+            <div 
+              key={trade.id} 
+              className={`py-5 flex items-start justify-between animate-fade-in ${idx > 0 ? 'border-t-2 border-paper-dark' : ''}`}
+              style={{ animationDelay: `${idx * 0.05}s` }}
+            >
               <div className="flex-1 min-w-0">
-                <div className="flex items-center gap-2 mb-1">
-                  <span className="font-medium text-text">{trade.company}</span>
+                <div className="flex items-center gap-3 mb-2">
+                  <span className="font-semibold text-ink text-lg">{trade.company}</span>
                   {trade.isPromoted && (
-                    <span className="text-[10px] px-1.5 py-0.5 rounded bg-accent-muted text-accent font-medium">热门</span>
+                    <span className="badge-antique badge-ochre text-[10px]">热门</span>
                   )}
                 </div>
-                <div className="text-xs text-text-secondary">
+                <div className="text-sm text-ink-light">
                   {trade.herbName} · {trade.spec} · {trade.quantity}
                 </div>
               </div>
-              <div className="flex flex-col items-end gap-1 shrink-0 ml-4">
-                <span className="text-xs text-text-tertiary">{formatDate(trade.createdAt)}</span>
-                <Link to={`/trade/${trade.id}`} className="text-xs text-accent hover:text-accent/80 transition-colors">
+              <div className="flex flex-col items-end gap-2 shrink-0 ml-6">
+                <span className="text-sm text-ink-muted">{formatDate(trade.createdAt)}</span>
+                <Link to="/trade" className="text-sm text-indigo hover:text-indigo-dark font-medium transition-colors">
                   查看详情 →
                 </Link>
               </div>
             </div>
           ))}
           {pagedTrades.length === 0 && (
-            <div className="text-center py-12 text-text-tertiary text-sm">暂无相关信息</div>
+            <div className="text-center py-16 text-ink-muted">暂无相关信息</div>
           )}
           {renderPagination()}
         </div>
       )}
 
       {activeTab === 'direct' && (
-        <div className="overflow-x-auto">
-          <table className="w-full text-sm">
-            <thead>
-              <tr className="border-b border-border-subtle">
-                <th className="px-3 py-2 text-left font-medium text-text-secondary">品名</th>
-                <th className="px-3 py-2 text-left font-medium text-text-secondary">规格</th>
-                <th className="px-3 py-2 text-left font-medium text-text-secondary">产地</th>
-                <th className="px-3 py-2 text-left font-medium text-text-secondary">数量</th>
-                <th className="px-3 py-2 text-left font-medium text-text-secondary">价格</th>
-                <th className="px-3 py-2 text-left font-medium text-text-secondary">联系方式</th>
-                <th className="px-3 py-2 text-left font-medium text-text-secondary">日期</th>
-              </tr>
-            </thead>
-            <tbody>
-              {pagedTrades.map(trade => (
-                <tr key={trade.id} className="border-b border-border-subtle hover:bg-surface-raised transition-colors">
-                  <td className="px-3 py-2.5">
-                    <div className="flex items-center gap-2">
-                      <Link to={`/herb/${trade.herbId}`} className="text-text hover:text-accent transition-colors font-medium">
-                        {trade.herbName}
-                      </Link>
-                      <span className="text-[10px] px-1.5 py-0.5 rounded bg-accent-muted text-accent font-medium">产地直供</span>
-                    </div>
-                  </td>
-                  <td className="px-3 py-2.5 text-text-secondary">{trade.spec}</td>
-                  <td className="px-3 py-2.5 text-text-secondary">{trade.origin}</td>
-                  <td className="px-3 py-2.5 text-text-secondary">{trade.quantity}</td>
-                  <td className="px-3 py-2.5 text-accent font-mono font-medium">{trade.price}</td>
-                  <td className="px-3 py-2.5 text-text-secondary font-mono">{maskPhone(trade.contact)}</td>
-                  <td className="px-3 py-2.5 text-text-tertiary">{formatDate(trade.createdAt)}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+        <div className="paper-card p-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {pagedTrades.map((trade, idx) => (
+              <div 
+                key={trade.id} 
+                className="p-5 border-2 border-paper-dark rounded bg-paper hover:border-jade transition-colors group animate-fade-in"
+                style={{ animationDelay: `${idx * 0.05}s` }}
+              >
+                <div className="flex items-start justify-between mb-3">
+                  <div className="flex items-center gap-2">
+                    <Link to={`/herb/${trade.herbId}`} className="font-serif text-xl text-ink group-hover:text-jade transition-colors font-semibold">
+                      {trade.herbName}
+                    </Link>
+                    <span className="badge-antique badge-jade text-[10px]">
+                      产地直供
+                    </span>
+                  </div>
+                  {trade.isPromoted && (
+                    <Star className="w-4 h-4 text-ochre fill-ochre" />
+                  )}
+                </div>
+                <div className="font-mono text-jade text-xl font-bold mb-3">
+                  {trade.price}
+                </div>
+                <div className="space-y-2 text-sm text-ink-light">
+                  <div className="flex items-center gap-2">
+                    <MapPin className="w-4 h-4 text-ink-muted" />
+                    <span>{trade.origin}</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <Package className="w-4 h-4 text-ink-muted" />
+                    <span>{trade.quantity}</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <Phone className="w-4 h-4 text-ink-muted" />
+                    <span className="font-mono">{maskPhone(trade.contact)}</span>
+                  </div>
+                </div>
+                <div className="mt-3 pt-3 border-t border-paper-dark text-xs text-ink-muted">
+                  {formatDate(trade.createdAt)}
+                </div>
+              </div>
+            ))}
+          </div>
           {pagedTrades.length === 0 && (
-            <div className="text-center py-12 text-text-tertiary text-sm">暂无相关信息</div>
+            <div className="text-center py-16 text-ink-muted">暂无相关信息</div>
           )}
           {renderPagination()}
         </div>

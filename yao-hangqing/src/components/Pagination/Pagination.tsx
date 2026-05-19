@@ -23,27 +23,27 @@ export default function Pagination({ current, total, pageSize, onChange }: Pagin
   }
 
   return (
-    <div className="flex items-center justify-center gap-1 pt-6">
+    <div className="flex items-center justify-center gap-2 pt-8">
       <button
         onClick={() => onChange(current - 1)}
         disabled={current === 1}
-        className="px-3 py-1.5 text-sm text-text-secondary disabled:text-text-tertiary disabled:cursor-not-allowed hover:text-text transition-colors"
+        className="px-4 py-2 text-sm text-ink-light disabled:text-ink-muted disabled:cursor-not-allowed hover:text-jade transition-colors"
       >
         上一页
       </button>
       {pages.map((p, i) =>
         typeof p === 'string' ? (
-          <span key={`ellipsis-${i}`} className="px-2 text-text-tertiary">
+          <span key={`ellipsis-${i}`} className="px-2 text-ink-muted">
             ...
           </span>
         ) : (
           <button
             key={p}
             onClick={() => onChange(p)}
-            className={`px-3 py-1.5 text-sm rounded transition-colors ${
+            className={`w-9 h-9 text-sm rounded transition-all ${
               current === p
-                ? 'bg-accent text-white'
-                : 'text-text-secondary hover:bg-accent-muted'
+                ? 'bg-jade text-white'
+                : 'text-ink-light hover:bg-jade-muted'
             }`}
           >
             {p}
@@ -53,11 +53,11 @@ export default function Pagination({ current, total, pageSize, onChange }: Pagin
       <button
         onClick={() => onChange(current + 1)}
         disabled={current === totalPages}
-        className="px-3 py-1.5 text-sm text-text-secondary disabled:text-text-tertiary disabled:cursor-not-allowed hover:text-text transition-colors"
+        className="px-4 py-2 text-sm text-ink-light disabled:text-ink-muted disabled:cursor-not-allowed hover:text-jade transition-colors"
       >
         下一页
       </button>
-      <span className="ml-4 text-xs text-text-tertiary">
+      <span className="ml-4 text-xs text-ink-muted">
         共 {total} 条
       </span>
     </div>
