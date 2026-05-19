@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { TrendingUp, TrendingDown, ArrowRight, Package, ShoppingCart, Newspaper, Leaf } from 'lucide-react';
-import { marketPrices, originPrices } from '../../data/prices';
+import { marketPrices } from '../../data/prices';
 import { trades } from '../../data/trades';
 import { newsList } from '../../data/news';
 import { herbs } from '../../data/herbs';
@@ -89,7 +89,7 @@ export default function Home() {
                     <span className="text-sm font-medium text-red-600">涨幅榜</span>
                   </div>
                   <ul className="space-y-2">
-                    {topRisers.map((item, idx) => (
+                    {topRisers.map((item) => (
                       <li key={item.id} className="flex items-center justify-between text-sm">
                         <Link to={`/herb/${item.herbId}`} className="text-text hover:text-primary transition-colors truncate max-w-[50%]">
                           {item.herbName}
@@ -106,7 +106,7 @@ export default function Home() {
                     <span className="text-sm font-medium text-green-600">跌幅榜</span>
                   </div>
                   <ul className="space-y-2">
-                    {topFallers.map((item, idx) => (
+                    {topFallers.map((item) => (
                       <li key={item.id} className="flex items-center justify-between text-sm">
                         <Link to={`/herb/${item.herbId}`} className="text-text hover:text-primary transition-colors truncate max-w-[50%]">
                           {item.herbName}

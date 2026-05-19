@@ -1,6 +1,6 @@
 import { useState, useMemo } from 'react';
 import { Link } from 'react-router-dom';
-import { TrendingUp, TrendingDown, Search, Flame } from 'lucide-react';
+import { TrendingUp, TrendingDown, Flame } from 'lucide-react';
 import { marketPrices } from '../../data/prices';
 import { herbs } from '../../data/herbs';
 import TabNav from '../../components/TabNav/TabNav';

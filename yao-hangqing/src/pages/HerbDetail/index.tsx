@@ -1,6 +1,6 @@
 import { useState, useMemo } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { TrendingUp, TrendingDown, Minus, Package, ShoppingCart, Newspaper, BookOpen } from 'lucide-react';
+import { TrendingUp, TrendingDown, Minus } from 'lucide-react';
 import { herbs } from '../../data/herbs';
 import { marketPrices, originPrices } from '../../data/prices';
 import { trades } from '../../data/trades';
@@ -10,10 +10,10 @@ import TabNav from '../../components/TabNav/TabNav';
 import { formatPrice, formatChange, formatDate } from '../../utils/format';
 
 const TABS = [
-  { key: 'supply', label: '供应信息', icon: Package },
-  { key: 'demand', label: '求购信息', icon: ShoppingCart },
-  { key: 'news', label: '相关资讯', icon: Newspaper },
-  { key: 'knowledge', label: '药材知识', icon: BookOpen },
+  { key: 'supply', label: '供应信息' },
+  { key: 'demand', label: '求购信息' },
+  { key: 'news', label: '相关资讯' },
+  { key: 'knowledge', label: '药材知识' },
 ];
 
 const CATEGORY_MAP: Record<string, string> = {
@@ -89,13 +89,9 @@ export default function HerbDetail() {
   return (
     <div className="max-w-[1280px] mx-auto px-4 py-6">
       <nav className="text-sm text-text-secondary mb-4 flex items-center gap-1">
-        <Link to="/" className="hover:text-primary">
-          首页
-        </Link>
+        <Link to="/" className="hover:text-primary">首页</Link>
         <span>/</span>
-        <Link to="/prices" className="hover:text-primary">
-          行情价格
-        </Link>
+        <Link to="/price" className="hover:text-primary">行情价格</Link>
         <span>/</span>
         <span className="text-text">{herb.name}</span>
       </nav>
@@ -130,24 +126,11 @@ export default function HerbDetail() {
             <div className="mb-3">
               <h3 className="text-sm font-medium text-text-secondary mb-1">市场报价</h3>
               {herbMarketPrices.map(p => (
-                <div
-                  key={p.id}
-                  className="flex items-center justify-between py-1.5 border-b border-divider last:border-b-0 text-sm"
-                >
-                  <span className="text-text">
-                    {p.market} · {p.spec}
-                  </span>
+                <div key={p.id} className="flex items-center justify-between py-1.5 border-b border-divider last:border-b-0 text-sm">
+                  <span className="text-text">{p.market} · {p.spec}</span>
                   <div className="flex items-center gap-2">
                     <span className="font-medium">{formatPrice(p.currentPrice)}</span>
-                    <span
-                      className={
-                        p.trend === 'up'
-                          ? 'text-rise'
-                          : p.trend === 'down'
-                            ? 'text-fall'
-                            : 'text-stable'
-                      }
-                    >
+                    <span className={p.trend === 'up' ? 'text-rise' : p.trend === 'down' ? 'text-fall' : 'text-stable'}>
                       {formatChange(p.monthlyChange)}
                     </span>
                     <TrendIcon trend={p.trend} />
@@ -160,24 +143,11 @@ export default function HerbDetail() {
             <div>
               <h3 className="text-sm font-medium text-text-secondary mb-1">产地报价</h3>
               {herbOriginPrices.map(p => (
-                <div
-                  key={p.id}
-                  className="flex items-center justify-between py-1.5 border-b border-divider last:border-b-0 text-sm"
-                >
-                  <span className="text-text">
-                    {p.origin} · {p.spec}
-                  </span>
+                <div key={p.id} className="flex items-center justify-between py-1.5 border-b border-divider last:border-b-0 text-sm">
+                  <span className="text-text">{p.origin} · {p.spec}</span>
                   <div className="flex items-center gap-2">
                     <span className="font-medium">{formatPrice(p.currentPrice)}</span>
-                    <span
-                      className={
-                        p.trend === 'up'
-                          ? 'text-rise'
-                          : p.trend === 'down'
-                            ? 'text-fall'
-                            : 'text-stable'
-                      }
-                    >
+                    <span className={p.trend === 'up' ? 'text-rise' : p.trend === 'down' ? 'text-fall' : 'text-stable'}>
                       {formatChange(p.monthlyChange)}
                     </span>
                     <TrendIcon trend={p.trend} />
@@ -194,7 +164,7 @@ export default function HerbDetail() {
         <div className="w-full lg:w-[60%] bg-card rounded-lg border border-border p-4 shadow-sm">
           <h2 className="text-base font-bold text-text mb-3">价格走势</h2>
           {chartData.length > 0 ? (
-            <PriceChart data={chartData} herbName={herb.name} />
+            <PriceChart history={chartData} herbName={herb.name} />
           ) : (
             <p className="text-text-secondary text-sm">暂无走势数据</p>
           )}
@@ -202,104 +172,90 @@ export default function HerbDetail() {
       </div>
 
       <div className="bg-card rounded-lg border border-border shadow-sm">
-        <TabNav tabs={TABS} activeTab={activeTab} onTabChange={setActiveTab} />
+        <TabNav tabs={TABS} activeKey={activeTab} onTabChange={setActiveTab} />
 
         <div className="p-4">
           {activeTab === 'supply' && (
-            <>
-              {supplyTrades.length > 0 ? (
-                <table className="w-full text-sm">
-                  <thead>
-                    <tr className="border-b border-border text-text-secondary">
-                      <th className="text-left py-2 font-medium">品名</th>
-                      <th className="text-left py-2 font-medium">规格</th>
-                      <th className="text-left py-2 font-medium">产地</th>
-                      <th className="text-left py-2 font-medium">数量</th>
-                      <th className="text-left py-2 font-medium">价格</th>
-                      <th className="text-left py-2 font-medium">公司</th>
-                      <th className="text-left py-2 font-medium">日期</th>
+            supplyTrades.length > 0 ? (
+              <table className="w-full text-sm">
+                <thead>
+                  <tr className="border-b border-border text-text-secondary">
+                    <th className="text-left py-2 font-medium">品名</th>
+                    <th className="text-left py-2 font-medium">规格</th>
+                    <th className="text-left py-2 font-medium">产地</th>
+                    <th className="text-left py-2 font-medium">数量</th>
+                    <th className="text-left py-2 font-medium">价格</th>
+                    <th className="text-left py-2 font-medium">日期</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {supplyTrades.map(t => (
+                    <tr key={t.id} className="border-b border-divider last:border-b-0">
+                      <td className="py-2 text-text">{t.herbName}</td>
+                      <td className="py-2 text-text-secondary">{t.spec}</td>
+                      <td className="py-2 text-text-secondary">{t.origin}</td>
+                      <td className="py-2 text-text-secondary">{t.quantity}</td>
+                      <td className="py-2 text-primary font-medium">{t.price}</td>
+                      <td className="py-2 text-text-secondary">{formatDate(t.createdAt)}</td>
                     </tr>
-                  </thead>
-                  <tbody>
-                    {supplyTrades.map(t => (
-                      <tr key={t.id} className="border-b border-divider last:border-b-0">
-                        <td className="py-2 text-text">{t.herbName}</td>
-                        <td className="py-2 text-text-secondary">{t.spec}</td>
-                        <td className="py-2 text-text-secondary">{t.origin}</td>
-                        <td className="py-2 text-text-secondary">{t.quantity}</td>
-                        <td className="py-2 text-primary font-medium">{t.price}</td>
-                        <td className="py-2 text-text-secondary">{t.company || '-'}</td>
-                        <td className="py-2 text-text-secondary">{formatDate(t.createdAt)}</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              ) : (
-                <p className="text-text-secondary text-sm py-4 text-center">暂无供应信息</p>
-              )}
-            </>
+                  ))}
+                </tbody>
+              </table>
+            ) : (
+              <p className="text-text-secondary text-sm py-4 text-center">暂无供应信息</p>
+            )
           )}
 
           {activeTab === 'demand' && (
-            <>
-              {demandTrades.length > 0 ? (
-                <table className="w-full text-sm">
-                  <thead>
-                    <tr className="border-b border-border text-text-secondary">
-                      <th className="text-left py-2 font-medium">品名</th>
-                      <th className="text-left py-2 font-medium">规格</th>
-                      <th className="text-left py-2 font-medium">产地</th>
-                      <th className="text-left py-2 font-medium">数量</th>
-                      <th className="text-left py-2 font-medium">价格</th>
-                      <th className="text-left py-2 font-medium">公司</th>
-                      <th className="text-left py-2 font-medium">日期</th>
+            demandTrades.length > 0 ? (
+              <table className="w-full text-sm">
+                <thead>
+                  <tr className="border-b border-border text-text-secondary">
+                    <th className="text-left py-2 font-medium">品名</th>
+                    <th className="text-left py-2 font-medium">规格</th>
+                    <th className="text-left py-2 font-medium">数量</th>
+                    <th className="text-left py-2 font-medium">报价人数</th>
+                    <th className="text-left py-2 font-medium">剩余天数</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {demandTrades.map(t => (
+                    <tr key={t.id} className="border-b border-divider last:border-b-0">
+                      <td className="py-2 text-text">{t.herbName}</td>
+                      <td className="py-2 text-text-secondary">{t.spec}</td>
+                      <td className="py-2 text-text-secondary">{t.quantity}</td>
+                      <td className="py-2 text-text-secondary">{t.quoteCount || 0}人</td>
+                      <td className="py-2 text-text-secondary">{t.remainingDays || 0}天</td>
                     </tr>
-                  </thead>
-                  <tbody>
-                    {demandTrades.map(t => (
-                      <tr key={t.id} className="border-b border-divider last:border-b-0">
-                        <td className="py-2 text-text">{t.herbName}</td>
-                        <td className="py-2 text-text-secondary">{t.spec}</td>
-                        <td className="py-2 text-text-secondary">{t.origin}</td>
-                        <td className="py-2 text-text-secondary">{t.quantity}</td>
-                        <td className="py-2 text-primary font-medium">{t.price}</td>
-                        <td className="py-2 text-text-secondary">{t.company || '-'}</td>
-                        <td className="py-2 text-text-secondary">{formatDate(t.createdAt)}</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              ) : (
-                <p className="text-text-secondary text-sm py-4 text-center">暂无求购信息</p>
-              )}
-            </>
+                  ))}
+                </tbody>
+              </table>
+            ) : (
+              <p className="text-text-secondary text-sm py-4 text-center">暂无求购信息</p>
+            )
           )}
 
           {activeTab === 'news' && (
-            <>
-              {relatedNews.length > 0 ? (
-                <ul className="divide-y divide-divider">
-                  {relatedNews.map(n => (
-                    <li key={n.id} className="py-3 first:pt-0 last:pb-0">
-                      <div className="flex items-start justify-between gap-4">
-                        <div className="flex-1 min-w-0">
-                          <h4 className="text-sm font-medium text-text truncate">{n.title}</h4>
-                          <p className="text-xs text-text-secondary mt-1 line-clamp-1">
-                            {n.summary}
-                          </p>
-                        </div>
-                        <div className="text-right shrink-0">
-                          <div className="text-xs text-text-secondary">{formatDate(n.createdAt)}</div>
-                          <div className="text-xs text-text-secondary mt-1">{n.views} 阅读</div>
-                        </div>
+            relatedNews.length > 0 ? (
+              <ul className="divide-y divide-divider">
+                {relatedNews.map(n => (
+                  <li key={n.id} className="py-3 first:pt-0 last:pb-0">
+                    <Link to={`/news/${n.id}`} className="flex items-start justify-between gap-4">
+                      <div className="flex-1 min-w-0">
+                        <h4 className="text-sm font-medium text-text hover:text-primary truncate">{n.title}</h4>
+                        <p className="text-xs text-text-secondary mt-1 line-clamp-1">{n.summary}</p>
                       </div>
-                    </li>
-                  ))}
-                </ul>
-              ) : (
-                <p className="text-text-secondary text-sm py-4 text-center">暂无相关资讯</p>
-              )}
-            </>
+                      <div className="text-right shrink-0">
+                        <div className="text-xs text-text-secondary">{formatDate(n.createdAt)}</div>
+                        <div className="text-xs text-text-secondary mt-1">{n.views} 阅读</div>
+                      </div>
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <p className="text-text-secondary text-sm py-4 text-center">暂无相关资讯</p>
+            )
           )}
 
           {activeTab === 'knowledge' && (

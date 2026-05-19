@@ -1,6 +1,6 @@
 import { useState, useMemo } from 'react';
 import { Link } from 'react-router-dom';
-import { Package, ShoppingCart, Building2, MapPin, Phone, Clock, Users } from 'lucide-react';
+import { Package, Building2, MapPin, Phone, Clock, Users } from 'lucide-react';
 import { trades } from '../../data/trades';
 import { herbs } from '../../data/herbs';
 import { CATEGORIES } from '../../utils/constants';
@@ -16,8 +16,6 @@ const TABS = [
 ];
 
 const PAGE_SIZE = 10;
-
-const herbCategoryMap = new Map(herbs.map(h => [h.id, h.category]));
 
 function maskPhone(phone: string): string {
   if (phone.length >= 7) {

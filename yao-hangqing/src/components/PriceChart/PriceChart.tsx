@@ -7,7 +7,6 @@ import {
   CartesianGrid,
   Tooltip,
   ResponsiveContainer,
-  Legend,
 } from 'recharts';
 import type { PriceHistoryPoint } from '../../types';
 
@@ -74,8 +73,8 @@ export default function PriceChart({ history, specs, herbName }: PriceChartProps
             tickFormatter={(v: number) => `¥${v}`}
           />
           <Tooltip
-            formatter={(value: number) => [`¥${value}`, herbName]}
-            labelFormatter={(label: string) => `日期: ${label}`}
+            formatter={(value: unknown) => [`¥${value}`, herbName]}
+            labelFormatter={(label: unknown) => `日期: ${String(label)}`}
           />
           <Line
             type="monotone"

@@ -1,7 +1,6 @@
 import { useState, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { newsList } from '../../data/news';
-import { herbs } from '../../data/herbs';
 import TabNav from '../../components/TabNav/TabNav';
 import Pagination from '../../components/Pagination/Pagination';
 import { formatDate } from '../../utils/format';

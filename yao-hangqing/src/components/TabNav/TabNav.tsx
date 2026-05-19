@@ -1,9 +1,6 @@
-import { Link } from 'react-router-dom';
-
 interface TabItem {
   key: string;
   label: string;
-  path?: string;
 }
 
 interface TabNavProps {
