@@ -12,7 +12,6 @@ import type { PriceHistoryPoint } from '../../types';
 
 interface PriceChartProps {
   history: PriceHistoryPoint[];
-  specs?: { spec: string; history: PriceHistoryPoint[] }[];
   herbName: string;
 }
 
@@ -24,9 +23,7 @@ const TIME_RANGES = [
   { key: 'all', label: '全部' },
 ];
 
-const COLORS = ['#1B5E20', '#D32F2F', '#C9A96E', '#1565C0'];
-
-export default function PriceChart({ history, specs, herbName }: PriceChartProps) {
+export default function PriceChart({ history, herbName }: PriceChartProps) {
   const [timeRange, setTimeRange] = useState('1y');
 
   const filterByRange = (data: PriceHistoryPoint[]) => {
@@ -39,7 +36,7 @@ export default function PriceChart({ history, specs, herbName }: PriceChartProps
 
   return (
     <div>
-      <div className="flex items-center justify-between mb-3">
+      <div className="flex items-center justify-between mb-4">
         <h3 className="text-sm font-medium text-text-secondary">
           {herbName} 价格走势
         </h3>
@@ -48,10 +45,10 @@ export default function PriceChart({ history, specs, herbName }: PriceChartProps
             <button
               key={r.key}
               onClick={() => setTimeRange(r.key)}
-              className={`px-2 py-0.5 text-xs rounded transition-colors ${
+              className={`px-2 py-1 text-xs rounded transition-colors ${
                 timeRange === r.key
-                  ? 'bg-primary text-white'
-                  : 'bg-row-alt text-text-secondary hover:bg-row-hover'
+                  ? 'bg-accent text-white'
+                  : 'text-text-secondary hover:bg-accent-muted'
               }`}
             >
               {r.label}
@@ -60,16 +57,16 @@ export default function PriceChart({ history, specs, herbName }: PriceChartProps
         </div>
       </div>
 
-      <ResponsiveContainer width="100%" height={280}>
+      <ResponsiveContainer width="100%" height={240}>
         <LineChart data={filteredHistory}>
-          <CartesianGrid strokeDasharray="3 3" stroke="#E0E0E0" />
+          <CartesianGrid strokeDasharray="3 3" stroke="#E5E5E5" />
           <XAxis
             dataKey="date"
-            tick={{ fontSize: 11, fill: '#666' }}
+            tick={{ fontSize: 11, fill: '#737373' }}
             tickFormatter={(v: string) => v.slice(5)}
           />
           <YAxis
-            tick={{ fontSize: 11, fill: '#666' }}
+            tick={{ fontSize: 11, fill: '#737373' }}
             tickFormatter={(v: number) => `¥${v}`}
           />
           <Tooltip
@@ -79,24 +76,12 @@ export default function PriceChart({ history, specs, herbName }: PriceChartProps
           <Line
             type="monotone"
             dataKey="price"
-            stroke={COLORS[0]}
+            stroke="#059669"
             strokeWidth={2}
             dot={false}
             activeDot={{ r: 4 }}
             name={herbName}
           />
-          {specs?.map((s, i) => (
-            <Line
-              key={s.spec}
-              type="monotone"
-              data={filterByRange(s.history)}
-              dataKey="price"
-              stroke={COLORS[(i + 1) % COLORS.length]}
-              strokeWidth={1.5}
-              dot={false}
-              name={s.spec}
-            />
-          ))}
         </LineChart>
       </ResponsiveContainer>
     </div>

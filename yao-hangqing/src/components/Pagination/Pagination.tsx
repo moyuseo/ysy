@@ -23,27 +23,27 @@ export default function Pagination({ current, total, pageSize, onChange }: Pagin
   }
 
   return (
-    <div className="flex items-center justify-center gap-1 mt-6">
+    <div className="flex items-center justify-center gap-1 pt-6">
       <button
         onClick={() => onChange(current - 1)}
         disabled={current === 1}
-        className="px-3 py-1.5 text-sm rounded border border-border disabled:opacity-40 disabled:cursor-not-allowed hover:bg-fall-bg transition-colors"
+        className="px-3 py-1.5 text-sm text-text-secondary disabled:text-text-tertiary disabled:cursor-not-allowed hover:text-text transition-colors"
       >
         上一页
       </button>
       {pages.map((p, i) =>
         typeof p === 'string' ? (
-          <span key={`ellipsis-${i}`} className="px-2 text-text-secondary">
+          <span key={`ellipsis-${i}`} className="px-2 text-text-tertiary">
             ...
           </span>
         ) : (
           <button
             key={p}
             onClick={() => onChange(p)}
-            className={`px-3 py-1.5 text-sm rounded border transition-colors ${
+            className={`px-3 py-1.5 text-sm rounded transition-colors ${
               current === p
-                ? 'bg-primary text-white border-primary'
-                : 'border-border hover:bg-fall-bg'
+                ? 'bg-accent text-white'
+                : 'text-text-secondary hover:bg-accent-muted'
             }`}
           >
             {p}
@@ -53,11 +53,11 @@ export default function Pagination({ current, total, pageSize, onChange }: Pagin
       <button
         onClick={() => onChange(current + 1)}
         disabled={current === totalPages}
-        className="px-3 py-1.5 text-sm rounded border border-border disabled:opacity-40 disabled:cursor-not-allowed hover:bg-fall-bg transition-colors"
+        className="px-3 py-1.5 text-sm text-text-secondary disabled:text-text-tertiary disabled:cursor-not-allowed hover:text-text transition-colors"
       >
         下一页
       </button>
-      <span className="ml-3 text-xs text-text-secondary">
+      <span className="ml-4 text-xs text-text-tertiary">
         共 {total} 条
       </span>
     </div>

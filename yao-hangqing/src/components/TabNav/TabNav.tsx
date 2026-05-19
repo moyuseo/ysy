@@ -11,15 +11,15 @@ interface TabNavProps {
 
 export default function TabNav({ tabs, activeKey, onTabChange }: TabNavProps) {
   return (
-    <div className="flex gap-1 border-b border-border">
+    <div className="flex gap-6 border-b border-border-subtle">
       {tabs.map((tab) => (
         <button
           key={tab.key}
           onClick={() => onTabChange(tab.key)}
-          className={`px-4 py-2.5 text-sm font-medium transition-colors relative ${
+          className={`pb-3 text-sm font-medium transition-colors relative ${
             activeKey === tab.key
-              ? 'text-primary border-b-2 border-primary'
-              : 'text-text-secondary hover:text-primary'
+              ? 'text-accent border-b-2 border-accent'
+              : 'text-text-secondary hover:text-text'
           }`}
         >
           {tab.label}

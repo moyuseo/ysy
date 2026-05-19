@@ -1,11 +1,10 @@
 import { Link } from 'react-router-dom';
-import { TrendingUp, TrendingDown, ArrowRight, Package, ShoppingCart, Newspaper, Leaf, BarChart3, Flame, Search, BookOpen } from 'lucide-react';
+import { TrendingUp, TrendingDown, ArrowRight, Search } from 'lucide-react';
 import { marketPrices } from '../../data/prices';
 import { trades } from '../../data/trades';
 import { newsList } from '../../data/news';
 import { herbs } from '../../data/herbs';
-import PriceTable from '../../components/PriceTable';
-import { formatChange, formatDate } from '../../utils/format';
+import { formatChange, formatDate, formatPrice } from '../../utils/format';
 
 const topRisers = [...marketPrices]
   .sort((a, b) => b.monthlyChange - a.monthlyChange)
@@ -15,295 +14,239 @@ const topFallers = [...marketPrices]
   .sort((a, b) => a.monthlyChange - b.monthlyChange)
   .slice(0, 5);
 
-const hotHerbs = herbs.slice(0, 15);
 const latestPrices = marketPrices.slice(0, 8);
 const supplyTrades = trades.filter(t => t.type === 'supply').slice(0, 4);
 const demandTrades = trades.filter(t => t.type === 'demand').slice(0, 4);
 const latestNews = newsList.slice(0, 4);
-
-const categoryLabels: Record<string, string> = {
-  analysis: '品种分析',
-  dynamic: '药市动态',
-  origin: '产地快报',
-  policy: '新闻法规',
-  review: '涨跌盘点',
-};
+const hotHerbs = herbs.slice(0, 12);
 
 const riseCount = marketPrices.filter(p => p.monthlyChange > 0).length;
 const fallCount = marketPrices.filter(p => p.monthlyChange < 0).length;
 
-const marketIndices = [
-  { name: '亳州指数', value: 1256.38, change: 0.012 },
-  { name: '安国指数', value: 1189.72, change: -0.005 },
-  { name: '成都指数', value: 1324.15, change: 0.008 },
-  { name: '玉林指数', value: 1102.63, change: 0.003 },
-];
-
-const quickTools = [
-  { name: '品种搜索', icon: Search, href: '/herb' },
-  { name: '涨跌排行', icon: BarChart3, href: '/price' },
-  { name: '供求发布', icon: Package, href: '/trade' },
-  { name: '知识百科', icon: BookOpen, href: '/herb' },
-];
-
 export default function Home() {
   return (
-    <div className="min-h-screen bg-bg">
-      <section className="bg-gradient-to-r from-primary to-primary-light text-white py-10">
-        <div className="max-w-[1280px] mx-auto px-4">
-          <div className="mb-8">
-            <h1 className="font-serif text-3xl font-bold mb-2">中药材行情信息平台</h1>
-            <p className="text-white/80 text-base">实时追踪中药材市场价格，洞察行业动态，助力供需对接</p>
-          </div>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            <div className="bg-white/10 backdrop-blur-sm rounded-lg px-4 py-3">
-              <div className="flex items-center gap-2 mb-1">
-                <Leaf className="w-4 h-4 text-primary-lightest" />
-                <span className="text-white/70 text-sm">覆盖品种数</span>
+    <div className="min-h-screen bg-[#FAFAFA]">
+      <div className="bg-[#FFFFFF] border-b border-[#E5E5E5]">
+        <div className="max-w-7xl mx-auto px-6 py-4">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-12">
+              <div>
+                <div className="text-[#737373] text-xs mb-1">覆盖品种</div>
+                <div className="text-2xl font-semibold text-[#171717]">{herbs.length}</div>
               </div>
-              <div className="text-2xl font-bold">{herbs.length}<span className="text-sm font-normal ml-1">种</span></div>
+              <div>
+                <div className="text-[#737373] text-xs mb-1">今日更新</div>
+                <div className="text-2xl font-semibold text-[#171717]">{marketPrices.length}</div>
+              </div>
+              <div>
+                <div className="text-[#737373] text-xs mb-1">上涨</div>
+                <div className="text-2xl font-semibold text-[#DC2626]">{riseCount}</div>
+              </div>
+              <div>
+                <div className="text-[#737373] text-xs mb-1">下跌</div>
+                <div className="text-2xl font-semibold text-[#16A34A]">{fallCount}</div>
+              </div>
             </div>
-            <div className="bg-white/10 backdrop-blur-sm rounded-lg px-4 py-3">
-              <div className="flex items-center gap-2 mb-1">
-                <Newspaper className="w-4 h-4 text-primary-lightest" />
-                <span className="text-white/70 text-sm">今日更新条数</span>
-              </div>
-              <div className="text-2xl font-bold">{marketPrices.length}<span className="text-sm font-normal ml-1">条</span></div>
-            </div>
-            <div className="bg-white/10 backdrop-blur-sm rounded-lg px-4 py-3">
-              <div className="flex items-center gap-2 mb-1">
-                <TrendingUp className="w-4 h-4 text-rise-bg" />
-                <span className="text-white/70 text-sm">上涨品种数</span>
-              </div>
-              <div className="text-2xl font-bold text-rise-bg">{riseCount}<span className="text-sm font-normal ml-1">种</span></div>
-            </div>
-            <div className="bg-white/10 backdrop-blur-sm rounded-lg px-4 py-3">
-              <div className="flex items-center gap-2 mb-1">
-                <TrendingDown className="w-4 h-4 text-primary-lightest" />
-                <span className="text-white/70 text-sm">下跌品种数</span>
-              </div>
-              <div className="text-2xl font-bold text-primary-lightest">{fallCount}<span className="text-sm font-normal ml-1">种</span></div>
+            <div className="flex items-center gap-4 text-sm text-[#737373]">
+              <span>数据更新时间: 2026-05-19 09:30</span>
             </div>
           </div>
         </div>
-      </section>
+      </div>
 
-      <section className="max-w-[1280px] mx-auto px-4 py-6">
-        <div className="bg-card rounded-lg border border-border shadow-sm px-6 py-4">
-          <div className="flex flex-wrap items-center justify-between gap-4">
-            {marketIndices.map((index) => (
-              <div key={index.name} className="flex items-center gap-3">
-                <div>
-                  <div className="text-xs text-text-secondary mb-0.5">{index.name}</div>
-                  <div className="flex items-center gap-2">
-                    <span className="text-base font-bold text-text">{index.value.toFixed(2)}</span>
-                    <span className={`text-xs font-medium flex items-center gap-0.5 ${index.change > 0 ? 'text-rise' : index.change < 0 ? 'text-fall' : 'text-stable'}`}>
-                      {index.change > 0 ? <TrendingUp className="w-3 h-3" /> : index.change < 0 ? <TrendingDown className="w-3 h-3" /> : null}
-                      {formatChange(index.change)}
-                    </span>
+      <div className="max-w-7xl mx-auto px-6 py-8">
+        <div className="flex gap-8">
+          <div className="w-[70%]">
+            <div className="mb-8">
+              <div className="flex items-center justify-between mb-4">
+                <h2 className="text-lg font-semibold text-[#171717]">行情概览</h2>
+                <Link to="/price" className="text-sm text-[#059669] hover:text-[#047857] flex items-center gap-1">
+                  查看更多 <ArrowRight className="w-3.5 h-3.5" />
+                </Link>
+              </div>
+              <table className="w-full">
+                <thead>
+                  <tr className="border-b border-[#E5E5E5]">
+                    <th className="text-left py-3 px-2 text-xs font-medium text-[#737373]">品种</th>
+                    <th className="text-left py-3 px-2 text-xs font-medium text-[#737373]">规格</th>
+                    <th className="text-left py-3 px-2 text-xs font-medium text-[#737373]">市场</th>
+                    <th className="text-right py-3 px-2 text-xs font-medium text-[#737373]">今日价</th>
+                    <th className="text-right py-3 px-2 text-xs font-medium text-[#737373]">月涨跌</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {latestPrices.map((price) => (
+                    <tr key={price.id} className="border-b border-[#F0F0F0] hover:bg-[#D1FAE5] transition-colors">
+                      <td className="py-3 px-2">
+                        <Link to={`/herb/${price.herbId}`} className="text-[#171717] hover:text-[#059669]">
+                          {price.herbName}
+                        </Link>
+                      </td>
+                      <td className="py-3 px-2 text-sm text-[#737373]">{price.spec}</td>
+                      <td className="py-3 px-2 text-sm text-[#737373]">{price.market}</td>
+                      <td className="py-3 px-2 text-right font-mono text-[#171717]">{formatPrice(price.currentPrice)}</td>
+                      <td className={`py-3 px-2 text-right font-mono text-sm ${price.monthlyChange > 0 ? 'text-[#DC2626]' : price.monthlyChange < 0 ? 'text-[#16A34A]' : 'text-[#737373]'}`}>
+                        {formatChange(price.monthlyChange)}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+
+            <div className="border-t border-[#E5E5E5] mb-8"></div>
+
+            <div className="mb-8">
+              <h2 className="text-lg font-semibold text-[#171717] mb-4">最新供求</h2>
+              <div className="flex gap-8">
+                <div className="flex-1">
+                  <div className="flex items-center gap-2 mb-3">
+                    <span className="text-sm font-medium text-[#059669]">供应</span>
+                    <Link to="/trade" className="text-xs text-[#A3A3A3] hover:text-[#059669]">更多</Link>
+                  </div>
+                  <div className="space-y-3">
+                    {supplyTrades.map((trade) => (
+                      <div key={trade.id} className="flex items-center justify-between py-2 border-b border-[#F0F0F0] last:border-0">
+                        <div>
+                          <Link to="/trade" className="text-sm text-[#171717] hover:text-[#059669]">{trade.herbName}</Link>
+                          <span className="text-xs text-[#A3A3A3] ml-2">{trade.spec}</span>
+                        </div>
+                        <div className="text-right">
+                          <div className="font-mono text-sm text-[#171717]">{trade.price}</div>
+                          <div className="text-xs text-[#A3A3A3]">{trade.quantity}</div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+                <div className="flex-1">
+                  <div className="flex items-center gap-2 mb-3">
+                    <span className="text-sm font-medium text-[#059669]">求购</span>
+                    <Link to="/trade" className="text-xs text-[#A3A3A3] hover:text-[#059669]">更多</Link>
+                  </div>
+                  <div className="space-y-3">
+                    {demandTrades.map((trade) => (
+                      <div key={trade.id} className="flex items-center justify-between py-2 border-b border-[#F0F0F0] last:border-0">
+                        <div>
+                          <Link to="/trade" className="text-sm text-[#171717] hover:text-[#059669]">{trade.herbName}</Link>
+                          <span className="text-xs text-[#A3A3A3] ml-2">{trade.spec}</span>
+                        </div>
+                        <div className="text-right">
+                          <div className="font-mono text-sm text-[#171717]">{trade.price}</div>
+                          <div className="text-xs text-[#A3A3A3]">{trade.quoteCount}条报价</div>
+                        </div>
+                      </div>
+                    ))}
                   </div>
                 </div>
               </div>
-            ))}
+            </div>
           </div>
-        </div>
-      </section>
 
-      <section className="max-w-[1280px] mx-auto px-4 py-6">
-        <div className="flex flex-col md:flex-row gap-6">
-          <div className="w-full md:w-[60%]">
-            <div className="bg-card rounded-lg border border-border shadow-sm p-5">
-              <h2 className="font-serif text-xl font-bold border-l-4 border-primary pl-3 mb-4">今日涨跌速览</h2>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div className="w-[30%]">
+            <div className="mb-8">
+              <h2 className="text-lg font-semibold text-[#171717] mb-4">涨跌排行</h2>
+              <div className="space-y-6">
                 <div>
                   <div className="flex items-center gap-1.5 mb-3">
-                    <Flame className="w-4 h-4 text-rise" />
-                    <span className="text-sm font-medium text-rise">涨幅榜</span>
+                    <TrendingUp className="w-4 h-4 text-[#DC2626]" />
+                    <span className="text-sm font-medium text-[#DC2626]">涨幅榜</span>
                   </div>
-                  <ul className="space-y-2">
+                  <div className="space-y-2">
                     {topRisers.map((item, idx) => (
-                      <li key={item.id} className="flex items-center gap-3 text-sm">
-                        <span className={`w-5 h-5 rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0 ${idx < 3 ? 'bg-rise text-white' : 'bg-rise-bg text-rise'}`}>
+                      <div key={item.id} className="flex items-center gap-3">
+                        <span className={`w-5 h-5 rounded-full flex items-center justify-center text-xs font-semibold ${idx < 3 ? 'bg-[#DC2626] text-white' : 'bg-[#FEE2E2] text-[#DC2626]'}`}>
                           {idx + 1}
                         </span>
-                        <Link to={`/herb/${item.herbId}`} className="text-text hover:text-primary transition-colors truncate flex-1">
+                        <Link to={`/herb/${item.herbId}`} className="text-sm text-[#171717] hover:text-[#059669] flex-1 truncate">
                           {item.herbName}
-                          <span className="text-text-secondary ml-1 text-xs">{item.spec}</span>
                         </Link>
-                        <span className="text-rise font-mono font-medium flex-shrink-0">{formatChange(item.monthlyChange)}</span>
-                      </li>
+                        <span className="font-mono text-sm text-[#DC2626]">{formatChange(item.monthlyChange)}</span>
+                      </div>
                     ))}
-                  </ul>
+                  </div>
                 </div>
                 <div>
                   <div className="flex items-center gap-1.5 mb-3">
-                    <TrendingDown className="w-4 h-4 text-fall" />
-                    <span className="text-sm font-medium text-fall">跌幅榜</span>
+                    <TrendingDown className="w-4 h-4 text-[#16A34A]" />
+                    <span className="text-sm font-medium text-[#16A34A]">跌幅榜</span>
                   </div>
-                  <ul className="space-y-2">
+                  <div className="space-y-2">
                     {topFallers.map((item, idx) => (
-                      <li key={item.id} className="flex items-center gap-3 text-sm">
-                        <span className={`w-5 h-5 rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0 ${idx < 3 ? 'bg-fall text-white' : 'bg-fall-bg text-fall'}`}>
+                      <div key={item.id} className="flex items-center gap-3">
+                        <span className={`w-5 h-5 rounded-full flex items-center justify-center text-xs font-semibold ${idx < 3 ? 'bg-[#16A34A] text-white' : 'bg-[#DCFCE7] text-[#16A34A]'}`}>
                           {idx + 1}
                         </span>
-                        <Link to={`/herb/${item.herbId}`} className="text-text hover:text-primary transition-colors truncate flex-1">
+                        <Link to={`/herb/${item.herbId}`} className="text-sm text-[#171717] hover:text-[#059669] flex-1 truncate">
                           {item.herbName}
-                          <span className="text-text-secondary ml-1 text-xs">{item.spec}</span>
                         </Link>
-                        <span className="text-fall font-mono font-medium flex-shrink-0">{formatChange(item.monthlyChange)}</span>
-                      </li>
+                        <span className="font-mono text-sm text-[#16A34A]">{formatChange(item.monthlyChange)}</span>
+                      </div>
                     ))}
-                  </ul>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
 
-          <div className="w-full md:w-[40%]">
-            <div className="bg-card rounded-lg border border-border shadow-sm p-5 h-full">
-              <h2 className="font-serif text-xl font-bold border-l-4 border-primary pl-3 mb-4">热门品种</h2>
-              <div className="grid grid-cols-3 gap-2">
-                {hotHerbs.map(herb => (
+            <div className="border-t border-[#E5E5E5] mb-8"></div>
+
+            <div className="mb-8">
+              <h2 className="text-lg font-semibold text-[#171717] mb-4">热门品种</h2>
+              <div className="flex flex-wrap gap-2">
+                {hotHerbs.map((herb) => (
                   <Link
                     key={herb.id}
                     to={`/herb/${herb.id}`}
-                    className="inline-flex items-center justify-center px-3 py-1.5 text-sm rounded-full border border-primary text-primary hover:bg-primary hover:text-white transition-colors"
+                    className="px-3 py-1.5 text-sm border border-[#E5E5E5] rounded-full text-[#171717] hover:border-[#059669] hover:text-[#059669] transition-colors"
                   >
                     {herb.name}
                   </Link>
                 ))}
               </div>
             </div>
-          </div>
-        </div>
-      </section>
 
-      <section className="max-w-[1280px] mx-auto px-4 py-6">
-        <div className="bg-card rounded-lg border border-border shadow-sm p-5">
-          <div className="flex items-center justify-between mb-4">
-            <h2 className="font-serif text-xl font-bold border-l-4 border-primary pl-3">市场行情快报</h2>
-            <Link to="/price" className="text-primary-light text-sm hover:text-primary flex items-center gap-1 transition-colors">
-              查看更多 <ArrowRight className="w-3.5 h-3.5" />
-            </Link>
-          </div>
-          <PriceTable prices={latestPrices} />
-        </div>
-      </section>
+            <div className="border-t border-[#E5E5E5] mb-8"></div>
 
-      <section className="max-w-[1280px] mx-auto px-4 py-6">
-        <div className="flex flex-col md:flex-row gap-6">
-          <div className="w-full md:w-1/2">
-            <div className="bg-card rounded-lg border border-border shadow-sm p-5 h-full">
+            <div>
               <div className="flex items-center justify-between mb-4">
-                <h2 className="font-serif text-xl font-bold border-l-4 border-primary pl-3">最新供应</h2>
-                <Link to="/trade" className="text-primary-light text-sm hover:text-primary flex items-center gap-1 transition-colors">
-                  更多 <ArrowRight className="w-3.5 h-3.5" />
-                </Link>
+                <h2 className="text-lg font-semibold text-[#171717]">最新资讯</h2>
+                <Link to="/news" className="text-sm text-[#059669] hover:text-[#047857]">更多</Link>
               </div>
-              <ul className="space-y-3">
-                {supplyTrades.map(trade => (
-                  <li key={trade.id} className="border-b border-divider pb-3 last:border-0 last:pb-0">
-                    <div className="flex items-start justify-between mb-1">
-                      <Link to="/trade" className="font-medium text-text hover:text-primary transition-colors">
-                        {trade.herbName}
-                        <span className="text-text-secondary text-xs ml-1.5">{trade.spec}</span>
-                      </Link>
-                      <span className="text-primary font-mono text-sm font-medium">{trade.price}</span>
-                    </div>
-                    <div className="flex items-center gap-3 text-xs text-text-secondary">
-                      <span className="flex items-center gap-1">
-                        <Package className="w-3 h-3" />
-                        {trade.quantity}
-                      </span>
-                      <span>{trade.origin}</span>
-                    </div>
-                  </li>
+              <div className="space-y-3">
+                {latestNews.map((news) => (
+                  <Link key={news.id} to={`/news/${news.id}`} className="block py-2 border-b border-[#F0F0F0] last:border-0 hover:bg-[#D1FAE5] -mx-2 px-2 transition-colors">
+                    <div className="text-sm text-[#171717] line-clamp-1 mb-1">{news.title}</div>
+                    <div className="text-xs text-[#A3A3A3]">{formatDate(news.createdAt)}</div>
+                  </Link>
                 ))}
-              </ul>
-            </div>
-          </div>
-
-          <div className="w-full md:w-1/2">
-            <div className="bg-card rounded-lg border border-border shadow-sm p-5 h-full">
-              <div className="flex items-center justify-between mb-4">
-                <h2 className="font-serif text-xl font-bold border-l-4 border-primary pl-3">最新求购</h2>
-                <Link to="/trade" className="text-primary-light text-sm hover:text-primary flex items-center gap-1 transition-colors">
-                  更多 <ArrowRight className="w-3.5 h-3.5" />
-                </Link>
               </div>
-              <ul className="space-y-3">
-                {demandTrades.map(trade => (
-                  <li key={trade.id} className="border-b border-divider pb-3 last:border-0 last:pb-0">
-                    <div className="flex items-start justify-between mb-1">
-                      <Link to="/trade" className="font-medium text-text hover:text-primary transition-colors">
-                        {trade.herbName}
-                        <span className="text-text-secondary text-xs ml-1.5">{trade.spec}</span>
-                      </Link>
-                      <span className="text-primary font-mono text-sm font-medium">{trade.price}</span>
-                    </div>
-                    <div className="flex items-center gap-3 text-xs text-text-secondary">
-                      <span className="flex items-center gap-1">
-                        <ShoppingCart className="w-3 h-3" />
-                        {trade.quantity}
-                      </span>
-                      <span>{trade.quoteCount}条报价</span>
-                      <span>剩余{trade.remainingDays}天</span>
-                    </div>
-                  </li>
-                ))}
-              </ul>
             </div>
           </div>
         </div>
-      </section>
+      </div>
 
-      <section className="max-w-[1280px] mx-auto px-4 py-6">
-        <div className="flex items-center justify-between mb-4">
-          <h2 className="font-serif text-xl font-bold border-l-4 border-primary pl-3">行业资讯</h2>
-          <Link to="/news" className="text-primary-light text-sm hover:text-primary flex items-center gap-1 transition-colors">
-            更多 <ArrowRight className="w-3.5 h-3.5" />
-          </Link>
-        </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          {latestNews.map(news => (
-            <Link
-              key={news.id}
-              to={`/news/${news.id}`}
-              className="bg-card rounded-lg border border-border shadow-sm p-4 hover:shadow-md transition-shadow flex flex-col"
-            >
-              <div className="flex items-center gap-2 mb-2">
-                <span className="text-xs px-2 py-0.5 rounded-full bg-fall-bg text-primary font-medium">
-                  {categoryLabels[news.category]}
-                </span>
+      <div className="bg-[#FFFFFF] border-t border-[#E5E5E5]">
+        <div className="max-w-7xl mx-auto px-6 py-4">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-4">
+              <div className="relative">
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#A3A3A3]" />
+                <input
+                  type="text"
+                  placeholder="搜索品种、规格、产地..."
+                  className="pl-10 pr-4 py-2 w-80 border border-[#E5E5E5] rounded-lg text-sm focus:outline-none focus:border-[#059669]"
+                />
               </div>
-              <h3 className="text-sm font-medium text-text line-clamp-2 mb-2 flex-1">{news.title}</h3>
-              <div className="flex items-center justify-between text-xs text-text-secondary">
-                <span>{formatDate(news.createdAt)}</span>
-                <span>{news.views} 次浏览</span>
-              </div>
-            </Link>
-          ))}
-        </div>
-      </section>
-
-      <section className="max-w-[1280px] mx-auto px-4 py-6">
-        <div className="bg-card rounded-lg border border-border shadow-sm p-5">
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-            {quickTools.map(tool => (
-              <Link
-                key={tool.name}
-                to={tool.href}
-                className="flex flex-col items-center gap-2 py-4 rounded-lg hover:bg-row-hover transition-colors group"
-              >
-                <div className="w-12 h-12 rounded-full bg-fall-bg flex items-center justify-center group-hover:bg-primary group-hover:text-white transition-colors text-primary">
-                  <tool.icon className="w-5 h-5" />
-                </div>
-                <span className="text-sm font-medium text-text group-hover:text-primary transition-colors">{tool.name}</span>
-              </Link>
-            ))}
+            </div>
+            <div className="flex items-center gap-6 text-sm">
+              <Link to="/price" className="text-[#737373] hover:text-[#059669]">行情</Link>
+              <Link to="/trade" className="text-[#737373] hover:text-[#059669]">供求</Link>
+              <Link to="/price" className="text-[#737373] hover:text-[#059669]">排行</Link>
+              <Link to="/news" className="text-[#737373] hover:text-[#059669]">资讯</Link>
+            </div>
           </div>
         </div>
-      </section>
+      </div>
     </div>
   );
 }
