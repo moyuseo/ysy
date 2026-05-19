@@ -23,41 +23,41 @@ export default function Pagination({ current, total, pageSize, onChange }: Pagin
   }
 
   return (
-    <div className="flex items-center justify-center gap-2 mt-8">
+    <div className="flex items-center justify-center gap-1 mt-6">
       <button
         onClick={() => onChange(current - 1)}
         disabled={current === 1}
-        className="px-4 py-2 rounded-xl text-sm border border-border-light disabled:opacity-40 disabled:cursor-not-allowed hover:bg-primary-50 transition-all duration-300 bg-card shadow-sm"
+        className="px-3 py-1.5 text-sm rounded border border-border disabled:opacity-40 disabled:cursor-not-allowed hover:bg-fall-bg transition-colors"
       >
         上一页
       </button>
-      {pages.map((p, i) => (
+      {pages.map((p, i) =>
         typeof p === 'string' ? (
-          <span key={`ellipsis-${i}`} className="px-2 text-text-muted">
+          <span key={`ellipsis-${i}`} className="px-2 text-text-secondary">
             ...
           </span>
         ) : (
           <button
             key={p}
             onClick={() => onChange(p)}
-            className={`px-4 py-2 rounded-xl text-sm transition-all duration-300 ${
+            className={`px-3 py-1.5 text-sm rounded border transition-colors ${
               current === p
-                ? 'bg-primary text-white shadow-md'
-                : 'bg-card border border-border-light hover:bg-primary-50 text-text'
+                ? 'bg-primary text-white border-primary'
+                : 'border-border hover:bg-fall-bg'
             }`}
           >
             {p}
           </button>
         )
-      ))}
+      )}
       <button
         onClick={() => onChange(current + 1)}
         disabled={current === totalPages}
-        className="px-4 py-2 rounded-xl text-sm border border-border-light disabled:opacity-40 disabled:cursor-not-allowed hover:bg-primary-50 transition-all duration-300 bg-card shadow-sm"
+        className="px-3 py-1.5 text-sm rounded border border-border disabled:opacity-40 disabled:cursor-not-allowed hover:bg-fall-bg transition-colors"
       >
         下一页
       </button>
-      <span className="ml-4 text-xs text-text-muted">
+      <span className="ml-3 text-xs text-text-secondary">
         共 {total} 条
       </span>
     </div>

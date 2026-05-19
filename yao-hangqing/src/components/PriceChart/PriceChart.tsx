@@ -24,7 +24,7 @@ const TIME_RANGES = [
   { key: 'all', label: '全部' },
 ];
 
-const COLORS = ['#0F5132', '#DC2626', '#B45309', '#1565C0'];
+const COLORS = ['#1B5E20', '#D32F2F', '#C9A96E', '#1565C0'];
 
 export default function PriceChart({ history, specs, herbName }: PriceChartProps) {
   const [timeRange, setTimeRange] = useState('1y');
@@ -38,20 +38,20 @@ export default function PriceChart({ history, specs, herbName }: PriceChartProps
   const filteredHistory = filterByRange(history);
 
   return (
-    <div className="bg-card rounded-2xl p-6 border border-border-light shadow-sm">
-      <div className="flex items-center justify-between mb-6">
-        <h3 className="font-serif text-lg font-semibold text-text">
+    <div>
+      <div className="flex items-center justify-between mb-3">
+        <h3 className="text-sm font-medium text-text-secondary">
           {herbName} 价格走势
         </h3>
-        <div className="flex gap-2 bg-bg-alt p-1 rounded-xl">
+        <div className="flex gap-1">
           {TIME_RANGES.map((r) => (
             <button
               key={r.key}
               onClick={() => setTimeRange(r.key)}
-              className={`px-3 py-1.5 text-xs rounded-lg transition-all duration-300 ${
+              className={`px-2 py-0.5 text-xs rounded transition-colors ${
                 timeRange === r.key
-                  ? 'bg-primary text-white shadow-sm'
-                  : 'text-text-secondary hover:text-text'
+                  ? 'bg-primary text-white'
+                  : 'bg-row-alt text-text-secondary hover:bg-row-hover'
               }`}
             >
               {r.label}
@@ -60,32 +60,19 @@ export default function PriceChart({ history, specs, herbName }: PriceChartProps
         </div>
       </div>
 
-      <ResponsiveContainer width="100%" height={300}>
+      <ResponsiveContainer width="100%" height={280}>
         <LineChart data={filteredHistory}>
-          <CartesianGrid strokeDasharray="4 4" stroke="#E5E7EB" vertical={false} />
+          <CartesianGrid strokeDasharray="3 3" stroke="#E0E0E0" />
           <XAxis
             dataKey="date"
-            tick={{ fontSize: 12, fill: '#9CA3AF', fontFamily: 'system-ui' }}
+            tick={{ fontSize: 11, fill: '#666' }}
             tickFormatter={(v: string) => v.slice(5)}
-            axisLine={false}
-            tickLine={false}
-            dy={10}
           />
           <YAxis
-            tick={{ fontSize: 12, fill: '#9CA3AF', fontFamily: 'system-ui' }}
+            tick={{ fontSize: 11, fill: '#666' }}
             tickFormatter={(v: number) => `¥${v}`}
-            axisLine={false}
-            tickLine={false}
-            dx={-10}
           />
           <Tooltip
-            contentStyle={{
-              backgroundColor: '#FFFFFF',
-              border: '1px solid #E5E7EB',
-              borderRadius: '12px',
-              boxShadow: '0 10px 25px -5px rgba(0, 0, 0, 0.1)',
-              padding: '12px',
-            }}
             formatter={(value: unknown) => [`¥${value}`, herbName]}
             labelFormatter={(label: unknown) => `日期: ${String(label)}`}
           />
@@ -93,9 +80,9 @@ export default function PriceChart({ history, specs, herbName }: PriceChartProps
             type="monotone"
             dataKey="price"
             stroke={COLORS[0]}
-            strokeWidth={3}
-            dot={{ r: 4, fill: COLORS[0], strokeWidth: 2, stroke: '#FFFFFF' }}
-            activeDot={{ r: 6, fill: COLORS[0], strokeWidth: 2, stroke: '#FFFFFF' }}
+            strokeWidth={2}
+            dot={false}
+            activeDot={{ r: 4 }}
             name={herbName}
           />
           {specs?.map((s, i) => (
@@ -105,7 +92,7 @@ export default function PriceChart({ history, specs, herbName }: PriceChartProps
               data={filterByRange(s.history)}
               dataKey="price"
               stroke={COLORS[(i + 1) % COLORS.length]}
-              strokeWidth={2}
+              strokeWidth={1.5}
               dot={false}
               name={s.spec}
             />
