@@ -1,6 +1,8 @@
 import { useState, useMemo } from 'react';
 import { Link } from 'react-router-dom';
+import { Pin, Eye, CalendarDays } from 'lucide-react';
 import { newsList } from '../../data/news';
+import { herbs } from '../../data/herbs';
 import TabNav from '../../components/TabNav/TabNav';
 import Pagination from '../../components/Pagination/Pagination';
 import { formatDate } from '../../utils/format';
@@ -26,15 +28,10 @@ const PAGE_SIZE = 10;
 export default function News() {
   const [activeTab, setActiveTab] = useState('analysis');
   const [currentPage, setCurrentPage] = useState(1);
-  const [selectedHerb, setSelectedHerb] = useState('');
 
   const filteredNews = useMemo(() => {
-    let result = newsList.filter(n => n.category === activeTab);
-    if (selectedHerb) {
-      result = result.filter(n => n.herbNames.includes(selectedHerb));
-    }
-    return result;
-  }, [activeTab, selectedHerb]);
+    return newsList.filter(n => n.category === activeTab);
+  }, [activeTab]);
 
   const pagedNews = useMemo(() => {
     const start = (currentPage - 1) * PAGE_SIZE;
@@ -46,18 +43,9 @@ export default function News() {
     [],
   );
 
-  const newsHerbNames = useMemo(() => {
-    const names = new Set<string>();
-    newsList.filter(n => n.category === activeTab).forEach(n => {
-      n.herbNames.forEach(name => names.add(name));
-    });
-    return Array.from(names);
-  }, [activeTab]);
-
   const handleTabChange = (key: string) => {
     setActiveTab(key);
     setCurrentPage(1);
-    setSelectedHerb('');
   };
 
   return (
@@ -75,21 +63,19 @@ export default function News() {
               {pagedNews.map(news => (
                 <div
                   key={news.id}
-                  className="bg-card rounded-lg border border-border p-5 shadow-sm hover:shadow-md transition-shadow"
+                  className="bg-card rounded-lg border border-border p-5 hover:shadow-md transition-shadow"
                 >
                   <div className="flex items-center gap-2 mb-2">
                     {news.isPinned && (
-                      <span className="text-xs px-2 py-0.5 rounded bg-rise text-white font-medium">
+                      <span className="inline-flex items-center gap-1 text-xs px-2 py-0.5 rounded bg-rise text-white font-medium">
+                        <Pin className="w-3 h-3" />
                         置顶
                       </span>
                     )}
-                    <span className="text-xs px-2 py-0.5 rounded bg-fall-bg text-primary font-medium">
-                      {CATEGORY_LABELS[news.category]}
-                    </span>
                   </div>
                   <Link
                     to={`/news/${news.id}`}
-                    className="text-base font-medium text-text hover:text-primary transition-colors block mb-1.5"
+                    className="font-medium text-text hover:text-primary transition-colors block mb-1.5"
                   >
                     {news.title}
                   </Link>
@@ -97,23 +83,23 @@ export default function News() {
                     {news.summary}
                   </p>
                   <div className="flex items-center gap-4 text-xs text-text-secondary">
-                    <span>{formatDate(news.createdAt)}</span>
-                    <span>{news.views} 次浏览</span>
-                    {news.herbNames.length > 0 && (
-                      <div className="flex items-center gap-1">
-                        {news.herbNames.slice(0, 3).map(name => (
-                          <span key={name} className="px-1.5 py-0.5 bg-bg rounded text-text-secondary">
-                            {name}
-                          </span>
-                        ))}
-                      </div>
-                    )}
+                    <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded bg-fall-bg text-primary font-medium">
+                      {CATEGORY_LABELS[news.category]}
+                    </span>
+                    <span className="inline-flex items-center gap-1">
+                      <CalendarDays className="w-3.5 h-3.5" />
+                      {formatDate(news.createdAt)}
+                    </span>
+                    <span className="inline-flex items-center gap-1">
+                      <Eye className="w-3.5 h-3.5" />
+                      {news.views}
+                    </span>
                   </div>
                 </div>
               ))}
             </div>
           ) : (
-            <div className="bg-card rounded-lg border border-border p-8 shadow-sm text-center">
+            <div className="bg-card rounded-lg border border-border p-8 text-center">
               <p className="text-text-secondary">暂无相关资讯</p>
             </div>
           )}
@@ -127,7 +113,7 @@ export default function News() {
         </div>
 
         <div className="w-full lg:w-[30%] space-y-6">
-          <div className="bg-card rounded-lg border border-border p-5 shadow-sm">
+          <div className="bg-card rounded-lg border border-border p-5">
             <h2 className="font-serif text-lg border-l-4 border-primary pl-3 mb-4">热门资讯</h2>
             <ul className="space-y-3">
               {hotNews.map((news, idx) => (
@@ -135,8 +121,8 @@ export default function News() {
                   <span
                     className={`shrink-0 w-5 h-5 rounded text-xs flex items-center justify-center font-medium ${
                       idx < 3
-                        ? 'bg-rise text-white'
-                        : 'bg-border text-text-secondary'
+                        ? 'text-rise'
+                        : 'text-text-secondary'
                     }`}
                   >
                     {idx + 1}
@@ -152,31 +138,17 @@ export default function News() {
             </ul>
           </div>
 
-          <div className="bg-card rounded-lg border border-border p-5 shadow-sm">
+          <div className="bg-card rounded-lg border border-border p-5">
             <h2 className="font-serif text-lg border-l-4 border-primary pl-3 mb-4">按品种筛选</h2>
             <div className="flex flex-wrap gap-2">
-              <button
-                onClick={() => { setSelectedHerb(''); setCurrentPage(1); }}
-                className={`px-3 py-1.5 text-sm rounded-full border transition-colors ${
-                  selectedHerb === ''
-                    ? 'bg-primary text-white border-primary'
-                    : 'bg-fall-bg text-primary border-primary/20 hover:bg-primary hover:text-white'
-                }`}
-              >
-                全部
-              </button>
-              {newsHerbNames.map(name => (
-                <button
-                  key={name}
-                  onClick={() => { setSelectedHerb(name); setCurrentPage(1); }}
-                  className={`px-3 py-1.5 text-sm rounded-full border transition-colors ${
-                    selectedHerb === name
-                      ? 'bg-primary text-white border-primary'
-                      : 'bg-fall-bg text-primary border-primary/20 hover:bg-primary hover:text-white'
-                  }`}
+              {herbs.slice(0, 16).map(herb => (
+                <Link
+                  key={herb.id}
+                  to={`/search?q=${encodeURIComponent(herb.name)}`}
+                  className="px-3 py-1.5 text-sm rounded-full border border-primary/20 bg-fall-bg text-primary hover:bg-primary hover:text-white transition-colors"
                 >
-                  {name}
-                </button>
+                  {herb.name}
+                </Link>
               ))}
             </div>
           </div>

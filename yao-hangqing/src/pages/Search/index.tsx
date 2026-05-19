@@ -1,6 +1,6 @@
 import { useState, useMemo } from 'react';
 import { useSearchParams, Link } from 'react-router-dom';
-import { Search } from 'lucide-react';
+import { Search, Filter, ArrowRight, Leaf } from 'lucide-react';
 import { herbs } from '../../data/herbs';
 import { marketPrices } from '../../data/prices';
 import { newsList } from '../../data/news';
@@ -68,10 +68,8 @@ export default function SearchPage() {
     if (e.key === 'Enter') handleSearch();
   };
 
-  const getHerbPrice = (herbId: string) => {
-    const prices = marketPrices.filter(p => p.herbId === herbId);
-    if (prices.length === 0) return null;
-    return prices[0];
+  const getHerbPrices = (herbId: string) => {
+    return marketPrices.filter(p => p.herbId === herbId);
   };
 
   return (
@@ -85,11 +83,11 @@ export default function SearchPage() {
             onChange={e => setQuery(e.target.value)}
             onKeyDown={handleKeyDown}
             placeholder="输入药材名称、别名或拼音搜索..."
-            className="w-full border border-border rounded-lg pl-12 pr-4 py-3 text-base focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary shadow-sm"
+            className="w-full border border-border rounded-lg pl-12 pr-24 py-3.5 text-base focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary bg-card"
           />
           <button
             onClick={handleSearch}
-            className="absolute right-2 top-1/2 -translate-y-1/2 bg-primary text-white px-4 py-1.5 rounded-md text-sm hover:bg-primary-light transition-colors"
+            className="absolute right-2 top-1/2 -translate-y-1/2 bg-primary text-white px-5 py-2 rounded-md text-sm hover:bg-primary-light transition-colors"
           >
             搜索
           </button>
@@ -98,13 +96,14 @@ export default function SearchPage() {
 
       {searchTerm.trim() && (
         <>
-          <div className="mb-4 text-sm text-text-secondary">
+          <div className="mb-5 text-sm text-text-secondary">
             搜索 "<span className="text-text font-medium">{searchTerm}</span>" 共找到 <span className="text-text font-medium">{filteredHerbs.length}</span> 个品种
             {relatedNews.length > 0 && `、${relatedNews.length} 条资讯`}
           </div>
 
-          {categoriesWithResults.length > 1 && (
-            <div className="flex flex-wrap gap-2 mb-6">
+          {categoriesWithResults.length > 0 && (
+            <div className="flex flex-wrap items-center gap-2 mb-6">
+              <Filter className="w-4 h-4 text-text-secondary" />
               <button
                 onClick={() => setCategoryFilter('')}
                 className={`px-3 py-1.5 text-sm rounded-full border transition-colors ${
@@ -134,67 +133,91 @@ export default function SearchPage() {
           {filteredHerbs.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
               {filteredHerbs.map(herb => {
-                const priceInfo = getHerbPrice(herb.id);
+                const prices = getHerbPrices(herb.id);
+                const minPrice = prices.length > 0 ? Math.min(...prices.map(p => p.currentPrice)) : null;
+                const maxPrice = prices.length > 0 ? Math.max(...prices.map(p => p.currentPrice)) : null;
                 return (
                   <div
                     key={herb.id}
-                    className="bg-card rounded-lg border border-border p-5 shadow-sm hover:shadow-md transition-shadow"
+                    className="bg-card rounded-lg border border-border p-5 hover:shadow-md transition-shadow"
                   >
                     <div className="flex items-start justify-between mb-2">
-                      <div>
-                        <Link
-                          to={`/herb/${herb.id}`}
-                          className="text-base font-medium text-text hover:text-primary transition-colors"
-                        >
-                          {herb.name}
-                        </Link>
-                        {herb.alias.length > 0 && (
-                          <span className="text-text-secondary text-xs ml-2">
-                            （{herb.alias.slice(0, 3).join('、')}）
-                          </span>
-                        )}
-                      </div>
-                      <span className="text-xs px-2 py-0.5 rounded bg-fall-bg text-primary shrink-0">
+                      <Link
+                        to={`/herb/${herb.id}`}
+                        className="text-lg font-medium text-text hover:text-primary transition-colors"
+                      >
+                        {herb.name}
+                      </Link>
+                    </div>
+
+                    {herb.alias.length > 0 && (
+                      <p className="text-xs text-text-secondary mb-2">
+                        别名：{herb.alias.slice(0, 3).join('、')}
+                      </p>
+                    )}
+
+                    <div className="flex items-center gap-2 mb-3">
+                      <span className="text-xs px-2 py-0.5 rounded bg-fall-bg text-primary">
                         {CATEGORY_MAP[herb.category] || herb.category}
+                      </span>
+                      <span className="text-xs px-2 py-0.5 rounded bg-row-alt text-text-secondary">
+                        {herb.family}
                       </span>
                     </div>
 
-                    {priceInfo && (
-                      <div className="flex items-center gap-3 mb-2 text-sm">
-                        <span className="text-text font-medium">{formatPrice(priceInfo.currentPrice)}</span>
-                        <span
-                          className={
-                            priceInfo.trend === 'up'
-                              ? 'text-rise'
-                              : priceInfo.trend === 'down'
-                                ? 'text-fall'
-                                : 'text-stable'
-                          }
-                        >
-                          {formatChange(priceInfo.monthlyChange)}
-                        </span>
-                        <span className="text-text-secondary text-xs">{priceInfo.market}</span>
+                    {prices.length > 0 && minPrice !== null && maxPrice !== null && (
+                      <div className="mb-3 p-3 bg-row-alt rounded-md">
+                        <div className="text-xs text-text-secondary mb-1">市场行情</div>
+                        <div className="flex items-center gap-3 text-sm">
+                          <span className="text-text font-medium">
+                            {minPrice === maxPrice
+                              ? formatPrice(minPrice)
+                              : `${formatPrice(minPrice)} ~ ${formatPrice(maxPrice)}`}
+                          </span>
+                          {prices[0] && (
+                            <span
+                              className={
+                                prices[0].trend === 'up'
+                                  ? 'text-rise'
+                                  : prices[0].trend === 'down'
+                                    ? 'text-fall'
+                                    : 'text-stable'
+                              }
+                            >
+                              {formatChange(prices[0].monthlyChange)}
+                            </span>
+                          )}
+                        </div>
+                        <div className="text-xs text-text-secondary mt-1">
+                          {prices.map(p => p.market).join('、')}
+                        </div>
                       </div>
                     )}
 
                     <div className="text-xs text-text-secondary mb-2">
-                      产地：{herb.origin.join('、')}
+                      <span className="inline-flex items-center gap-1">
+                        <Leaf className="w-3 h-3" />
+                        产地：{herb.origin.join('、')}
+                      </span>
                     </div>
+
                     <p className="text-sm text-text-secondary line-clamp-2 mb-3">
                       {herb.effect}
                     </p>
+
                     <Link
                       to={`/herb/${herb.id}`}
-                      className="text-sm text-primary hover:text-primary-light transition-colors"
+                      className="inline-flex items-center gap-1 text-sm text-primary hover:text-primary-light transition-colors"
                     >
-                      查看详情 →
+                      查看详情
+                      <ArrowRight className="w-3.5 h-3.5" />
                     </Link>
                   </div>
                 );
               })}
             </div>
           ) : (
-            <div className="bg-card rounded-lg border border-border p-8 shadow-sm text-center mb-8">
+            <div className="bg-card rounded-lg border border-border p-8 text-center mb-8">
               <p className="text-text-secondary">未找到匹配的药材品种</p>
             </div>
           )}
@@ -207,7 +230,7 @@ export default function SearchPage() {
                   <Link
                     key={news.id}
                     to={`/news/${news.id}`}
-                    className="block bg-card rounded-lg border border-border p-4 shadow-sm hover:shadow-md transition-shadow"
+                    className="block bg-card rounded-lg border border-border p-4 hover:shadow-md transition-shadow"
                   >
                     <div className="flex items-center gap-2 mb-1">
                       <span className="text-xs px-2 py-0.5 rounded bg-fall-bg text-primary font-medium">
@@ -228,7 +251,7 @@ export default function SearchPage() {
       )}
 
       {!searchTerm.trim() && (
-        <div className="bg-card rounded-lg border border-border p-8 shadow-sm text-center">
+        <div className="bg-card rounded-lg border border-border p-8 text-center">
           <Search className="w-12 h-12 text-border mx-auto mb-3" />
           <p className="text-text-secondary">输入关键词开始搜索中药材品种和资讯</p>
         </div>

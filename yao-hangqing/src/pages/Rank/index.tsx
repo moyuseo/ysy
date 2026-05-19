@@ -1,6 +1,6 @@
 import { useState, useMemo } from 'react';
 import { Link } from 'react-router-dom';
-import { TrendingUp, TrendingDown, Flame } from 'lucide-react';
+import { TrendingUp, TrendingDown, Flame, Trophy, Medal, Award } from 'lucide-react';
 import { marketPrices } from '../../data/prices';
 import { herbs } from '../../data/herbs';
 import TabNav from '../../components/TabNav/TabNav';
@@ -23,7 +23,11 @@ const TIME_RANGES = [
 
 const PAGE_SIZE = 20;
 
-const RANK_MEDALS = ['🥇', '🥈', '🥉'];
+const RANK_ICONS = [
+  { icon: Trophy, cls: 'text-gold bg-gold/10' },
+  { icon: Medal, cls: 'text-gray-400 bg-gray-100' },
+  { icon: Award, cls: 'text-amber-700 bg-amber-50' },
+];
 
 export default function RankPage() {
   const [activeTab, setActiveTab] = useState('rise');
@@ -90,7 +94,7 @@ export default function RankPage() {
           <table className="w-full text-sm">
             <thead>
               <tr className="border-b border-border bg-bg">
-                <th className="text-left px-4 py-3 font-medium text-text-secondary w-16">排名</th>
+                <th className="text-left px-4 py-3 font-medium text-text-secondary w-20">排名</th>
                 <th className="text-left px-4 py-3 font-medium text-text-secondary">品种</th>
                 <th className="text-left px-4 py-3 font-medium text-text-secondary">规格</th>
                 <th className="text-left px-4 py-3 font-medium text-text-secondary">市场</th>
@@ -102,13 +106,22 @@ export default function RankPage() {
             <tbody>
               {pagedRiseData.map((item, idx) => {
                 const globalIdx = (currentPage - 1) * PAGE_SIZE + idx;
+                const isTop3 = globalIdx < 3;
+                const RankIcon = isTop3 ? RANK_ICONS[globalIdx].icon : null;
                 return (
-                  <tr key={item.id} className="border-b border-divider hover:bg-row-hover transition-colors">
+                  <tr
+                    key={item.id}
+                    className={`border-b border-divider hover:bg-row-hover transition-colors ${
+                      isTop3 ? RANK_ICONS[globalIdx].cls : ''
+                    }`}
+                  >
                     <td className="px-4 py-3">
-                      {globalIdx < 3 ? (
-                        <span className="text-lg">{RANK_MEDALS[globalIdx]}</span>
+                      {isTop3 && RankIcon ? (
+                        <span className="inline-flex items-center justify-center w-7 h-7 rounded-full bg-white/80">
+                          <RankIcon className="w-4 h-4" />
+                        </span>
                       ) : (
-                        <span className="text-text-secondary">{globalIdx + 1}</span>
+                        <span className="text-text-secondary pl-1.5">{globalIdx + 1}</span>
                       )}
                     </td>
                     <td className="px-4 py-3">
@@ -119,7 +132,7 @@ export default function RankPage() {
                     <td className="px-4 py-3 text-text-secondary">{item.spec}</td>
                     <td className="px-4 py-3 text-text-secondary">{item.market}</td>
                     <td className="px-4 py-3 text-right font-mono">{formatPrice(item.currentPrice)}</td>
-                    <td className="px-4 py-3 text-right font-mono text-rise font-medium">{formatChange(item.monthlyChange)}</td>
+                    <td className="px-4 py-3 text-right font-mono text-rise font-bold">{formatChange(item.monthlyChange)}</td>
                     <td className="px-4 py-3 text-center">
                       <TrendingUp className="w-4 h-4 text-rise inline" />
                     </td>
@@ -143,7 +156,7 @@ export default function RankPage() {
           <table className="w-full text-sm">
             <thead>
               <tr className="border-b border-border bg-bg">
-                <th className="text-left px-4 py-3 font-medium text-text-secondary w-16">排名</th>
+                <th className="text-left px-4 py-3 font-medium text-text-secondary w-20">排名</th>
                 <th className="text-left px-4 py-3 font-medium text-text-secondary">品种</th>
                 <th className="text-left px-4 py-3 font-medium text-text-secondary">规格</th>
                 <th className="text-left px-4 py-3 font-medium text-text-secondary">市场</th>
@@ -155,13 +168,22 @@ export default function RankPage() {
             <tbody>
               {pagedFallData.map((item, idx) => {
                 const globalIdx = (currentPage - 1) * PAGE_SIZE + idx;
+                const isTop3 = globalIdx < 3;
+                const RankIcon = isTop3 ? RANK_ICONS[globalIdx].icon : null;
                 return (
-                  <tr key={item.id} className="border-b border-divider hover:bg-row-hover transition-colors">
+                  <tr
+                    key={item.id}
+                    className={`border-b border-divider hover:bg-row-hover transition-colors ${
+                      isTop3 ? RANK_ICONS[globalIdx].cls : ''
+                    }`}
+                  >
                     <td className="px-4 py-3">
-                      {globalIdx < 3 ? (
-                        <span className="text-lg">{RANK_MEDALS[globalIdx]}</span>
+                      {isTop3 && RankIcon ? (
+                        <span className="inline-flex items-center justify-center w-7 h-7 rounded-full bg-white/80">
+                          <RankIcon className="w-4 h-4" />
+                        </span>
                       ) : (
-                        <span className="text-text-secondary">{globalIdx + 1}</span>
+                        <span className="text-text-secondary pl-1.5">{globalIdx + 1}</span>
                       )}
                     </td>
                     <td className="px-4 py-3">
@@ -172,7 +194,7 @@ export default function RankPage() {
                     <td className="px-4 py-3 text-text-secondary">{item.spec}</td>
                     <td className="px-4 py-3 text-text-secondary">{item.market}</td>
                     <td className="px-4 py-3 text-right font-mono">{formatPrice(item.currentPrice)}</td>
-                    <td className="px-4 py-3 text-right font-mono text-fall font-medium">{formatChange(item.monthlyChange)}</td>
+                    <td className="px-4 py-3 text-right font-mono text-fall font-bold">{formatChange(item.monthlyChange)}</td>
                     <td className="px-4 py-3 text-center">
                       <TrendingDown className="w-4 h-4 text-fall inline" />
                     </td>
@@ -196,7 +218,7 @@ export default function RankPage() {
           <table className="w-full text-sm">
             <thead>
               <tr className="border-b border-border bg-bg">
-                <th className="text-left px-4 py-3 font-medium text-text-secondary w-16">排名</th>
+                <th className="text-left px-4 py-3 font-medium text-text-secondary w-20">排名</th>
                 <th className="text-left px-4 py-3 font-medium text-text-secondary">品名</th>
                 <th className="text-left px-4 py-3 font-medium text-text-secondary">搜索热度</th>
                 <th className="text-right px-4 py-3 font-medium text-text-secondary">当前价</th>
@@ -207,13 +229,22 @@ export default function RankPage() {
               {hotHerbs.map((herb, idx) => {
                 const priceEntry = marketPrices.find(p => p.herbId === herb.id);
                 const fireCount = Math.max(1, 5 - Math.floor(idx / 3));
+                const isTop3 = idx < 3;
+                const RankIcon = isTop3 ? RANK_ICONS[idx].icon : null;
                 return (
-                  <tr key={herb.id} className="border-b border-divider hover:bg-row-hover transition-colors">
+                  <tr
+                    key={herb.id}
+                    className={`border-b border-divider hover:bg-row-hover transition-colors ${
+                      isTop3 ? RANK_ICONS[idx].cls : ''
+                    }`}
+                  >
                     <td className="px-4 py-3">
-                      {idx < 3 ? (
-                        <span className="text-lg">{RANK_MEDALS[idx]}</span>
+                      {isTop3 && RankIcon ? (
+                        <span className="inline-flex items-center justify-center w-7 h-7 rounded-full bg-white/80">
+                          <RankIcon className="w-4 h-4" />
+                        </span>
                       ) : (
-                        <span className="text-text-secondary">{idx + 1}</span>
+                        <span className="text-text-secondary pl-1.5">{idx + 1}</span>
                       )}
                     </td>
                     <td className="px-4 py-3">
@@ -233,7 +264,7 @@ export default function RankPage() {
                     </td>
                     <td className="px-4 py-3 text-right font-mono">
                       {priceEntry ? (
-                        <span className={priceEntry.dailyChange > 0 ? 'text-rise' : priceEntry.dailyChange < 0 ? 'text-fall' : 'text-text-secondary'}>
+                        <span className={priceEntry.dailyChange > 0 ? 'text-rise font-bold' : priceEntry.dailyChange < 0 ? 'text-fall font-bold' : 'text-text-secondary'}>
                           {formatChange(priceEntry.dailyChange)}
                         </span>
                       ) : '-'}
@@ -247,33 +278,35 @@ export default function RankPage() {
       )}
 
       {activeTab === 'bull' && (
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-          {bullHerbs.map(item => (
-            <Link
-              key={item.id}
-              to={`/herb/${item.herbId}`}
-              className="bg-card rounded-lg border border-border p-4 shadow-sm hover:shadow-md transition flex items-center gap-3"
-            >
-              <div className="shrink-0 w-10 h-10 rounded-full bg-rise/10 flex items-center justify-center">
-                <TrendingUp className="w-5 h-5 text-rise" />
-              </div>
-              <div className="flex-1 min-w-0">
-                <div className="flex items-center justify-between mb-1">
-                  <span className="font-medium text-text">{item.herbName}</span>
-                  <span className="text-xs text-text-secondary">{item.spec}</span>
-                </div>
-                <div className="flex items-center justify-between">
-                  <span className="font-mono text-sm">{formatPrice(item.currentPrice)}</span>
-                  <span className="font-mono text-sm text-rise font-medium">{formatChange(item.monthlyChange)}</span>
-                </div>
-              </div>
-            </Link>
-          ))}
-        </div>
-      )}
-
-      {activeTab === 'bull' && bullHerbs.length === 0 && (
-        <div className="text-center py-12 text-text-secondary">暂无牛气品种</div>
+        <>
+          {bullHerbs.length === 0 ? (
+            <div className="text-center py-12 text-text-secondary">暂无牛气品种</div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+              {bullHerbs.map(item => (
+                <Link
+                  key={item.id}
+                  to={`/herb/${item.herbId}`}
+                  className="bg-card rounded-lg border border-border p-5 shadow-sm hover:shadow-md transition flex items-center gap-4 border-l-4 border-l-primary"
+                >
+                  <div className="shrink-0 w-12 h-12 rounded-full bg-rise-bg flex items-center justify-center">
+                    <TrendingUp className="w-6 h-6 text-rise" />
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center justify-between mb-1">
+                      <span className="font-semibold text-text">{item.herbName}</span>
+                      <span className="text-xs text-text-secondary">{item.spec}</span>
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <span className="font-mono text-sm text-text">{formatPrice(item.currentPrice)}</span>
+                      <span className="font-mono text-sm text-rise font-bold">{formatChange(item.monthlyChange)}</span>
+                    </div>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          )}
+        </>
       )}
     </div>
   );

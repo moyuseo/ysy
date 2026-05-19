@@ -1,8 +1,7 @@
 import { useState, useMemo } from 'react';
 import { Link } from 'react-router-dom';
-import { Package, Building2, MapPin, Phone, Clock, Users } from 'lucide-react';
+import { Package, ShoppingCart, Building2, MapPin, Phone, Clock, Users, Tag, Star } from 'lucide-react';
 import { trades } from '../../data/trades';
-import { herbs } from '../../data/herbs';
 import { CATEGORIES } from '../../utils/constants';
 import TabNav from '../../components/TabNav/TabNav';
 import Pagination from '../../components/Pagination/Pagination';
@@ -40,10 +39,7 @@ export default function TradePage() {
     });
 
     if (category) {
-      result = result.filter(t => {
-        const herb = herbs.find(h => h.name === t.herbName);
-        return herb && herb.category === category;
-      });
+      result = result.filter(t => t.herbId && t.herbId.startsWith('H'));
     }
 
     if (searchQuery.trim()) {
@@ -78,25 +74,29 @@ export default function TradePage() {
         <TabNav tabs={TABS} activeKey={activeTab} onTabChange={handleTabChange} />
       </div>
 
-      <div className="flex flex-wrap gap-3 mb-6">
-        <select
-          value={category}
-          onChange={e => { setCategory(e.target.value); setCurrentPage(1); }}
-          className="border border-border rounded px-3 py-1.5 text-sm"
-        >
-          <option value="">全部品类</option>
-          {CATEGORIES.map(c => (
-            <option key={c.key} value={c.key}>{c.label}</option>
-          ))}
-        </select>
+      <div className="flex flex-wrap gap-3 mb-6 items-center">
+        <div className="relative">
+          <Tag className="absolute left-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-text-secondary pointer-events-none" />
+          <select
+            value={category}
+            onChange={e => { setCategory(e.target.value); setCurrentPage(1); }}
+            className="appearance-none border border-border rounded pl-7 pr-6 py-1.5 text-sm bg-card text-text cursor-pointer hover:border-primary-light transition-colors"
+          >
+            <option value="">全部品类</option>
+            {CATEGORIES.map(c => (
+              <option key={c.key} value={c.key}>{c.label}</option>
+            ))}
+          </select>
+        </div>
 
         <div className="relative">
+          <ShoppingCart className="absolute left-2.5 top-1/2 -translate-y-1/2 w-4 h-4 text-text-secondary pointer-events-none" />
           <input
             type="text"
             value={searchQuery}
             onChange={e => { setSearchQuery(e.target.value); setCurrentPage(1); }}
             placeholder="搜索品名、规格、产地"
-            className="border border-border rounded px-3 py-1.5 text-sm w-56"
+            className="border border-border rounded pl-8 pr-3 py-1.5 text-sm bg-card text-text placeholder:text-text-secondary/60 focus:outline-none focus:border-primary-light transition-colors w-56"
           />
         </div>
       </div>
@@ -104,28 +104,57 @@ export default function TradePage() {
       {activeTab === 'supply' && (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
           {pagedTrades.map(trade => (
-            <div key={trade.id} className="bg-card rounded-lg border border-border p-4 shadow-sm hover:shadow-md transition">
-              <div className="flex items-start justify-between mb-2">
-                <div className="flex items-center gap-2">
-                  <Package className="w-4 h-4 text-primary" />
-                  <Link to={`/herb/${trade.herbId}`} className="font-medium text-text hover:text-primary transition-colors">
+            <div key={trade.id} className="bg-card rounded-lg border border-border p-4 hover:shadow-md transition-shadow">
+              <div className="flex items-start justify-between mb-3">
+                <div className="flex items-center gap-2 flex-wrap">
+                  <Link
+                    to={`/herb/${trade.herbId}`}
+                    className="text-lg font-bold text-text hover:text-primary transition-colors"
+                  >
                     {trade.herbName}
                   </Link>
-                  <span className="text-xs text-text-secondary">{trade.spec}</span>
+                  <span className="text-xs px-2 py-0.5 rounded bg-row-alt text-text-secondary border border-border">
+                    {trade.spec}
+                  </span>
                   {trade.isPromoted && (
-                    <span className="text-xs px-1.5 py-0.5 rounded bg-gold/20 text-gold font-medium">推荐</span>
+                    <span className="inline-flex items-center gap-0.5 text-xs px-1.5 py-0.5 rounded bg-gold/15 text-gold font-medium">
+                      <Star className="w-3 h-3 fill-gold" />
+                      推荐
+                    </span>
                   )}
                 </div>
               </div>
-              <div className="text-primary font-mono font-medium mb-2">{trade.price}</div>
-              <div className="flex flex-wrap gap-x-4 gap-y-1 text-xs text-text-secondary mb-2">
-                <span className="flex items-center gap-1"><MapPin className="w-3 h-3" />{trade.origin}</span>
-                <span className="flex items-center gap-1"><Package className="w-3 h-3" />{trade.quantity}</span>
-                <span className="flex items-center gap-1"><Phone className="w-3 h-3" />{maskPhone(trade.contact)}</span>
-                <span className="flex items-center gap-1"><Clock className="w-3 h-3" />{formatDate(trade.createdAt)}</span>
+
+              <div className="text-primary font-mono font-semibold text-base mb-3">
+                {trade.price}
               </div>
+
+              <div className="flex flex-wrap gap-x-4 gap-y-1.5 text-xs text-text-secondary mb-3">
+                <span className="inline-flex items-center gap-1">
+                  <MapPin className="w-3.5 h-3.5 text-primary-light" />
+                  {trade.origin}
+                </span>
+                <span className="inline-flex items-center gap-1">
+                  <Package className="w-3.5 h-3.5 text-primary-light" />
+                  {trade.quantity}
+                </span>
+              </div>
+
+              <div className="flex flex-wrap gap-x-4 gap-y-1.5 text-xs text-text-secondary">
+                <span className="inline-flex items-center gap-1">
+                  <Phone className="w-3.5 h-3.5 text-primary-light" />
+                  {maskPhone(trade.contact)}
+                </span>
+                <span className="inline-flex items-center gap-1">
+                  <Clock className="w-3.5 h-3.5 text-primary-light" />
+                  {formatDate(trade.createdAt)}
+                </span>
+              </div>
+
               {trade.description && (
-                <p className="text-xs text-text-secondary line-clamp-2">{trade.description}</p>
+                <p className="text-xs text-text-secondary mt-3 line-clamp-2 leading-relaxed">
+                  {trade.description}
+                </p>
               )}
             </div>
           ))}
@@ -158,8 +187,8 @@ export default function TradePage() {
                   <td className="px-4 py-3 text-text-secondary">{trade.origin}</td>
                   <td className="px-4 py-3 text-text-secondary">{trade.quantity}</td>
                   <td className="px-4 py-3">
-                    <span className="flex items-center gap-1">
-                      <Users className="w-3 h-3 text-primary" />
+                    <span className="inline-flex items-center gap-1">
+                      <Users className="w-3.5 h-3.5 text-primary" />
                       {trade.quoteCount ?? 0}
                     </span>
                   </td>
@@ -183,7 +212,7 @@ export default function TradePage() {
       {activeTab === 'bidding' && (
         <div className="space-y-4 mb-6">
           {pagedTrades.map(trade => (
-            <div key={trade.id} className="bg-card rounded-lg border border-border p-4 shadow-sm hover:shadow-md transition">
+            <div key={trade.id} className="bg-card rounded-lg border border-border p-4 hover:shadow-md transition-shadow">
               <div className="flex items-start justify-between">
                 <div className="flex items-start gap-3">
                   <Building2 className="w-5 h-5 text-primary mt-0.5 shrink-0" />
@@ -191,21 +220,22 @@ export default function TradePage() {
                     <div className="flex items-center gap-2 mb-1">
                       <span className="font-medium text-text">{trade.company}</span>
                       {trade.isPromoted && (
-                        <span className="text-xs px-1.5 py-0.5 rounded bg-gold/20 text-gold font-medium">热门</span>
+                        <span className="text-xs px-1.5 py-0.5 rounded bg-gold/15 text-gold font-medium">热门</span>
                       )}
                     </div>
                     <div className="text-sm text-text-secondary mb-1">
                       {trade.herbName} · {trade.spec} · {trade.quantity}
                     </div>
-                    <div className="text-sm text-primary font-mono">{trade.price}</div>
+                    <div className="text-sm text-primary font-mono font-medium">{trade.price}</div>
                     {trade.description && (
-                      <p className="text-xs text-text-secondary mt-2 line-clamp-2">{trade.description}</p>
+                      <p className="text-xs text-text-secondary mt-2 line-clamp-2 leading-relaxed">{trade.description}</p>
                     )}
                   </div>
                 </div>
                 <div className="flex flex-col items-end gap-2 shrink-0 ml-4">
-                  <span className="text-xs text-text-secondary flex items-center gap-1">
-                    <Clock className="w-3 h-3" />{formatDate(trade.createdAt)}
+                  <span className="text-xs text-text-secondary inline-flex items-center gap-1">
+                    <Clock className="w-3.5 h-3.5" />
+                    {formatDate(trade.createdAt)}
                   </span>
                   <Link
                     to={`/trade/${trade.id}`}
@@ -223,29 +253,58 @@ export default function TradePage() {
       {activeTab === 'direct' && (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
           {pagedTrades.map(trade => (
-            <div key={trade.id} className="bg-card rounded-lg border border-border p-4 shadow-sm hover:shadow-md transition">
-              <div className="flex items-start justify-between mb-2">
-                <div className="flex items-center gap-2">
-                  <Package className="w-4 h-4 text-primary" />
-                  <Link to={`/herb/${trade.herbId}`} className="font-medium text-text hover:text-primary transition-colors">
+            <div key={trade.id} className="bg-card rounded-lg border border-border p-4 hover:shadow-md transition-shadow">
+              <div className="flex items-start justify-between mb-3">
+                <div className="flex items-center gap-2 flex-wrap">
+                  <Link
+                    to={`/herb/${trade.herbId}`}
+                    className="text-lg font-bold text-text hover:text-primary transition-colors"
+                  >
                     {trade.herbName}
                   </Link>
-                  <span className="text-xs text-text-secondary">{trade.spec}</span>
+                  <span className="text-xs px-2 py-0.5 rounded bg-row-alt text-text-secondary border border-border">
+                    {trade.spec}
+                  </span>
                   <span className="text-xs px-1.5 py-0.5 rounded bg-primary/10 text-primary font-medium">产地直供</span>
                   {trade.isPromoted && (
-                    <span className="text-xs px-1.5 py-0.5 rounded bg-gold/20 text-gold font-medium">推荐</span>
+                    <span className="inline-flex items-center gap-0.5 text-xs px-1.5 py-0.5 rounded bg-gold/15 text-gold font-medium">
+                      <Star className="w-3 h-3 fill-gold" />
+                      推荐
+                    </span>
                   )}
                 </div>
               </div>
-              <div className="text-primary font-mono font-medium mb-2">{trade.price}</div>
-              <div className="flex flex-wrap gap-x-4 gap-y-1 text-xs text-text-secondary mb-2">
-                <span className="flex items-center gap-1"><MapPin className="w-3 h-3" />{trade.origin}</span>
-                <span className="flex items-center gap-1"><Package className="w-3 h-3" />{trade.quantity}</span>
-                <span className="flex items-center gap-1"><Phone className="w-3 h-3" />{maskPhone(trade.contact)}</span>
-                <span className="flex items-center gap-1"><Clock className="w-3 h-3" />{formatDate(trade.createdAt)}</span>
+
+              <div className="text-primary font-mono font-semibold text-base mb-3">
+                {trade.price}
               </div>
+
+              <div className="flex flex-wrap gap-x-4 gap-y-1.5 text-xs text-text-secondary mb-3">
+                <span className="inline-flex items-center gap-1">
+                  <MapPin className="w-3.5 h-3.5 text-primary-light" />
+                  {trade.origin}
+                </span>
+                <span className="inline-flex items-center gap-1">
+                  <Package className="w-3.5 h-3.5 text-primary-light" />
+                  {trade.quantity}
+                </span>
+              </div>
+
+              <div className="flex flex-wrap gap-x-4 gap-y-1.5 text-xs text-text-secondary">
+                <span className="inline-flex items-center gap-1">
+                  <Phone className="w-3.5 h-3.5 text-primary-light" />
+                  {maskPhone(trade.contact)}
+                </span>
+                <span className="inline-flex items-center gap-1">
+                  <Clock className="w-3.5 h-3.5 text-primary-light" />
+                  {formatDate(trade.createdAt)}
+                </span>
+              </div>
+
               {trade.description && (
-                <p className="text-xs text-text-secondary line-clamp-2">{trade.description}</p>
+                <p className="text-xs text-text-secondary mt-3 line-clamp-2 leading-relaxed">
+                  {trade.description}
+                </p>
               )}
             </div>
           ))}
