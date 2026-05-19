@@ -16,31 +16,29 @@ const SERVICE_LINKS = [
 
 export default function Footer() {
   return (
-    <footer className="bg-forest-dark text-white">
-      <div className="max-w-7xl mx-auto px-6 py-16">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
+    <footer className="bg-gray-900 text-white">
+      <div className="container py-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
           <div>
-            <div className="flex items-center gap-3 mb-6">
-              <div className="w-10 h-10 bg-white/10 rounded-lg flex items-center justify-center">
+            <Link to="/" className="flex items-center gap-3 mb-6">
+              <div className="w-10 h-10 bg-primary rounded-lg flex items-center justify-center">
                 <span className="text-white text-lg font-serif font-bold">药</span>
               </div>
-              <span className="font-serif text-xl font-bold tracking-wide">
-                药行情
-              </span>
-            </div>
-            <p className="text-white/70 text-sm leading-relaxed mb-6">
+              <span className="font-serif text-xl font-semibold">药行情</span>
+            </Link>
+            <p className="text-gray-400 text-sm leading-relaxed mb-6">
               专注中药材价格信息服务，汇聚行业数据，助力药材交易决策。
             </p>
           </div>
 
           <div>
-            <h3 className="text-sm font-semibold mb-4 text-white/90">快速导航</h3>
+            <h3 className="text-sm font-semibold text-white mb-4">快速导航</h3>
             <ul className="space-y-3">
               {QUICK_LINKS.map((link) => (
                 <li key={link.path}>
                   <Link
                     to={link.path}
-                    className="text-sm text-white/60 hover:text-white transition-colors"
+                    className="text-sm text-gray-400 hover:text-white transition-colors"
                   >
                     {link.label}
                   </Link>
@@ -50,13 +48,13 @@ export default function Footer() {
           </div>
 
           <div>
-            <h3 className="text-sm font-semibold mb-4 text-white/90">服务支持</h3>
+            <h3 className="text-sm font-semibold text-white mb-4">服务支持</h3>
             <ul className="space-y-3">
               {SERVICE_LINKS.map((link) => (
                 <li key={link.path}>
                   <Link
                     to={link.path}
-                    className="text-sm text-white/60 hover:text-white transition-colors"
+                    className="text-sm text-gray-400 hover:text-white transition-colors"
                   >
                     {link.label}
                   </Link>
@@ -66,30 +64,30 @@ export default function Footer() {
           </div>
 
           <div>
-            <h3 className="text-sm font-semibold mb-4 text-white/90">联系我们</h3>
+            <h3 className="text-sm font-semibold text-white mb-4">联系我们</h3>
             <ul className="space-y-4">
-              <li className="flex items-center gap-3 text-sm text-white/60">
-                <Phone className="w-4 h-4 text-mint shrink-0" />
+              <li className="flex items-center gap-3 text-sm text-gray-400">
+                <Phone className="w-4 h-4 text-primary-light shrink-0" />
                 <span>400-888-8888</span>
               </li>
-              <li className="flex items-center gap-3 text-sm text-white/60">
-                <Mail className="w-4 h-4 text-mint shrink-0" />
+              <li className="flex items-center gap-3 text-sm text-gray-400">
+                <Mail className="w-4 h-4 text-primary-light shrink-0" />
                 <span>service@yaohangqing.com</span>
               </li>
-              <li className="flex items-start gap-3 text-sm text-white/60">
-                <MapPin className="w-4 h-4 text-mint shrink-0 mt-0.5" />
+              <li className="flex items-start gap-3 text-sm text-gray-400">
+                <MapPin className="w-4 h-4 text-primary-light shrink-0 mt-0.5" />
                 <span>安徽省亳州市中药材交易中心</span>
               </li>
             </ul>
           </div>
         </div>
 
-        <div className="pt-8 border-t border-white/10">
+        <div className="mt-12 pt-8 border-t border-gray-800">
           <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-            <p className="text-xs text-white/50">
+            <p className="text-xs text-gray-500">
               Copyright © 2026 药行情 版权所有
             </p>
-            <div className="flex items-center gap-6 text-xs text-white/50">
+            <div className="flex items-center gap-6 text-xs text-gray-500">
               <Link to="/privacy" className="hover:text-white transition-colors">
                 隐私政策
               </Link>

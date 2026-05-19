@@ -30,7 +30,7 @@ export default function Header() {
           h.pinyinInitial.toLowerCase().startsWith(q) ||
           h.alias.some((a) => a.includes(q))
       )
-      .slice(0, 8);
+      .slice(0, 6);
   }, [searchQuery]);
 
   const handleSearch = (e: React.FormEvent) => {
@@ -48,67 +48,67 @@ export default function Header() {
   };
 
   return (
-    <header className="sticky top-0 z-50 bg-white/95 backdrop-blur-sm border-b border-cream-dark">
-      <div className="max-w-7xl mx-auto px-6">
-        <div className="flex items-center justify-between h-16">
-          <Link to="/" className="flex items-center gap-3 group">
-            <div className="w-9 h-9 bg-forest rounded-lg flex items-center justify-center">
-              <span className="text-white text-lg font-serif font-bold">药</span>
-            </div>
-            <span className="font-serif text-xl font-bold text-forest tracking-wide">
-              药行情
-            </span>
-          </Link>
+    <header className="sticky top-0 z-50 bg-white border-b border-gray-200">
+      <div className="container">
+        <div className="flex items-center justify-between h-[68px]">
+          <div className="flex items-center gap-8">
+            <Link to="/" className="flex items-center gap-3">
+              <div className="w-10 h-10 bg-primary rounded-lg flex items-center justify-center">
+                <span className="text-white text-lg font-serif font-bold">药</span>
+              </div>
+              <div>
+                <span className="font-serif text-xl font-semibold text-gray-900">药行情</span>
+                <span className="hidden sm:block text-xs text-gray-500 -mt-1">中药材行情中心</span>
+              </div>
+            </Link>
 
-          <nav className="hidden lg:flex items-center">
-            {NAV_ITEMS.map((item) => (
-              <Link
-                key={item.path}
-                to={item.path}
-                className={`px-4 py-2 text-sm font-medium transition-colors ${
-                  isActive(item.path)
-                    ? 'text-forest'
-                    : 'text-slate-light hover:text-forest'
-                }`}
-              >
-                {item.label}
-              </Link>
-            ))}
-          </nav>
+            <nav className="hidden lg:flex items-center gap-1">
+              {NAV_ITEMS.map((item) => (
+                <Link
+                  key={item.path}
+                  to={item.path}
+                  className={`px-4 py-2 text-sm font-medium rounded transition-colors ${
+                    isActive(item.path)
+                      ? 'bg-primary-muted text-primary'
+                      : 'text-gray-600 hover:text-primary hover:bg-gray-50'
+                  }`}
+                >
+                  {item.label}
+                </Link>
+              ))}
+            </nav>
+          </div>
 
           <div className="flex items-center gap-4">
-            <div className="relative hidden lg:block">
+            <div className="relative hidden md:block">
               <form onSubmit={handleSearch}>
-                <input
-                  type="text"
-                  value={searchQuery}
-                  onChange={(e) => {
-                    setSearchQuery(e.target.value);
-                    setShowSuggestions(true);
-                  }}
-                  onFocus={() => setShowSuggestions(true)}
-                  onBlur={() => setTimeout(() => setShowSuggestions(false), 200)}
-                  placeholder="搜索品种..."
-                  className="w-48 px-4 py-2 pr-10 text-sm bg-cream border border-cream-dark rounded-lg focus:outline-none focus:border-forest focus:ring-2 focus:ring-forest-muted transition-all"
-                />
-                <button
-                  type="submit"
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-muted hover:text-forest transition-colors"
-                >
-                  <Search className="w-4 h-4" />
-                </button>
+                <div className="relative">
+                  <input
+                    type="text"
+                    value={searchQuery}
+                    onChange={(e) => {
+                      setSearchQuery(e.target.value);
+                      setShowSuggestions(true);
+                    }}
+                    onFocus={() => setShowSuggestions(true)}
+                    onBlur={() => setTimeout(() => setShowSuggestions(false), 150)}
+                    placeholder="搜索药材..."
+                    className="w-56 pl-10 pr-4 py-2 text-sm bg-gray-50 border border-gray-200 rounded-lg focus:bg-white focus:border-primary focus:ring-2 focus:ring-primary-muted transition-all"
+                  />
+                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+                </div>
               </form>
 
               {showSuggestions && suggestions.length > 0 && (
-                <div className="absolute top-full left-0 right-0 mt-2 bg-white border border-cream-dark rounded-lg shadow-lg z-50 max-h-80 overflow-y-auto">
+                <div className="absolute top-full left-0 right-0 mt-2 bg-white border border-gray-200 rounded-lg shadow-lg z-50 overflow-hidden">
                   {suggestions.map((herb) => (
                     <Link
                       key={herb.id}
                       to={`/herb/${herb.id}`}
-                      className="flex items-center justify-between px-4 py-3 hover:bg-forest-muted text-slate text-sm transition-colors border-b border-cream-dark last:border-b-0"
+                      className="flex items-center justify-between px-4 py-3 hover:bg-gray-50 text-gray-900 text-sm transition-colors border-b border-gray-100 last:border-b-0"
                     >
                       <span className="font-medium">{herb.name}</span>
-                      <span className="text-slate-muted text-xs">{herb.family}</span>
+                      <span className="text-gray-400 text-xs">{herb.family}</span>
                     </Link>
                   ))}
                 </div>
@@ -116,7 +116,7 @@ export default function Header() {
             </div>
 
             <button
-              className="lg:hidden p-2 text-slate-light hover:text-forest transition-colors"
+              className="lg:hidden p-2 text-gray-600 hover:text-primary hover:bg-gray-50 rounded-lg transition-colors"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             >
               {mobileMenuOpen ? (
@@ -130,38 +130,37 @@ export default function Header() {
       </div>
 
       {mobileMenuOpen && (
-        <div className="lg:hidden bg-white border-t border-cream-dark animate-fade-in">
-          <nav className="flex flex-col px-6 py-4">
-            {NAV_ITEMS.map((item) => (
-              <Link
-                key={item.path}
-                to={item.path}
-                onClick={() => setMobileMenuOpen(false)}
-                className={`py-3 text-base font-medium border-b border-cream-dark last:border-b-0 transition-colors ${
-                  isActive(item.path)
-                    ? 'text-forest'
-                    : 'text-slate-light hover:text-forest'
-                }`}
-              >
-                {item.label}
-              </Link>
-            ))}
+        <div className="lg:hidden border-t border-gray-200 bg-white animate-fade-in-down">
+          <nav className="container py-4">
+            <div className="flex flex-col gap-1">
+              {NAV_ITEMS.map((item) => (
+                <Link
+                  key={item.path}
+                  to={item.path}
+                  onClick={() => setMobileMenuOpen(false)}
+                  className={`px-4 py-3 text-sm font-medium rounded-lg transition-colors ${
+                    isActive(item.path)
+                      ? 'bg-primary-muted text-primary'
+                      : 'text-gray-600 hover:text-primary hover:bg-gray-50'
+                  }`}
+                >
+                  {item.label}
+                </Link>
+              ))}
+            </div>
+            <form onSubmit={handleSearch} className="mt-4">
+              <div className="relative">
+                <input
+                  type="text"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  placeholder="搜索药材..."
+                  className="w-full pl-10 pr-4 py-3 text-sm bg-gray-50 border border-gray-200 rounded-lg"
+                />
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+              </div>
+            </form>
           </nav>
-          <form onSubmit={handleSearch} className="flex items-center px-6 pb-4">
-            <input
-              type="text"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="搜索品种..."
-              className="flex-1 px-4 py-2.5 text-sm bg-cream border border-cream-dark rounded-lg focus:outline-none"
-            />
-            <button
-              type="submit"
-              className="ml-3 p-2.5 text-slate-muted hover:text-forest transition-colors"
-            >
-              <Search className="w-5 h-5" />
-            </button>
-          </form>
         </div>
       )}
     </header>
