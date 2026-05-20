@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { herbs, priceList, newsList, marketIndexes, suppliers } from '../data/mockData';
+import { herbs, priceList, marketIndexes } from '../data/mockData';
 
 const Home: React.FC = () => {
   return (
