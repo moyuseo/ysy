@@ -357,3 +357,58 @@ export interface UserShare {
   views: number;
   location?: string;
 }
+
+export interface DataStatistics {
+  id: string;
+  name: string;
+  value: number;
+  unit: string;
+  change: number;
+  changePercent: number;
+  trend: 'up' | 'down' | 'stable';
+  description: string;
+}
+
+export interface QueryRanking {
+  id: string;
+  rank: number;
+  herbName: string;
+  queryCount: number;
+  change: number;
+  trend: 'up' | 'down' | 'stable';
+  category: string;
+}
+
+export interface PriceChangeRanking {
+  id: string;
+  rank: number;
+  herbName: string;
+  currentPrice: number;
+  unit: string;
+  change: number;
+  changePercent: number;
+  trend: 'up' | 'down' | 'stable';
+  origin: string;
+}
+
+export interface DailyViewpoint {
+  id: string;
+  title: string;
+  content: string;
+  authorName: string;
+  publishTime: string;
+  category: string;
+  keywords: string[];
+  views: number;
+  likes: number;
+  imageUrl?: string;
+}
+
+export interface DataOverview {
+  totalHerbs: number;
+  totalMarkets: number;
+  totalSuppliers: number;
+  totalTransactions: number;
+  avgPriceChange: number;
+  hotVarieties: string[];
+}

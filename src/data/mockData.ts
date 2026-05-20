@@ -1,4 +1,4 @@
-import { Herb, PriceItem, NewsItem, Supplier, Demand, MarketIndex, VarietyIndex, HistoricalPrice, HerbPriceDetail, Shop, SupplyItem, PurchaseItem, HerbProfile, AuthenticityCheck, CultivationTechnique, HealthKnowledge, OriginDistribution, TraceabilityProduct, GAPCertifiedProduct, FreshCutProduct, HighQualityProduct, ProcurementNews, PublicOpinion, PolicyRegulation, DiscussionPost, UserShare } from '../types';
+import { Herb, PriceItem, NewsItem, Supplier, Demand, MarketIndex, VarietyIndex, HistoricalPrice, HerbPriceDetail, Shop, SupplyItem, PurchaseItem, HerbProfile, AuthenticityCheck, CultivationTechnique, HealthKnowledge, OriginDistribution, TraceabilityProduct, GAPCertifiedProduct, FreshCutProduct, HighQualityProduct, ProcurementNews, PublicOpinion, PolicyRegulation, DiscussionPost, UserShare, DataStatistics, QueryRanking, PriceChangeRanking, DailyViewpoint, DataOverview } from '../types';
 
 export const herbs: Herb[] = [
   {
@@ -1958,3 +1958,163 @@ export const userShares: UserShare[] = [
     views: 4567,
   },
 ];
+
+export const dataStatistics: DataStatistics[] = [
+  {
+    id: '1',
+    name: '综合指数',
+    value: 1258.32,
+    unit: '点',
+    change: 5.67,
+    changePercent: 0.45,
+    trend: 'up',
+    description: '中药材市场综合价格指数',
+  },
+  {
+    id: '2',
+    name: '监测品种',
+    value: 1200,
+    unit: '种',
+    change: 15,
+    changePercent: 1.27,
+    trend: 'up',
+    description: '纳入监测的中药材品种数量',
+  },
+  {
+    id: '3',
+    name: '市场报价',
+    value: 85600,
+    unit: '条',
+    change: 1200,
+    changePercent: 1.42,
+    trend: 'up',
+    description: '今日市场报价条数',
+  },
+  {
+    id: '4',
+    name: '价格上涨',
+    value: 386,
+    unit: '种',
+    change: 23,
+    changePercent: 6.32,
+    trend: 'up',
+    description: '今日价格上涨品种数',
+  },
+  {
+    id: '5',
+    name: '价格下跌',
+    value: 245,
+    unit: '种',
+    change: -12,
+    changePercent: -4.66,
+    trend: 'down',
+    description: '今日价格下跌品种数',
+  },
+  {
+    id: '6',
+    name: '价格稳定',
+    value: 569,
+    unit: '种',
+    change: -11,
+    changePercent: -1.90,
+    trend: 'stable',
+    description: '今日价格稳定品种数',
+  },
+];
+
+export const queryRankings: QueryRanking[] = [
+  { id: '1', rank: 1, herbName: '人参', queryCount: 15680, change: 1256, trend: 'up', category: '补气药' },
+  { id: '2', rank: 2, herbName: '当归', queryCount: 12340, change: 890, trend: 'up', category: '补血药' },
+  { id: '3', rank: 3, herbName: '黄芪', queryCount: 11230, change: -234, trend: 'down', category: '补气药' },
+  { id: '4', rank: 4, herbName: '枸杞', queryCount: 9870, change: 567, trend: 'up', category: '补阴药' },
+  { id: '5', rank: 5, herbName: '三七', queryCount: 8760, change: 123, trend: 'up', category: '止血药' },
+  { id: '6', rank: 6, herbName: '连翘', queryCount: 7650, change: 345, trend: 'up', category: '清热药' },
+  { id: '7', rank: 7, herbName: '金银花', queryCount: 6540, change: -123, trend: 'down', category: '清热药' },
+  { id: '8', rank: 8, herbName: '丹参', queryCount: 5430, change: 78, trend: 'up', category: '活血化瘀药' },
+  { id: '9', rank: 9, herbName: '茯苓', queryCount: 4320, change: -45, trend: 'down', category: '利水渗湿药' },
+  { id: '10', rank: 10, herbName: '川芎', queryCount: 3210, change: 234, trend: 'up', category: '活血化瘀药' },
+];
+
+export const priceChangeRankings: PriceChangeRanking[] = [
+  { id: '1', rank: 1, herbName: '黄连', currentPrice: 150, unit: '元/kg', change: 12, changePercent: 8.57, trend: 'up', origin: '重庆' },
+  { id: '2', rank: 2, herbName: '连翘', currentPrice: 68, unit: '元/kg', change: 5, changePercent: 8.11, trend: 'up', origin: '山西' },
+  { id: '3', rank: 3, herbName: '山银花', currentPrice: 52, unit: '元/kg', change: 3, changePercent: 6.25, trend: 'up', origin: '湖南' },
+  { id: '4', rank: 4, herbName: '黄芪', currentPrice: 28, unit: '元/kg', change: 2, changePercent: 7.69, trend: 'up', origin: '内蒙古' },
+  { id: '5', rank: 5, herbName: '甘草', currentPrice: 18, unit: '元/kg', change: 1, changePercent: 5.88, trend: 'up', origin: '内蒙古' },
+  { id: '6', rank: 6, herbName: '三七', currentPrice: 180, unit: '元/kg', change: -10, changePercent: -5.26, trend: 'down', origin: '云南' },
+  { id: '7', rank: 7, herbName: '金银花', currentPrice: 95, unit: '元/kg', change: -4, changePercent: -4.08, trend: 'down', origin: '河南' },
+  { id: '8', rank: 8, herbName: '白芍', currentPrice: 38, unit: '元/kg', change: -2, changePercent: -5.00, trend: 'down', origin: '安徽' },
+  { id: '9', rank: 9, herbName: '当归', currentPrice: 45, unit: '元/kg', change: -1, changePercent: -2.17, trend: 'down', origin: '甘肃' },
+  { id: '10', rank: 10, herbName: '白术', currentPrice: 32, unit: '元/kg', change: -1, changePercent: -3.03, trend: 'down', origin: '浙江' },
+];
+
+export const dailyViewpoints: DailyViewpoint[] = [
+  {
+    id: '1',
+    title: '今日中药材市场行情综述',
+    content: '今日中药材市场整体运行平稳，部分品种因产地天气影响出现波动。连翘、山银花等品种价格继续上涨，而三七、金银花等品种则出现小幅回落...',
+    authorName: '市场分析师',
+    publishTime: '2026-05-20 10:30',
+    category: '市场综述',
+    keywords: ['市场行情', '价格波动', '产地信息'],
+    views: 5678,
+    likes: 234,
+    imageUrl: 'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=600&h=400&fit=crop',
+  },
+  {
+    id: '2',
+    title: '黄连价格持续上涨，后市如何？',
+    content: '黄连近期价格持续上涨，主要原因是产地减产和市场需求增加。分析认为，短期内黄连价格仍有上涨空间，但需关注新货上市情况...',
+    authorName: '行业研究员',
+    publishTime: '2026-05-20 09:15',
+    category: '品种分析',
+    keywords: ['黄连', '价格分析', '后市预测'],
+    views: 4321,
+    likes: 189,
+    imageUrl: 'https://images.unsplash.com/photo-1530834988782-7091b9b23d62?w=600&h=400&fit=crop',
+  },
+  {
+    id: '3',
+    title: '甘肃当归产新情况调研',
+    content: '甘肃岷县当归即将产新，今年种植面积略有增加，但受前期干旱影响，预计产量增幅有限。市场关注焦点集中在新货质量和价格上...',
+    authorName: '产地记者',
+    publishTime: '2026-05-19 16:45',
+    category: '产地调研',
+    keywords: ['当归', '产新', '甘肃'],
+    views: 3890,
+    likes: 156,
+    imageUrl: 'https://images.unsplash.com/photo-1593005510500-63b95406814c?w=600&h=400&fit=crop',
+  },
+  {
+    id: '4',
+    title: '中药材电商平台发展趋势分析',
+    content: '随着互联网技术的发展，中药材电商平台逐渐成为行业发展新趋势。各大平台不断完善质量追溯体系，提升用户体验...',
+    authorName: '电商专家',
+    publishTime: '2026-05-19 14:20',
+    category: '产业观察',
+    keywords: ['电商平台', '发展趋势', '质量追溯'],
+    views: 6789,
+    likes: 345,
+    imageUrl: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&h=400&fit=crop',
+  },
+  {
+    id: '5',
+    title: '本周重点品种价格走势分析',
+    content: '本周重点监测品种中，连翘上涨8.11%，山银花上涨6.25%，黄连上涨8.57%；三七下跌5.26%，金银花下跌4.08%...',
+    authorName: '数据分析师',
+    publishTime: '2026-05-18 11:00',
+    category: '数据分析',
+    keywords: ['价格走势', '数据分析', '重点品种'],
+    views: 5123,
+    likes: 212,
+  },
+];
+
+export const dataOverview: DataOverview = {
+  totalHerbs: 1200,
+  totalMarkets: 17,
+  totalSuppliers: 8500,
+  totalTransactions: 286000,
+  avgPriceChange: 0.85,
+  hotVarieties: ['人参', '当归', '黄芪', '连翘', '三七'],
+};
