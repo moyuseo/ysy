@@ -89,3 +89,45 @@ export interface HerbPriceDetail {
   unit: string;
   history: HistoricalPrice[];
 }
+
+export interface Shop {
+  id: string;
+  name: string;
+  logo?: string;
+  description: string;
+  location: string;
+  contact: string;
+  products: string[];
+  verified: boolean;
+  rating: number;
+  salesCount: number;
+  tags: string[];
+}
+
+export interface SupplyItem {
+  id: string;
+  herbName: string;
+  spec: string;
+  origin: string;
+  price: number;
+  unit: string;
+  quantity: number;
+  shopId: string;
+  shopName: string;
+  imageUrl?: string;
+  updateTime: string;
+}
+
+export interface PurchaseItem {
+  id: string;
+  herbName: string;
+  spec: string;
+  quantity: number;
+  unit: string;
+  price?: number;
+  buyerName: string;
+  location: string;
+  contact: string;
+  publishTime: string;
+  urgent: boolean;
+}
