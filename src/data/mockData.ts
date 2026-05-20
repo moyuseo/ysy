@@ -1,4 +1,4 @@
-import { Herb, PriceItem, NewsItem, Supplier, Demand, MarketIndex } from '../types';
+import { Herb, PriceItem, NewsItem, Supplier, Demand, MarketIndex, VarietyIndex, HistoricalPrice, HerbPriceDetail } from '../types';
 
 export const herbs: Herb[] = [
   {
@@ -112,6 +112,118 @@ export const herbs: Herb[] = [
     origin: ['云南', '安徽', '湖北'],
     description: '多孔菌科真菌茯苓的干燥菌核。',
     imageUrl: 'https://images.unsplash.com/photo-1518895949257-7621c3c786d7?w=400&h=300&fit=crop',
+  },
+  {
+    id: '9',
+    name: '连翘',
+    pinyin: 'Lián Qiào',
+    latinName: 'Forsythia suspensa (Thunb.) Vahl',
+    category: '清热药',
+    nature: '微寒',
+    taste: '苦',
+    meridian: ['肺', '心', '小肠'],
+    efficacy: ['清热解毒', '消肿散结', '疏散风热'],
+    origin: ['山西', '河南', '陕西'],
+    description: '木犀科植物连翘的干燥果实。',
+    imageUrl: 'https://images.unsplash.com/photo-1509114397022-ed747cca3f65?w=400&h=300&fit=crop',
+  },
+  {
+    id: '10',
+    name: '山银花',
+    pinyin: 'Shān Yín Huā',
+    latinName: 'Lonicera confusa (Sweet) DC.',
+    category: '清热药',
+    nature: '寒',
+    taste: '甘',
+    meridian: ['肺', '心', '胃'],
+    efficacy: ['清热解毒', '疏散风热'],
+    origin: ['湖南', '广东', '广西'],
+    description: '忍冬科植物灰毡毛忍冬、红腺忍冬、华南忍冬或黄褐毛忍冬的干燥花蕾或带初开的花。',
+    imageUrl: 'https://images.unsplash.com/photo-1490750967868-88aa4486c946?w=400&h=300&fit=crop',
+  },
+  {
+    id: '11',
+    name: '金银花',
+    pinyin: 'Jīn Yín Huā',
+    latinName: 'Lonicera japonica Thunb.',
+    category: '清热药',
+    nature: '寒',
+    taste: '甘',
+    meridian: ['肺', '心', '胃'],
+    efficacy: ['清热解毒', '疏散风热'],
+    origin: ['河南', '山东', '河北'],
+    description: '忍冬科植物忍冬的干燥花蕾或带初开的花。',
+    imageUrl: 'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=400&h=300&fit=crop',
+  },
+  {
+    id: '12',
+    name: '丹参',
+    pinyin: 'Dān Shēn',
+    latinName: 'Salvia miltiorrhiza Bge.',
+    category: '活血化瘀药',
+    nature: '微寒',
+    taste: '苦',
+    meridian: ['心', '肝'],
+    efficacy: ['活血祛瘀', '通经止痛', '清心除烦', '凉血消痈'],
+    origin: ['河南', '山东', '四川'],
+    description: '唇形科植物丹参的干燥根和根茎。',
+    imageUrl: 'https://images.unsplash.com/photo-1501601983405-5a1ba8a51ca9?w=400&h=300&fit=crop',
+  },
+  {
+    id: '13',
+    name: '川芎',
+    pinyin: 'Chuān Xiōng',
+    latinName: 'Ligusticum chuanxiong Hort.',
+    category: '活血化瘀药',
+    nature: '温',
+    taste: '辛',
+    meridian: ['肝', '胆', '心包'],
+    efficacy: ['活血行气', '祛风止痛'],
+    origin: ['四川', '贵州', '云南'],
+    description: '伞形科植物川芎的干燥根茎。',
+    imageUrl: 'https://images.unsplash.com/photo-1591387001180-f45196179a69?w=400&h=300&fit=crop',
+  },
+  {
+    id: '14',
+    name: '黄连',
+    pinyin: 'Huáng Lián',
+    latinName: 'Coptis chinensis Franch.',
+    category: '清热药',
+    nature: '寒',
+    taste: '苦',
+    meridian: ['心', '脾', '胃', '肝', '胆', '大肠'],
+    efficacy: ['清热燥湿', '泻火解毒'],
+    origin: ['重庆', '四川', '湖北'],
+    description: '毛茛科植物黄连、三角叶黄连或云连的干燥根茎。',
+    imageUrl: 'https://images.unsplash.com/photo-1530834988782-7091b9b23d62?w=400&h=300&fit=crop',
+  },
+  {
+    id: '15',
+    name: '三七',
+    pinyin: 'Sān Qī',
+    latinName: 'Panax notoginseng (Burk.) F.H.Chen',
+    category: '止血药',
+    nature: '温',
+    taste: '甘、微苦',
+    meridian: ['肝', '胃'],
+    efficacy: ['散瘀止血', '消肿定痛'],
+    origin: ['云南', '广西'],
+    description: '五加科植物三七的干燥根和根茎。',
+    imageUrl: 'https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?w=400&h=300&fit=crop',
+  },
+  {
+    id: '16',
+    name: '板蓝根',
+    pinyin: 'Bǎn Lán Gēn',
+    latinName: 'Isatis indigotica Fort.',
+    category: '清热药',
+    nature: '寒',
+    taste: '苦',
+    meridian: ['心', '胃'],
+    efficacy: ['清热解毒', '凉血利咽'],
+    origin: ['黑龙江', '河南', '安徽'],
+    description: '十字花科植物菘蓝的干燥根。',
+    imageUrl: 'https://images.unsplash.com/photo-1511285560929-80b456fea0bc?w=400&h=300&fit=crop',
   },
 ];
 
@@ -387,3 +499,119 @@ export const marketIndexes: MarketIndex[] = [
     updateTime: '2026-05-20',
   },
 ];
+
+// 扩展更多价格数据
+export const expandedPriceList: PriceItem[] = [
+  ...priceList,
+  { id: '9', herbId: '9', herbName: '连翘', spec: '青翘 统货', origin: '山西', market: '安国', price: 68, unit: '元/kg', trend: 'up', change: 5, updateTime: '2026-05-20' },
+  { id: '10', herbId: '10', herbName: '山银花', spec: '山银花 统货', origin: '湖南', market: '亳州', price: 52, unit: '元/kg', trend: 'up', change: 3, updateTime: '2026-05-20' },
+  { id: '11', herbId: '11', herbName: '金银花', spec: '金银花 统货', origin: '河南', market: '安国', price: 95, unit: '元/kg', trend: 'down', change: -4, updateTime: '2026-05-20' },
+  { id: '12', herbId: '12', herbName: '丹参', spec: '丹参片 统货', origin: '河南', market: '玉林', price: 22, unit: '元/kg', trend: 'stable', change: 0, updateTime: '2026-05-20' },
+  { id: '13', herbId: '13', herbName: '川芎', spec: '川芎片 统货', origin: '四川', market: '亳州', price: 35, unit: '元/kg', trend: 'up', change: 4, updateTime: '2026-05-20' },
+  { id: '14', herbId: '14', herbName: '黄连', spec: '黄连 单支', origin: '重庆', market: '安国', price: 150, unit: '元/kg', trend: 'up', change: 8, updateTime: '2026-05-20' },
+  { id: '15', herbId: '15', herbName: '三七', spec: '三七 40头', origin: '云南', market: '玉林', price: 180, unit: '元/kg', trend: 'down', change: -10, updateTime: '2026-05-20' },
+  { id: '16', herbId: '16', herbName: '板蓝根', spec: '板蓝根片 统货', origin: '黑龙江', market: '亳州', price: 12, unit: '元/kg', trend: 'stable', change: 0, updateTime: '2026-05-20' },
+];
+
+// 品种指数
+export const varietyIndexes: VarietyIndex[] = [
+  {
+    id: '1',
+    name: '连翘指数',
+    value: 1856.23,
+    change: 42.56,
+    changePercent: 2.34,
+    history: generateHistoryData(1800, 1856, 30),
+  },
+  {
+    id: '2',
+    name: '山银花指数',
+    value: 1623.45,
+    change: 28.78,
+    changePercent: 1.81,
+    history: generateHistoryData(1580, 1623, 30),
+  },
+  {
+    id: '3',
+    name: '金银花指数',
+    value: 1987.65,
+    change: -35.43,
+    changePercent: -1.75,
+    history: generateHistoryData(2020, 1987, 30),
+  },
+  {
+    id: '4',
+    name: '人参指数',
+    value: 1456.78,
+    change: 12.34,
+    changePercent: 0.85,
+    history: generateHistoryData(1440, 1456, 30),
+  },
+  {
+    id: '5',
+    name: '当归指数',
+    value: 1345.67,
+    change: -18.90,
+    changePercent: -1.38,
+    history: generateHistoryData(1360, 1345, 30),
+  },
+];
+
+// 单个药材的历史价格数据
+export const herbPriceDetails: HerbPriceDetail[] = [
+  {
+    herbId: '1',
+    herbName: '人参',
+    currentPrice: 380,
+    unit: '元/kg',
+    history: generateHistoryData(360, 380, 30),
+  },
+  {
+    herbId: '9',
+    herbName: '连翘',
+    currentPrice: 68,
+    unit: '元/kg',
+    history: generateHistoryData(60, 68, 30),
+  },
+  {
+    herbId: '10',
+    herbName: '山银花',
+    currentPrice: 52,
+    unit: '元/kg',
+    history: generateHistoryData(48, 52, 30),
+  },
+  {
+    herbId: '2',
+    herbName: '当归',
+    currentPrice: 45,
+    unit: '元/kg',
+    history: generateHistoryData(50, 45, 30),
+  },
+  {
+    herbId: '3',
+    herbName: '黄芪',
+    currentPrice: 28,
+    unit: '元/kg',
+    history: generateHistoryData(24, 28, 30),
+  },
+];
+
+// 生成历史数据的辅助函数
+function generateHistoryData(start: number, end: number, days: number): HistoricalPrice[] {
+  const history: HistoricalPrice[] = [];
+  const step = (end - start) / days;
+  
+  for (let i = 0; i < days; i++) {
+    const date = new Date();
+    date.setDate(date.getDate() - (days - i));
+    const randomness = (Math.random() - 0.5) * (end - start) * 0.1;
+    const price = start + step * i + randomness;
+    
+    history.push({
+      date: date.toISOString().split('T')[0],
+      price: Math.round(price * 100) / 100,
+    });
+  }
+  
+  return history;
+}

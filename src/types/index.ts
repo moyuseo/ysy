@@ -67,3 +67,25 @@ export interface MarketIndex {
   changePercent: number;
   updateTime: string;
 }
+
+export interface HistoricalPrice {
+  date: string;
+  price: number;
+}
+
+export interface VarietyIndex {
+  id: string;
+  name: string;
+  value: number;
+  change: number;
+  changePercent: number;
+  history: HistoricalPrice[];
+}
+
+export interface HerbPriceDetail {
+  herbId: string;
+  herbName: string;
+  currentPrice: number;
+  unit: string;
+  history: HistoricalPrice[];
+}
