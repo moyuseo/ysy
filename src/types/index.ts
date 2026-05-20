@@ -193,3 +193,64 @@ export interface OriginDistribution {
   qualityLevels?: { area: string; level: string; description: string }[];
   mapImage?: string;
 }
+
+export interface TraceabilityInfo {
+  id: string;
+  herbId: string;
+  herbName: string;
+  batchNumber: string;
+  origin: string;
+  plantingBase: string;
+  harvestDate: string;
+  processingDate: string;
+  storageLocation: string;
+  qualityReport?: string;
+  certifications: string[];
+  traceSteps: {
+    step: number;
+    title: string;
+    location: string;
+    date: string;
+    description: string;
+  }[];
+}
+
+export interface GAPProduct {
+  id: string;
+  herbName: string;
+  spec: string;
+  origin: string;
+  certificationNo: string;
+  certificationDate: string;
+  validUntil: string;
+  baseName: string;
+  imageUrl?: string;
+  description?: string;
+}
+
+export interface FreshCutProduct {
+  id: string;
+  herbName: string;
+  spec: string;
+  origin: string;
+  cutDate: string;
+  freshnessLevel: 'A' | 'B' | 'C';
+  storageMethod: string;
+  shelfLife: string;
+  imageUrl?: string;
+  description?: string;
+}
+
+export interface HighQualityProduct {
+  id: string;
+  herbName: string;
+  spec: string;
+  origin: string;
+  hasNoSulfur: boolean;
+  hasNoPesticideResidue: boolean;
+  hasNoHeavyMetal: boolean;
+  isComplete: boolean;
+  qualityLevel: '特级' | '一级' | '二级';
+  imageUrl?: string;
+  description?: string;
+}
