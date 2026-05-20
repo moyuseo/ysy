@@ -1,4 +1,4 @@
-import { Herb, PriceItem, NewsItem, Supplier, Demand, MarketIndex, VarietyIndex, HistoricalPrice, HerbPriceDetail, Shop, SupplyItem, PurchaseItem } from '../types';
+import { Herb, PriceItem, NewsItem, Supplier, Demand, MarketIndex, VarietyIndex, HistoricalPrice, HerbPriceDetail, Shop, SupplyItem, PurchaseItem, HerbProfile, AuthenticityCheck, CultivationTechnique, HealthKnowledge, OriginDistribution } from '../types';
 
 export const herbs: Herb[] = [
   {
@@ -615,6 +615,326 @@ function generateHistoryData(start: number, end: number, days: number): Historic
   
   return history;
 }
+
+export const herbProfiles: HerbProfile[] = [
+  {
+    id: '1',
+    herbId: '1',
+    name: '人参',
+    alias: ['黄参', '地精', '神草', '孩儿参'],
+    source: '五加科植物人参 Panax ginseng C.A.Mey. 的干燥根和根茎。',
+    properties: '性平，味甘、微苦。',
+    functions: ['大补元气', '复脉固脱', '补脾益肺', '生津养血', '安神益智'],
+    indications: ['体虚欲脱', '肢冷脉微', '脾虚食少', '肺虚喘咳', '津伤口渴', '内热消渴', '气血亏虚', '久病虚羸', '惊悸失眠', '阳痿宫冷'],
+    dosage: '煎服，3～9g；挽救虚脱可用 15～30g。宜文火另煎分次兑服。',
+    precautions: '实证、热证而正气不虚者忌服。不宜与藜芦、五灵脂同用。',
+    storage: '置阴凉干燥处，密闭保存，防蛀。',
+  },
+  {
+    id: '2',
+    herbId: '2',
+    name: '当归',
+    alias: ['干归', '秦归', '云归', '西当归'],
+    source: '伞形科植物当归 Angelica sinensis (Oliv.) Diels 的干燥根。',
+    properties: '性温，味甘、辛。',
+    functions: ['补血活血', '调经止痛', '润肠通便'],
+    indications: ['血虚萎黄', '眩晕心悸', '月经不调', '经闭痛经', '虚寒腹痛', '风湿痹痛', '跌扑损伤', '痈疽疮疡', '肠燥便秘'],
+    dosage: '煎服，6～12g。',
+    precautions: '湿阻中满及大便溏泄者慎服。',
+    storage: '置阴凉干燥处，防潮，防蛀。',
+  },
+  {
+    id: '3',
+    herbId: '9',
+    name: '连翘',
+    alias: ['黄花条', '连壳', '青翘', '落翘'],
+    source: '木犀科植物连翘 Forsythia suspensa (Thunb.) Vahl 的干燥果实。',
+    properties: '性微寒，味苦。',
+    functions: ['清热解毒', '消肿散结', '疏散风热'],
+    indications: ['痈疽', '瘰疬', '乳痈', '丹毒', '风热感冒', '温病初起', '温热入营', '高热烦渴', '神昏发斑', '热淋涩痛'],
+    dosage: '煎服，6～15g。',
+    precautions: '脾胃虚寒及气虚脓清者不宜服。',
+    storage: '置干燥处。',
+  },
+  {
+    id: '4',
+    herbId: '10',
+    name: '山银花',
+    alias: ['华南忍冬', '红腺忍冬', '黄褐毛忍冬'],
+    source: '忍冬科植物灰毡毛忍冬、红腺忍冬、华南忍冬或黄褐毛忍冬的干燥花蕾或带初开的花。',
+    properties: '性寒，味甘。',
+    functions: ['清热解毒', '疏散风热'],
+    indications: ['痈肿疔疮', '喉痹', '丹毒', '热毒血痢', '风热感冒', '温病发热'],
+    dosage: '煎服，6～15g。',
+    precautions: '脾胃虚寒及气虚疮疡脓清者慎服。',
+    storage: '置阴凉干燥处，防潮，防蛀。',
+  },
+];
+
+export const authenticityChecks: AuthenticityCheck[] = [
+  {
+    id: '1',
+    herbId: '1',
+    herbName: '人参',
+    genuineFeatures: [
+      '主根呈纺锤形或圆柱形，长3～15cm，直径1～2cm。',
+      '表面灰黄色，上部或全体有疏浅断续的粗横纹及明显的纵皱。',
+      '下部有支根2～3条，并着生多数细长的须根，须根上常有不明显的细小疣状突起。',
+      '质较硬，断面淡黄白色，显粉性，形成层环纹棕黄色，皮部有黄棕色的点状树脂道及放射状裂隙。',
+      '香气特异，味微苦、甘。',
+    ],
+    fakeFeatures: [
+      '主根呈圆锥形，表面黄白色或棕褐色，无横纹或横纹不明显。',
+      '质地坚硬，断面平坦，白色或灰白色，无形成层环纹。',
+      '无香气或香气淡。',
+    ],
+    identificationMethods: [
+      '观察芦碗：真参有明显的芦碗，伪品多无或不明显。',
+      '闻香气：真参有特异香气，伪品无或淡。',
+      '尝味道：真参味微苦、甘，伪品多有麻味或辣味。',
+      '看纹理：真参有纵皱，下部有须根，伪品多无。',
+    ],
+    images: {
+      genuine: 'https://images.unsplash.com/photo-1559825481-125a8279d079?w=400&h=300&fit=crop',
+      fake: 'https://images.unsplash.com/photo-1518895949257-7621c3c786d7?w=400&h=300&fit=crop',
+    },
+  },
+  {
+    id: '2',
+    herbId: '2',
+    herbName: '当归',
+    genuineFeatures: [
+      '略呈圆柱形，下部有支根3～5条或更多，长15～25cm。',
+      '表面黄棕色至棕褐色，具纵皱纹及横长皮孔样突起。',
+      '根头具环纹，上端圆钝，或具数个明显突出的根茎痕，有紫色或黄绿色的茎及叶鞘的残基。',
+      '质柔韧，断面黄白色或淡黄棕色，皮部厚，有裂隙及多数棕色点状分泌腔，木部色较淡，形成层环黄棕色。',
+      '有浓郁的香气，味甘、辛、微苦。',
+    ],
+    fakeFeatures: [
+      '主根短，支根少或无，表面灰黄色，无香气。',
+      '质地坚硬，断面平坦，无分泌腔。',
+      '无特殊香气，味淡或微苦。',
+    ],
+    identificationMethods: [
+      '闻香气：真当归有浓郁香气，伪品无或淡。',
+      '看根头：真当归根头有环纹，伪品无。',
+      '尝味道：真当归味甘、辛、微苦，伪品多淡。',
+      '看断面：真当归有棕色分泌腔，伪品无。',
+    ],
+  },
+];
+
+export const cultivationTechniques: CultivationTechnique[] = [
+  {
+    id: '1',
+    herbId: '1',
+    herbName: '人参',
+    growingConditions: {
+      climate: '喜冷凉湿润气候，耐寒，忌强光直射。',
+      soil: '宜选富含腐殖质、疏松肥沃、排水良好的砂质壤土。',
+      temperature: '生长适温15～20℃，温度高于30℃或低于-30℃生长受抑。',
+      rainfall: '年降水量600～1000mm，空气湿度70%～80%为宜。',
+    },
+    propagationMethod: '主要采用种子繁殖，也可分株繁殖。',
+    cultivationSteps: [
+      '选地整地：选择排水良好、疏松肥沃的地块，深翻30～40cm，施基肥。',
+      '种子处理：播种前需进行层积处理，打破休眠。',
+      '播种：春播或秋播，条播或撒播，覆土3～5cm。',
+      '移栽：生长2～3年后移栽，秋季落叶后或春季萌芽前进行。',
+      '遮阳：搭建遮阳棚，透光度30%～40%。',
+    ],
+    fieldManagement: [
+      '中耕除草：每年3～4次，保持土壤疏松。',
+      '施肥：每年追肥2～3次，以有机肥为主。',
+      '灌溉：保持土壤湿润，雨季注意排水。',
+      '防寒：冬季覆盖防寒，避免冻害。',
+    ],
+    pestControl: [
+      '病害防治：立枯病、斑点病等，可用多菌灵防治。',
+      '虫害防治：地下害虫、蚜虫等，可用杀虫剂防治。',
+    ],
+    harvestProcessing: '生长5～6年后采收，秋季采挖，洗净，晒干或烘干。',
+  },
+  {
+    id: '2',
+    herbId: '2',
+    herbName: '当归',
+    growingConditions: {
+      climate: '喜凉爽湿润气候，耐寒，怕高温。',
+      soil: '宜选土层深厚、疏松肥沃、排水良好的砂质壤土。',
+      temperature: '生长适温10～20℃，忌高温多湿。',
+      rainfall: '年降水量500～1000mm，空气湿度60%～70%为宜。',
+    },
+    propagationMethod: '主要采用种子繁殖，也可分株繁殖。',
+    cultivationSteps: [
+      '选地整地：选择地势高燥、排水良好的地块，深翻30～40cm，施基肥。',
+      '播种：春播或秋播，条播，行距30～40cm。',
+      '间苗：苗高5～10cm时间苗，株距20～25cm。',
+      '中耕除草：每年3～4次，保持土壤疏松。',
+      '施肥：每年追肥2～3次，以有机肥为主。',
+    ],
+    fieldManagement: [
+      '灌溉：保持土壤湿润，雨季注意排水。',
+      '摘薹：抽薹时及时摘除，促进根部生长。',
+      '培土：秋季培土，防止冻害。',
+    ],
+    pestControl: [
+      '病害防治：白粉病、根腐病等，可用多菌灵防治。',
+      '虫害防治：蚜虫、蛴螬等，可用杀虫剂防治。',
+    ],
+    harvestProcessing: '生长2～3年后采收，秋季采挖，洗净，晒干。',
+  },
+];
+
+export const healthKnowledge: HealthKnowledge[] = [
+  {
+    id: '1',
+    herbId: '1',
+    herbName: '人参',
+    healthBenefits: [
+      '大补元气，提高免疫力。',
+      '改善心血管功能，增强心肌收缩力。',
+      '调节神经系统，改善睡眠质量。',
+      '延缓衰老，抗氧化作用。',
+      '促进造血功能，改善贫血。',
+    ],
+    suitableFor: ['体虚者', '中老年人群', '病后恢复期', '亚健康人群'],
+    usageMethods: [
+      { name: '煎服', method: '人参片3～9g，水煎服。' },
+      { name: '研粉', method: '人参研粉，每次1～2g，冲服。' },
+      { name: '泡酒', method: '人参50g，白酒500ml，浸泡15天后饮用。' },
+      { name: '炖服', method: '人参片加适量水，炖40分钟后服用。' },
+    ],
+    recommendedRecipes: [
+      {
+        name: '人参鸡汤',
+        ingredients: ['人参10g', '鸡1只', '红枣5颗', '枸杞10g', '姜片适量'],
+        instructions: '鸡洗净切块，与人参、红枣、枸杞、姜片一起炖2小时，调味即可。',
+      },
+      {
+        name: '人参粥',
+        ingredients: ['人参5g', '大米100g', '冰糖适量'],
+        instructions: '人参加水煎煮取汁，加大米煮粥，加冰糖调味即可。',
+      },
+    ],
+    contraindications: ['实证、热证者忌服', '高血压患者慎服', '孕妇慎服', '不宜与藜芦、五灵脂同用'],
+  },
+  {
+    id: '2',
+    herbId: '2',
+    herbName: '当归',
+    healthBenefits: [
+      '补血活血，改善贫血。',
+      '调经止痛，改善女性月经不调。',
+      '润肠通便，改善便秘。',
+      '增强免疫力，抗氧化。',
+      '保护心血管，降低血脂。',
+    ],
+    suitableFor: ['女性气血不足者', '月经不调者', '血虚便秘者', '中老年人群'],
+    usageMethods: [
+      { name: '煎服', method: '当归片6～12g，水煎服。' },
+      { name: '泡酒', method: '当归50g，白酒500ml，浸泡15天后饮用。' },
+      { name: '煲汤', method: '当归适量，与肉类一起煲汤食用。' },
+    ],
+    recommendedRecipes: [
+      {
+        name: '当归羊肉汤',
+        ingredients: ['当归15g', '羊肉500g', '生姜15g', '红枣5颗'],
+        instructions: '羊肉洗净切块，与当归、生姜、红枣一起炖2小时，调味即可。',
+      },
+      {
+        name: '当归鸡蛋汤',
+        ingredients: ['当归10g', '鸡蛋2个', '红糖适量'],
+        instructions: '当归加水煎煮30分钟，加入鸡蛋煮至熟，去壳再煮10分钟，加红糖调味。',
+      },
+    ],
+    contraindications: ['湿阻中满者慎服', '大便溏泄者慎服', '孕妇慎服'],
+  },
+  {
+    id: '3',
+    herbId: '4',
+    herbName: '枸杞',
+    healthBenefits: [
+      '滋补肝肾，益精明目。',
+      '抗氧化，延缓衰老。',
+      '调节免疫力，增强体质。',
+      '降血脂，保护心血管。',
+      '保护肝脏，促进肝细胞再生。',
+    ],
+    suitableFor: ['肝肾不足者', '眼睛疲劳者', '中老年人群', '亚健康人群'],
+    usageMethods: [
+      { name: '直接嚼食', method: '每日10～20粒，直接嚼食。' },
+      { name: '泡水', method: '枸杞10～15粒，开水冲泡饮用。' },
+      { name: '泡酒', method: '枸杞100g，白酒500ml，浸泡15天后饮用。' },
+      { name: '煲汤', method: '枸杞适量，与肉类一起煲汤食用。' },
+    ],
+    recommendedRecipes: [
+      {
+        name: '枸杞菊花茶',
+        ingredients: ['枸杞10g', '菊花5g'],
+        instructions: '枸杞和菊花一起用开水冲泡，代茶饮。',
+      },
+      {
+        name: '枸杞红枣粥',
+        ingredients: ['枸杞15g', '红枣5颗', '大米100g'],
+        instructions: '大米煮粥，加入枸杞、红枣，煮至粥熟即可。',
+      },
+    ],
+    contraindications: ['外邪实热者慎服', '脾虚有湿者慎服', '腹泻者慎服'],
+  },
+];
+
+export const originDistributions: OriginDistribution[] = [
+  {
+    id: '1',
+    herbId: '1',
+    herbName: '人参',
+    mainProvinces: ['吉林', '辽宁', '黑龙江', '河北', '山西'],
+    characteristics: '东北地区出产的人参品质最佳，特别是吉林长白山地区。',
+    qualityLevels: [
+      { area: '吉林长白山', level: '一等', description: '品质最佳，产量少，价格高。' },
+      { area: '辽宁东部', level: '二等', description: '品质较好，产量中等。' },
+      { area: '黑龙江', level: '三等', description: '品质一般，产量较大。' },
+    ],
+    mapImage: 'https://images.unsplash.com/photo-1559825481-125a8279d079?w=600&h=400&fit=crop',
+  },
+  {
+    id: '2',
+    herbId: '2',
+    herbName: '当归',
+    mainProvinces: ['甘肃', '云南', '四川', '陕西', '湖北'],
+    characteristics: '甘肃岷县出产的当归品质最佳，被誉为“中国当归之乡”。',
+    qualityLevels: [
+      { area: '甘肃岷县', level: '一等', description: '品质最佳，产量较大，市场知名度高。' },
+      { area: '云南', level: '二等', description: '品质较好，产量中等。' },
+      { area: '四川', level: '三等', description: '品质一般，产量较大。' },
+    ],
+    mapImage: 'https://images.unsplash.com/photo-1593005510500-63b95406814c?w=600&h=400&fit=crop',
+  },
+  {
+    id: '3',
+    herbId: '9',
+    herbName: '连翘',
+    mainProvinces: ['山西', '河南', '陕西', '河北', '山东'],
+    characteristics: '山西出产的连翘品质最佳，产量最大。',
+    qualityLevels: [
+      { area: '山西运城', level: '一等', description: '品质最佳，产量大，市场主流。' },
+      { area: '河南', level: '二等', description: '品质较好，产量中等。' },
+      { area: '陕西', level: '三等', description: '品质一般，产量较大。' },
+    ],
+  },
+  {
+    id: '4',
+    herbId: '10',
+    herbName: '山银花',
+    mainProvinces: ['湖南', '广东', '广西', '贵州', '四川'],
+    characteristics: '湖南、广东、广西出产的山银花品质较好。',
+    qualityLevels: [
+      { area: '湖南', level: '一等', description: '品质最佳，产量大。' },
+      { area: '广东、广西', level: '二等', description: '品质较好，产量中等。' },
+    ],
+  },
+];
 
 export const shops: Shop[] = [
   {

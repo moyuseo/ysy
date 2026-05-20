@@ -131,3 +131,65 @@ export interface PurchaseItem {
   publishTime: string;
   urgent: boolean;
 }
+
+export interface HerbProfile {
+  id: string;
+  herbId: string;
+  name: string;
+  alias?: string[];
+  source?: string;
+  properties?: string;
+  functions?: string[];
+  indications?: string[];
+  dosage?: string;
+  precautions?: string;
+  storage?: string;
+}
+
+export interface AuthenticityCheck {
+  id: string;
+  herbId: string;
+  herbName: string;
+  genuineFeatures: string[];
+  fakeFeatures: string[];
+  identificationMethods: string[];
+  images?: { genuine: string; fake: string };
+}
+
+export interface CultivationTechnique {
+  id: string;
+  herbId: string;
+  herbName: string;
+  growingConditions: {
+    climate: string;
+    soil: string;
+    temperature: string;
+    rainfall: string;
+  };
+  propagationMethod: string;
+  cultivationSteps: string[];
+  fieldManagement: string[];
+  pestControl: string[];
+  harvestProcessing: string;
+}
+
+export interface HealthKnowledge {
+  id: string;
+  herbId: string;
+  herbName: string;
+  healthBenefits: string[];
+  suitableFor: string[];
+  usageMethods: { name: string; method: string }[];
+  recommendedRecipes: { name: string; ingredients: string[]; instructions: string }[];
+  contraindications?: string[];
+}
+
+export interface OriginDistribution {
+  id: string;
+  herbId: string;
+  herbName: string;
+  mainProvinces: string[];
+  characteristics?: string;
+  qualityLevels?: { area: string; level: string; description: string }[];
+  mapImage?: string;
+}
