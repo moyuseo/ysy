@@ -273,3 +273,87 @@ export interface HighQualityProduct {
   stock: number;
   imageUrl?: string;
 }
+
+export interface ProcurementNews {
+  id: string;
+  title: string;
+  summary: string;
+  procurementType: string;
+  region: string;
+  publishTime: string;
+  source: string;
+  status: string;
+  deadline?: string;
+  amount?: string;
+  imageUrl?: string;
+  views?: number;
+}
+
+export interface PublicOpinion {
+  id: string;
+  title: string;
+  summary: string;
+  source: string;
+  publishTime: string;
+  sentiment: 'positive' | 'neutral' | 'negative';
+  influenceLevel: 'high' | 'medium' | 'low';
+  relatedHerbs: string[];
+  imageUrl?: string;
+  views?: number;
+}
+
+export interface PolicyRegulation {
+  id: string;
+  title: string;
+  summary: string;
+  category: string;
+  issuingAuthority: string;
+  publishTime: string;
+  effectiveDate?: string;
+  documentNo?: string;
+  imageUrl?: string;
+  views?: number;
+}
+
+export interface DiscussionPost {
+  id: string;
+  title: string;
+  content: string;
+  authorId: string;
+  authorName: string;
+  authorAvatar?: string;
+  publishTime: string;
+  category: string;
+  tags: string[];
+  likes: number;
+  comments: number;
+  views: number;
+  images?: string[];
+}
+
+export interface DiscussionComment {
+  id: string;
+  postId: string;
+  content: string;
+  authorId: string;
+  authorName: string;
+  authorAvatar?: string;
+  publishTime: string;
+  likes: number;
+}
+
+export interface UserShare {
+  id: string;
+  title: string;
+  content: string;
+  authorId: string;
+  authorName: string;
+  authorAvatar?: string;
+  publishTime: string;
+  category: string;
+  images: string[];
+  likes: number;
+  comments: number;
+  views: number;
+  location?: string;
+}
