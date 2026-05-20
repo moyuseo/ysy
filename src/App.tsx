@@ -8,6 +8,7 @@ import News from './pages/News';
 import Trade from './pages/Trade';
 import Herbs from './pages/Herbs';
 import HerbDetail from './pages/HerbDetail';
+import Quality from './pages/Quality';
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
           <Route path="/trade" element={<Trade />} />
           <Route path="/herbs" element={<Herbs />} />
           <Route path="/herbs/:id" element={<HerbDetail />} />
+          <Route path="/quality" element={<Quality />} />
         </Routes>
       </main>
       <Footer />

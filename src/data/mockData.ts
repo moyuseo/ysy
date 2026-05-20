@@ -1,4 +1,4 @@
-import { Herb, PriceItem, NewsItem, Supplier, Demand, MarketIndex, VarietyIndex, HistoricalPrice, HerbPriceDetail, Shop, SupplyItem, PurchaseItem, HerbProfile, AuthenticityCheck, CultivationTechnique, HealthKnowledge, OriginDistribution } from '../types';
+import { Herb, PriceItem, NewsItem, Supplier, Demand, MarketIndex, VarietyIndex, HistoricalPrice, HerbPriceDetail, Shop, SupplyItem, PurchaseItem, HerbProfile, AuthenticityCheck, CultivationTechnique, HealthKnowledge, OriginDistribution, TraceabilityProduct, GAPCertifiedProduct, FreshCutProduct, HighQualityProduct } from '../types';
 
 export const herbs: Herb[] = [
   {
@@ -1202,4 +1202,411 @@ export const purchaseItems: PurchaseItem[] = [
     publishTime: '2026-05-19',
     urgent: false,
   },
+];
+
+export const traceabilityProducts: TraceabilityProduct[] = [
+  {
+    id: '1',
+    herbName: '人参',
+    batchNo: 'RS202605001',
+    traceCode: 'TRC-RS-2026-05-001',
+    origin: '吉林长白山',
+    productionDate: '2025-09-15',
+    expiryDate: '2030-09-14',
+    specifications: '生晒参 25支',
+    qualityLevel: '特级',
+    supplierName: '吉林长白山药材基地',
+    supplierContact: '0431-12345678',
+    imageUrl: 'https://images.unsplash.com/photo-1596040033229-a9821ebd058d?w=400&h=300&fit=crop',
+    traceRecords: [
+      {
+        id: 'r1',
+        title: '种子采购',
+        date: '2024-03-20',
+        location: '吉林通化种子站',
+        operator: '张种子站',
+        details: '购买优质人参种子，品种纯正，质量检测合格'
+      },
+      {
+        id: 'r2',
+        title: '种植培育',
+        date: '2024-04-15',
+        location: '吉林长白山药材种植基地',
+        operator: '李种植员',
+        details: '播种完成，按照GAP标准管理，定期施肥、浇水、病虫害防治'
+      },
+      {
+        id: 'r3',
+        title: '生长管理',
+        date: '2024-08-10',
+        location: '吉林长白山药材种植基地',
+        operator: '王技术员',
+        details: '中期生长检查，生长状况良好，无病虫害'
+      },
+      {
+        id: 'r4',
+        title: '采收加工',
+        date: '2025-09-15',
+        location: '吉林长白山药材加工厂',
+        operator: '赵工人',
+        details: '人工采收，选择生长饱满、无病虫害的参根，清洗、晾晒、加工'
+      },
+      {
+        id: 'r5',
+        title: '质量检测',
+        date: '2025-09-20',
+        location: '吉林药材质量检测中心',
+        operator: '质检师',
+        details: '农药残留检测合格，重金属含量达标，有效成分含量高'
+      },
+      {
+        id: 'r6',
+        title: '入库仓储',
+        date: '2025-09-25',
+        location: '吉林长白山药材仓库',
+        operator: '陈保管员',
+        details: '入库登记，温度20℃，湿度60%，定期检查'
+      },
+      {
+        id: 'r7',
+        title: '发货运输',
+        date: '2026-05-15',
+        location: '吉林长白山药材基地',
+        operator: '刘物流',
+        details: '冷链运输，全程温度监控，确保药材质量'
+      }
+    ]
+  },
+  {
+    id: '2',
+    herbName: '三七',
+    batchNo: 'SQ202605001',
+    traceCode: 'TRC-SQ-2026-05-001',
+    origin: '云南文山',
+    productionDate: '2025-10-20',
+    expiryDate: '2030-10-19',
+    specifications: '40头',
+    qualityLevel: '一级',
+    supplierName: '文山三七种植专业合作社',
+    supplierContact: '0876-1234567',
+    imageUrl: 'https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?w=400&h=300&fit=crop',
+    traceRecords: [
+      {
+        id: 'r1',
+        title: '选地整地',
+        date: '2023-04-10',
+        location: '云南文山',
+        operator: '王种植户',
+        details: '选择海拔1500米左右的坡地，土壤肥沃，排水良好'
+      },
+      {
+        id: 'r2',
+        title: '播种',
+        date: '2023-05-15',
+        location: '云南文山三七种植基地',
+        operator: '李种植员',
+        details: '条播播种，间距合理，覆盖松针保湿'
+      },
+      {
+        id: 'r3',
+        title: '三年管理',
+        date: '2024-06-20',
+        location: '云南文山三七种植基地',
+        operator: '张技术员',
+        details: '三年生长期，精心管理，定期施肥、浇水、遮阳'
+      },
+      {
+        id: 'r4',
+        title: '采挖',
+        date: '2025-10-20',
+        location: '云南文山三七种植基地',
+        operator: '赵采挖队',
+        details: '人工采挖，避免损伤，选择饱满、无病虫害的根块'
+      },
+      {
+        id: 'r5',
+        title: '加工干燥',
+        date: '2025-10-25',
+        location: '云南文山三七加工厂',
+        operator: '王工人',
+        details: '清洗、修剪、低温干燥，分级包装'
+      },
+      {
+        id: 'r6',
+        title: '质量检测',
+        date: '2025-11-01',
+        location: '云南三七质量检测中心',
+        operator: '质检师',
+        details: '皂苷含量检测合格，无农药残留，重金属达标'
+      },
+      {
+        id: 'r7',
+        title: '入库销售',
+        date: '2025-11-05',
+        location: '云南文山中药材交易市场',
+        operator: '刘管理员',
+        details: '入库登记，质检合格后上市销售'
+      }
+    ]
+  },
+  {
+    id: '3',
+    herbName: '当归',
+    batchNo: 'DG202605001',
+    traceCode: 'TRC-DG-2026-05-001',
+    origin: '甘肃岷县',
+    productionDate: '2025-11-10',
+    expiryDate: '2030-11-09',
+    specifications: '当归片 统货',
+    qualityLevel: '一级',
+    supplierName: '甘肃岷县当归属地药材合作社',
+    supplierContact: '0932-1234567',
+    imageUrl: 'https://images.unsplash.com/photo-1593005510500-63b95406814c?w=400&h=300&fit=crop',
+    traceRecords: [
+      {
+        id: 'r1',
+        title: '育苗',
+        date: '2024-03-15',
+        location: '甘肃岷县育苗基地',
+        operator: '李育苗员',
+        details: '精选种子，温室育苗，管理精细'
+      },
+      {
+        id: 'r2',
+        title: '移栽',
+        date: '2024-06-20',
+        location: '甘肃岷县当归种植基地',
+        operator: '王种植户',
+        details: '适时移栽，合理密植，科学施肥'
+      },
+      {
+        id: 'r3',
+        title: '田间管理',
+        date: '2024-09-10',
+        location: '甘肃岷县当归种植基地',
+        operator: '张技术员',
+        details: '中耕除草、施肥、浇水、病虫害防治'
+      },
+      {
+        id: 'r4',
+        title: '采收',
+        date: '2025-11-10',
+        location: '甘肃岷县当归种植基地',
+        operator: '赵采收队',
+        details: '秋季采挖，选择生长2年以上的当归'
+      },
+      {
+        id: 'r5',
+        title: '加工',
+        date: '2025-11-15',
+        location: '甘肃岷县中药材加工厂',
+        operator: '王工人',
+        details: '清洗、去须根、硫磺熏蒸、切片干燥'
+      },
+      {
+        id: 'r6',
+        title: '检测',
+        date: '2025-11-20',
+        location: '甘肃中药材质量检测中心',
+        operator: '质检师',
+        details: '质量检测合格，含量达标'
+      }
+    ]
+  }
+];
+
+export const gapCertifiedProducts: GAPCertifiedProduct[] = [
+  {
+    id: '1',
+    herbName: '人参',
+    certificateNo: 'GAP-JL-2025-001',
+    certifiedBy: '国家中药材GAP认证中心',
+    certificationDate: '2025-03-15',
+    validUntil: '2030-03-14',
+    baseLocation: '吉林省白山市长白县',
+    areaSize: '500亩',
+    mainProducts: ['人参', '西洋参', '林下参'],
+    qualityStandards: ['GAP', '药典2025版', '绿色食品'],
+    manufacturerName: '吉林长白山药材种植有限公司',
+    manufacturerAddress: '吉林省白山市长白县长白镇',
+    contact: '0439-1234567',
+    imageUrl: 'https://images.unsplash.com/photo-1559825481-125a8279d079?w=400&h=300&fit=crop',
+    certificateImage: 'https://images.unsplash.com/photo-1586281380349-632531db7ed4?w=400&h=300&fit=crop'
+  },
+  {
+    id: '2',
+    herbName: '三七',
+    certificateNo: 'GAP-YN-2025-002',
+    certifiedBy: '云南省中药材GAP认证中心',
+    certificationDate: '2025-05-20',
+    validUntil: '2030-05-19',
+    baseLocation: '云南省文山州文山市',
+    areaSize: '1000亩',
+    mainProducts: ['三七', '重楼', '白及'],
+    qualityStandards: ['GAP', '道地药材', '有机食品'],
+    manufacturerName: '云南文山三七种植专业合作社',
+    manufacturerAddress: '云南省文山州文山市开化镇',
+    contact: '0876-7654321',
+    imageUrl: 'https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?w=400&h=300&fit=crop',
+    certificateImage: 'https://images.unsplash.com/photo-1586281380349-632531db7ed4?w=400&h=300&fit=crop'
+  },
+  {
+    id: '3',
+    herbName: '当归',
+    certificateNo: 'GAP-GS-2025-003',
+    certifiedBy: '甘肃省中药材GAP认证中心',
+    certificationDate: '2025-06-10',
+    validUntil: '2030-06-09',
+    baseLocation: '甘肃省定西市岷县',
+    areaSize: '800亩',
+    mainProducts: ['当归', '黄芪', '党参'],
+    qualityStandards: ['GAP', '道地药材', '地理标志产品'],
+    manufacturerName: '甘肃岷县当归属地药材合作社',
+    manufacturerAddress: '甘肃省定西市岷县岷阳镇',
+    contact: '0932-7654321',
+    imageUrl: 'https://images.unsplash.com/photo-1593005510500-63b95406814c?w=400&h=300&fit=crop',
+    certificateImage: 'https://images.unsplash.com/photo-1586281380349-632531db7ed4?w=400&h=300&fit=crop'
+  }
+];
+
+export const freshCutProducts: FreshCutProduct[] = [
+  {
+    id: '1',
+    herbName: '白芍',
+    specification: '鲜切白芍片',
+    processingMethod: '采挖后24小时内清洗、去外皮、切薄片、低温干燥',
+    origin: '安徽亳州',
+    harvestDate: '2026-05-10',
+    processingDate: '2026-05-10',
+    storageMethod: '阴凉干燥处保存，防潮',
+    shelfLife: '24个月',
+    qualityFeatures: ['表面洁白', '切面光滑', '无霉变', '有效成分含量高'],
+    manufacturer: '安徽亳州鲜切中药材加工厂',
+    contact: '0558-1234567',
+    price: 45,
+    unit: '元/kg',
+    stock: 300,
+    imageUrl: 'https://images.unsplash.com/photo-1596040033086-a29478013068?w=400&h=300&fit=crop'
+  },
+  {
+    id: '2',
+    herbName: '白芷',
+    specification: '鲜切白芷片',
+    processingMethod: '新鲜采挖，及时清洗，趁鲜切片，低温烘干',
+    origin: '河北安国',
+    harvestDate: '2026-05-12',
+    processingDate: '2026-05-12',
+    storageMethod: '密封保存，防潮防虫蛀',
+    shelfLife: '24个月',
+    qualityFeatures: ['香气浓郁', '片形完整', '无虫蛀', '有效成分稳定'],
+    manufacturer: '河北安国中药材加工厂',
+    contact: '0312-7654321',
+    price: 28,
+    unit: '元/kg',
+    stock: 250,
+    imageUrl: 'https://images.unsplash.com/photo-1596040033229-a9821ebd058d?w=400&h=300&fit=crop'
+  },
+  {
+    id: '3',
+    herbName: '葛根',
+    specification: '鲜切葛根片',
+    processingMethod: '采挖后立即清洗，去外皮，切薄片，低温干燥',
+    origin: '广东茂名',
+    harvestDate: '2026-05-15',
+    processingDate: '2026-05-15',
+    storageMethod: '密封防潮，避免阳光直射',
+    shelfLife: '18个月',
+    qualityFeatures: ['粉性充足', '片形整齐', '无变色', '葛根素含量高'],
+    manufacturer: '广东茂名中药材加工厂',
+    contact: '0668-1234567',
+    price: 32,
+    unit: '元/kg',
+    stock: 400,
+    imageUrl: 'https://images.unsplash.com/photo-1518895949257-7621c3c786d7?w=400&h=300&fit=crop'
+  },
+  {
+    id: '4',
+    herbName: '丹参',
+    specification: '鲜切丹参片',
+    processingMethod: '秋季采挖，24小时内清洗、去须根、切薄片、低温干燥',
+    origin: '河南南阳',
+    harvestDate: '2026-05-18',
+    processingDate: '2026-05-18',
+    storageMethod: '密封保存，防潮',
+    shelfLife: '24个月',
+    qualityFeatures: ['表面红棕色', '切面黄白色', '菊花心明显', '丹参酮含量高'],
+    manufacturer: '河南南阳中药材加工厂',
+    contact: '0377-7654321',
+    price: 35,
+    unit: '元/kg',
+    stock: 200,
+    imageUrl: 'https://images.unsplash.com/photo-1501601980367-5a1ba8a51ca9?w=400&h=300&fit=crop'
+  }
+];
+
+export const highQualityProducts: HighQualityProduct[] = [
+  {
+    id: '1',
+    herbName: '人参',
+    standardType: '三无一全',
+    herbId: '1',
+    origin: '吉林长白山',
+    features: ['无污染', '无农药残留', '无重金属超标', '全程质量可控'],
+    qualityLevel: '特级',
+    testingReport: '2026年度质检报告，各项指标均符合国家标准，有效成分含量高于药典标准',
+    manufacturer: '吉林长白山药材种植有限公司',
+    contact: '0439-9876543',
+    price: 680,
+    unit: '元/kg',
+    stock: 80,
+    imageUrl: 'https://images.unsplash.com/photo-1559825481-125a8279d079?w=400&h=300&fit=crop'
+  },
+  {
+    id: '2',
+    herbName: '三七',
+    standardType: '三无一全',
+    herbId: '2',
+    origin: '云南文山',
+    features: ['无农药残留', '无重金属', '无黄曲霉素', '全程溯源'],
+    qualityLevel: '一级',
+    testingReport: '2026年第1季度质量检测报告，皂苷含量达7.5%，远超药典标准',
+    manufacturer: '云南文山三七种植专业合作社',
+    contact: '0876-9876543',
+    price: 320,
+    unit: '元/kg',
+    stock: 120,
+    imageUrl: 'https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?w=400&h=300&fit=crop'
+  },
+  {
+    id: '3',
+    herbName: '当归',
+    standardType: '三无一全',
+    herbId: '3',
+    origin: '甘肃岷县',
+    features: ['无公害', '无农残', '无重金属', '全链条监管'],
+    qualityLevel: '一级',
+    testingReport: '2026年度质量检测报告，挥发油含量达标，安全指标优秀',
+    manufacturer: '甘肃岷县当归属地药材合作社',
+    contact: '0932-9876543',
+    price: 95,
+    unit: '元/kg',
+    stock: 200,
+    imageUrl: 'https://images.unsplash.com/photo-1593005510500-63b95406814c?w=400&h=300&fit=crop'
+  },
+  {
+    id: '4',
+    herbName: '枸杞',
+    standardType: '三无一全',
+    herbId: '4',
+    origin: '宁夏中宁',
+    features: ['无硫熏', '无农残', '无添加剂', '全流程质量保证'],
+    qualityLevel: '特级',
+    testingReport: '2026年度质检报告，颗粒饱满，多糖含量高，安全指标全部合格',
+    manufacturer: '宁夏中宁枸杞种植专业合作社',
+    contact: '0955-9876543',
+    price: 85,
+    unit: '元/kg',
+    stock: 180,
+    imageUrl: 'https://images.unsplash.com/photo-1595341888016-a392ef81b7de?w=400&h=300&fit=crop'
+  }
 ];

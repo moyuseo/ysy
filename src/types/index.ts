@@ -193,3 +193,83 @@ export interface OriginDistribution {
   qualityLevels?: { area: string; level: string; description: string }[];
   mapImage?: string;
 }
+
+export interface TraceabilityRecord {
+  id: string;
+  title: string;
+  date: string;
+  location: string;
+  operator: string;
+  details: string;
+  images?: string[];
+}
+
+export interface TraceabilityProduct {
+  id: string;
+  herbName: string;
+  batchNo: string;
+  traceCode: string;
+  origin: string;
+  productionDate: string;
+  expiryDate: string;
+  specifications: string;
+  qualityLevel: string;
+  supplierName: string;
+  supplierContact: string;
+  traceRecords: TraceabilityRecord[];
+  imageUrl?: string;
+}
+
+export interface GAPCertifiedProduct {
+  id: string;
+  herbName: string;
+  certificateNo: string;
+  certifiedBy: string;
+  certificationDate: string;
+  validUntil: string;
+  baseLocation: string;
+  areaSize: string;
+  mainProducts: string[];
+  qualityStandards: string[];
+  manufacturerName: string;
+  manufacturerAddress: string;
+  contact: string;
+  imageUrl?: string;
+  certificateImage?: string;
+}
+
+export interface FreshCutProduct {
+  id: string;
+  herbName: string;
+  specification: string;
+  processingMethod: string;
+  origin: string;
+  harvestDate: string;
+  processingDate: string;
+  storageMethod: string;
+  shelfLife: string;
+  qualityFeatures: string[];
+  manufacturer: string;
+  contact: string;
+  price: number;
+  unit: string;
+  stock: number;
+  imageUrl?: string;
+}
+
+export interface HighQualityProduct {
+  id: string;
+  herbName: string;
+  standardType: string;
+  herbId: string;
+  origin: string;
+  features: string[];
+  qualityLevel: string;
+  testingReport: string;
+  manufacturer: string;
+  contact: string;
+  price: number;
+  unit: string;
+  stock: number;
+  imageUrl?: string;
+}
