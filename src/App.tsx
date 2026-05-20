@@ -8,7 +8,6 @@ import News from './pages/News';
 import Trade from './pages/Trade';
 import Herbs from './pages/Herbs';
 import HerbDetail from './pages/HerbDetail';
-import Traceability from './pages/Traceability';
 
 function App() {
   return (
@@ -22,7 +21,6 @@ function App() {
           <Route path="/trade" element={<Trade />} />
           <Route path="/herbs" element={<Herbs />} />
           <Route path="/herbs/:id" element={<HerbDetail />} />
-          <Route path="/traceability" element={<Traceability />} />
         </Routes>
       </main>
       <Footer />

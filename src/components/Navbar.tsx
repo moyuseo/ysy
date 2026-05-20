@@ -11,7 +11,6 @@ const Navbar: React.FC = () => {
     { path: '/news', label: '资讯分析' },
     { path: '/trade', label: '供求交易' },
     { path: '/herbs', label: '品种知识' },
-    { path: '/traceability', label: '溯源与质量' },
   ];
 
   const isActive = (path: string) => location.pathname === path;
