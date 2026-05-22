@@ -9,8 +9,6 @@ import Trade from './pages/Trade';
 import Herbs from './pages/Herbs';
 import HerbDetail from './pages/HerbDetail';
 import Quality from './pages/Quality';
-import Services from './pages/Services';
-import Tools from './pages/Tools';
 
 function App() {
   return (
@@ -25,8 +23,6 @@ function App() {
           <Route path="/herbs" element={<Herbs />} />
           <Route path="/herbs/:id" element={<HerbDetail />} />
           <Route path="/quality" element={<Quality />} />
-          <Route path="/services" element={<Services />} />
-          <Route path="/tools" element={<Tools />} />
         </Routes>
       </main>
       <Footer />
