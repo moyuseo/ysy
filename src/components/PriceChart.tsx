@@ -28,7 +28,7 @@ const PriceChart: React.FC<PriceChartProps> = ({ data, title, color = '#2563eb' 
             <YAxis stroke="#6b7280" tick={{ fontSize: 12 }} />
             <Tooltip
               contentStyle={{ backgroundColor: '#fff', border: '1px solid #e5e7eb', borderRadius: '8px' }}
-              formatter={(value) => [`${value} 元/kg`, '价格']}
+              formatter={(value: number) => [`${value} 元/kg`, '价格']}
             />
             <Line
               type="monotone"

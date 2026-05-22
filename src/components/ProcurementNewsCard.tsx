@@ -6,7 +6,7 @@ interface ProcurementNewsCardProps {
 }
 
 const ProcurementNewsCard: React.FC<ProcurementNewsCardProps> = ({ news }) => {
-  const statusColors: Record<string, string> = {
+  const statusColors = {
     '招标中': 'bg-yellow-100 text-yellow-800',
     '公示中': 'bg-blue-100 text-blue-800',
     '报名中': 'bg-purple-100 text-purple-800',
