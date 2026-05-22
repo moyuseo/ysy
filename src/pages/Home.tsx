@@ -1,11 +1,20 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { herbs, priceList, newsList, marketIndexes, suppliers, compositeIndices, categoryIndices, marketIndices as marketIndicesData, varietyIndices, specialtyIndices } from '../data/mockData';
+import { herbs, priceList, newsList, marketIndexes, suppliers, compositeIndices, categoryIndices, marketIndices as marketIndicesData, varietyIndices, specialtyIndices, purchaseItems } from '../data/mockData';
 
 const Home: React.FC = () => {
+  const [searchTerm, setSearchTerm] = useState('');
+
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (searchTerm.trim()) {
+      window.location.href = `/prices?search=${encodeURIComponent(searchTerm)}`;
+    }
+  };
+
   return (
     <div className="min-h-screen">
-      {/* Hero Section */}
+      {/* Hero Section with Search */}
       <section className="bg-gradient-to-r from-green-800 via-emerald-700 to-teal-800 text-white py-20">
         <div className="container">
           <div className="text-center">
@@ -13,6 +22,38 @@ const Home: React.FC = () => {
             <p className="text-xl md:text-2xl text-green-100 mb-8 max-w-3xl mx-auto">
               专业的价格行情 · 市场指数 · 资讯分析 · 供求交易 · 溯源质量服务
             </p>
+            
+            {/* Quick Search Box */}
+            <div className="max-w-3xl mx-auto mb-8">
+              <form onSubmit={handleSearch} className="flex gap-3">
+                <input
+                  type="text"
+                  placeholder="搜索药材名称、规格、产地..."
+                  className="flex-1 px-6 py-4 rounded-xl text-gray-900 text-lg focus:outline-none focus:ring-4 focus:ring-green-300"
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                />
+                <button
+                  type="submit"
+                  className="bg-green-600 hover:bg-green-500 px-8 py-4 rounded-xl font-bold text-lg transition-colors shadow-lg"
+                >
+                  🔍 搜索
+                </button>
+              </form>
+              <div className="flex flex-wrap justify-center gap-3 mt-4">
+                <span className="text-green-200 text-sm">热门搜索:</span>
+                {['人参', '当归', '黄芪', '枸杞', '三七'].map((keyword) => (
+                  <button
+                    key={keyword}
+                    className="text-sm text-white/80 hover:text-white bg-white/10 hover:bg-white/20 px-3 py-1 rounded-full transition-colors"
+                    onClick={() => setSearchTerm(keyword)}
+                  >
+                    {keyword}
+                  </button>
+                ))}
+              </div>
+            </div>
+
             <div className="flex flex-wrap justify-center gap-4 mb-12">
               <Link to="/market" className="bg-white text-green-800 px-8 py-4 rounded-xl font-bold text-lg hover:bg-green-50 transition-all hover:scale-105 shadow-lg">
                 📊 行情中心
@@ -45,6 +86,38 @@ const Home: React.FC = () => {
               </div>
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* Data Dashboard Entrance */}
+      <section className="py-8 bg-gradient-to-b from-white to-green-50">
+        <div className="container">
+          <Link to="/market" className="block bg-gradient-to-r from-green-700 via-emerald-600 to-teal-600 rounded-2xl p-8 text-white hover:shadow-2xl transition-all hover:-translate-y-1">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-6">
+                <div className="text-6xl">📊</div>
+                <div>
+                  <h3 className="text-2xl font-bold mb-2">数据大屏</h3>
+                  <p className="text-green-100">实时监控中药材市场全景数据 - 综合指数 · 品类指数 · 市场指数 · 品种指数</p>
+                </div>
+              </div>
+              <div className="hidden md:flex items-center gap-8">
+                <div className="text-center">
+                  <div className="text-3xl font-bold">{compositeIndices[0].value.toFixed(0)}</div>
+                  <div className="text-sm text-green-200">综合指数</div>
+                </div>
+                <div className="text-center">
+                  <div className="text-3xl font-bold">{categoryIndices.length}</div>
+                  <div className="text-sm text-green-200">品类</div>
+                </div>
+                <div className="text-center">
+                  <div className="text-3xl font-bold">{marketIndicesData.length}</div>
+                  <div className="text-sm text-green-200">市场</div>
+                </div>
+                <div className="text-4xl">→</div>
+              </div>
+            </div>
+          </Link>
         </div>
       </section>
 
@@ -378,6 +451,152 @@ const Home: React.FC = () => {
                   </div>
                 </div>
               </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Hot Purchase & Top Suppliers */}
+      <section className="py-16 bg-white">
+        <div className="container">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+            {/* Hot Purchase Information */}
+            <div>
+              <div className="flex justify-between items-center mb-6">
+                <div className="flex items-center gap-3">
+                  <span className="text-3xl">🔥</span>
+                  <h2 className="text-2xl font-bold text-gray-900">热门求购</h2>
+                </div>
+                <Link to="/trade" className="text-green-700 hover:text-green-900 font-semibold">
+                  更多求购 →
+                </Link>
+              </div>
+              <div className="space-y-4">
+                {purchaseItems.slice(0, 4).map((item, index) => (
+                  <div key={item.id} className="bg-gradient-to-r from-green-50 to-white border-2 border-green-100 rounded-xl p-5 hover:shadow-lg transition-all">
+                    <div className="flex items-start justify-between mb-3">
+                      <div className="flex-1">
+                        <div className="flex items-center gap-2 mb-2">
+                          <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-bold ${
+                            index === 0 ? 'bg-red-100 text-red-700' :
+                            index === 1 ? 'bg-orange-100 text-orange-700' :
+                            'bg-green-100 text-green-700'
+                          }`}>
+                            TOP {index + 1}
+                          </span>
+                          <span className="font-bold text-lg text-gray-900">{item.herbName}</span>
+                        </div>
+                        <p className="text-sm text-gray-600 mb-2">
+                          <span className="font-semibold">需求规格:</span> {item.spec}
+                        </p>
+                        <p className="text-sm text-gray-600">
+                          <span className="font-semibold">产地:</span> {item.origin}
+                        </p>
+                      </div>
+                      <div className="text-right">
+                        <div className="text-xl font-bold text-green-700 mb-1">
+                          ¥{item.price}
+                          <span className="text-sm text-gray-500">/{item.unit}</span>
+                        </div>
+                        <div className="text-sm text-gray-500">
+                          需求: {item.quantity}{item.unit}
+                        </div>
+                      </div>
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <span className="text-xs text-gray-500">发布时间: {item.publishTime}</span>
+                      <button className="text-sm text-green-600 hover:text-green-800 font-semibold">
+                        查看详情 →
+                      </button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Top Suppliers */}
+            <div>
+              <div className="flex justify-between items-center mb-6">
+                <div className="flex items-center gap-3">
+                  <span className="text-3xl">🏆</span>
+                  <h2 className="text-2xl font-bold text-gray-900">优质供应商</h2>
+                </div>
+                <Link to="/trade" className="text-green-700 hover:text-green-900 font-semibold">
+                  查看全部 →
+                </Link>
+              </div>
+              <div className="space-y-4">
+                {suppliers.slice(0, 4).map((supplier, index) => (
+                  <div key={supplier.id} className="bg-gradient-to-r from-emerald-50 to-white border-2 border-emerald-100 rounded-xl p-5 hover:shadow-lg transition-all">
+                    <div className="flex items-start gap-4">
+                      <div className="w-16 h-16 bg-gradient-to-br from-green-400 to-emerald-500 rounded-xl flex items-center justify-center text-white text-2xl font-bold flex-shrink-0">
+                        {supplier.name.substring(0, 2)}
+                      </div>
+                      <div className="flex-1">
+                        <div className="flex items-center gap-2 mb-2">
+                          <h3 className="font-bold text-lg text-gray-900">{supplier.name}</h3>
+                          {index < 2 && (
+                            <span className="inline-flex items-center px-2 py-1 bg-yellow-100 text-yellow-700 rounded-full text-xs font-semibold">
+                              ⭐ 认证
+                            </span>
+                          )}
+                        </div>
+                        <div className="flex flex-wrap gap-2 mb-2">
+                          {supplier.mainProducts.slice(0, 3).map((product, idx) => (
+                            <span key={idx} className="inline-block bg-green-100 text-green-700 px-2 py-1 rounded text-xs">
+                              {product}
+                            </span>
+                          ))}
+                        </div>
+                        <div className="flex items-center gap-4 text-sm text-gray-600">
+                          <span className="flex items-center gap-1">
+                            <span className="text-yellow-500">★</span>
+                            {supplier.rating}
+                          </span>
+                          <span>|</span>
+                          <span>{supplier.location}</span>
+                          <span>|</span>
+                          <span className="text-green-600 font-semibold">
+                            {supplier.tradeCount}笔交易
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="flex gap-2 mt-4">
+                      <button className="flex-1 bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition-colors font-semibold text-sm">
+                        联系供应商
+                      </button>
+                      <button className="flex-1 border-2 border-green-600 text-green-600 px-4 py-2 rounded-lg hover:bg-green-50 transition-colors font-semibold text-sm">
+                        查看店铺
+                      </button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Service Features */}
+      <section className="py-16 bg-gradient-to-b from-gray-50 to-green-50">
+        <div className="container">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold text-gray-900 mb-3">专业服务保障</h2>
+            <p className="text-gray-600">全方位的中药材行业信息与交易服务</p>
+          </div>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+            {[
+              { icon: '🔒', title: '诚信保障', desc: '商家认证 · 交易担保' },
+              { icon: '📋', title: '质检报告', desc: '第三方检测 · 品质保证' },
+              { icon: '🚚', title: '产地直供', desc: '一手货源 · 价格优势' },
+              { icon: '💬', title: '在线客服', desc: '7×24小时 · 专业解答' },
+            ].map((feature, idx) => (
+              <div key={idx} className="bg-white rounded-2xl p-6 text-center hover:shadow-xl transition-shadow">
+                <div className="text-5xl mb-4">{feature.icon}</div>
+                <h3 className="font-bold text-gray-900 mb-2">{feature.title}</h3>
+                <p className="text-sm text-gray-600">{feature.desc}</p>
+              </div>
             ))}
           </div>
         </div>
