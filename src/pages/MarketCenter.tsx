@@ -60,30 +60,30 @@ const MarketCenter: React.FC = () => {
         ))}
       </div>
 
-      <div className="bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg shadow-lg p-8 text-white">
+      <div className="bg-gradient-to-r from-green-700 to-emerald-600 rounded-lg shadow-lg p-8 text-white">
         <h3 className="text-2xl font-bold mb-4">市场概况</h3>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
           <div>
-            <p className="text-blue-200 text-sm">综合指数</p>
+            <p className="text-green-200 text-sm">综合指数</p>
             <p className="text-3xl font-bold">{compositeIndices[0].value.toFixed(1)}</p>
             <p className={`text-sm ${compositeIndices[0].changePercent > 0 ? 'text-green-300' : 'text-red-300'}`}>
               {compositeIndices[0].changePercent > 0 ? '↑' : '↓'} {Math.abs(compositeIndices[0].changePercent).toFixed(2)}%
             </p>
           </div>
           <div>
-            <p className="text-blue-200 text-sm">监测品类</p>
+            <p className="text-green-200 text-sm">监测品类</p>
             <p className="text-3xl font-bold">{categoryIndices.length}</p>
-            <p className="text-sm text-blue-200">个分类</p>
+            <p className="text-sm text-green-200">个分类</p>
           </div>
           <div>
-            <p className="text-blue-200 text-sm">监测市场</p>
+            <p className="text-green-200 text-sm">监测市场</p>
             <p className="text-3xl font-bold">{marketIndices.length}</p>
-            <p className="text-sm text-blue-200">大市场</p>
+            <p className="text-sm text-green-200">大市场</p>
           </div>
           <div>
-            <p className="text-blue-200 text-sm">品种指数</p>
+            <p className="text-green-200 text-sm">品种指数</p>
             <p className="text-3xl font-bold">{varietyIndices.length}+</p>
-            <p className="text-sm text-blue-200">核心品种</p>
+            <p className="text-sm text-green-200">核心品种</p>
           </div>
         </div>
       </div>
@@ -329,9 +329,9 @@ const MarketCenter: React.FC = () => {
 
   const renderSpecialty = () => (
     <div className="space-y-6">
-      <div className="bg-gradient-to-r from-indigo-600 to-purple-600 rounded-lg shadow-lg p-8 text-white mb-6">
+      <div className="bg-gradient-to-r from-green-700 to-emerald-600 rounded-lg shadow-lg p-8 text-white mb-6">
         <h2 className="text-3xl font-bold mb-4">特色指数体系</h2>
-        <p className="text-lg text-blue-100">道地药材 · 药典合格 · 进口药材</p>
+        <p className="text-lg text-green-100">道地药材 · 药典合格 · 进口药材</p>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {specialtyIndices.map((special) => (
@@ -416,7 +416,7 @@ const MarketCenter: React.FC = () => {
           <div key={personal.id} className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow">
             <div className="flex items-center justify-between mb-4">
               <h3 className="text-xl font-bold text-gray-800">{personal.name}</h3>
-              <button className="text-blue-600 hover:text-blue-800 text-sm font-semibold">
+              <button className="text-green-600 hover:text-green-800 text-sm font-semibold">
                 编辑
               </button>
             </div>
@@ -425,7 +425,7 @@ const MarketCenter: React.FC = () => {
                 <p className="text-sm text-gray-500 mb-2">监控品种</p>
                 <div className="flex flex-wrap gap-2">
                   {personal.varieties.map((v, idx) => (
-                    <span key={idx} className="bg-purple-100 text-purple-700 px-3 py-1 rounded-full text-sm">
+                    <span key={idx} className="bg-green-100 text-green-700 px-3 py-1 rounded-full text-sm">
                       {v}
                     </span>
                   ))}
@@ -435,7 +435,7 @@ const MarketCenter: React.FC = () => {
                 <p className="text-sm text-gray-500 mb-2">监控市场</p>
                 <div className="flex flex-wrap gap-2">
                   {personal.markets.map((m, idx) => (
-                    <span key={idx} className="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-sm">
+                    <span key={idx} className="bg-emerald-100 text-emerald-700 px-3 py-1 rounded-full text-sm">
                       {m}
                     </span>
                   ))}
@@ -521,7 +521,7 @@ const MarketCenter: React.FC = () => {
             onClick={() => setActiveTab('overview')}
             className={`px-6 py-4 font-semibold transition-colors ${
               activeTab === 'overview'
-                ? 'text-blue-600 border-b-2 border-blue-600'
+                ? 'text-green-600 border-b-2 border-green-600'
                 : 'text-gray-600 hover:text-gray-900'
             }`}
           >
@@ -531,7 +531,7 @@ const MarketCenter: React.FC = () => {
             onClick={() => setActiveTab('category')}
             className={`px-6 py-4 font-semibold transition-colors ${
               activeTab === 'category'
-                ? 'text-blue-600 border-b-2 border-blue-600'
+                ? 'text-green-600 border-b-2 border-green-600'
                 : 'text-gray-600 hover:text-gray-900'
             }`}
           >
@@ -541,7 +541,7 @@ const MarketCenter: React.FC = () => {
             onClick={() => setActiveTab('market')}
             className={`px-6 py-4 font-semibold transition-colors ${
               activeTab === 'market'
-                ? 'text-blue-600 border-b-2 border-blue-600'
+                ? 'text-green-600 border-b-2 border-green-600'
                 : 'text-gray-600 hover:text-gray-900'
             }`}
           >
@@ -551,7 +551,7 @@ const MarketCenter: React.FC = () => {
             onClick={() => setActiveTab('variety')}
             className={`px-6 py-4 font-semibold transition-colors ${
               activeTab === 'variety'
-                ? 'text-blue-600 border-b-2 border-blue-600'
+                ? 'text-green-600 border-b-2 border-green-600'
                 : 'text-gray-600 hover:text-gray-900'
             }`}
           >
@@ -561,7 +561,7 @@ const MarketCenter: React.FC = () => {
             onClick={() => setActiveTab('specialty')}
             className={`px-6 py-4 font-semibold transition-colors ${
               activeTab === 'specialty'
-                ? 'text-blue-600 border-b-2 border-blue-600'
+                ? 'text-green-600 border-b-2 border-green-600'
                 : 'text-gray-600 hover:text-gray-900'
             }`}
           >
@@ -571,7 +571,7 @@ const MarketCenter: React.FC = () => {
             onClick={() => setActiveTab('personal')}
             className={`px-6 py-4 font-semibold transition-colors ${
               activeTab === 'personal'
-                ? 'text-blue-600 border-b-2 border-blue-600'
+                ? 'text-green-600 border-b-2 border-green-600'
                 : 'text-gray-600 hover:text-gray-900'
             }`}
           >

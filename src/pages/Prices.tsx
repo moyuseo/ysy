@@ -100,14 +100,14 @@ const Prices: React.FC = () => {
               <input
                 type="text"
                 placeholder="搜索药材品种..."
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
               />
             </div>
             <div>
               <select
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
                 value={selectedMarket}
                 onChange={(e) => setSelectedMarket(e.target.value)}
               >
@@ -121,7 +121,7 @@ const Prices: React.FC = () => {
             </div>
             <div>
               <select
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
                 value={sortBy}
                 onChange={(e) => setSortBy(e.target.value as any)}
               >
@@ -131,7 +131,7 @@ const Prices: React.FC = () => {
               </select>
             </div>
             <div>
-              <button className="w-full bg-gradient-to-r from-blue-500 to-indigo-600 text-white px-6 py-2 rounded-lg font-semibold hover:from-blue-600 hover:to-indigo-700 transition-all shadow-md">
+              <button className="w-full bg-gradient-to-r from-green-600 to-emerald-600 text-white px-6 py-2 rounded-lg font-semibold hover:from-green-700 hover:to-emerald-700 transition-all shadow-md">
                 导出数据
               </button>
             </div>
@@ -141,7 +141,7 @@ const Prices: React.FC = () => {
         {/* 价格表格 */}
         <div className="bg-white rounded-xl shadow-md overflow-hidden">
           <table className="w-full">
-            <thead className="bg-gradient-to-r from-blue-500 to-indigo-600">
+            <thead className="bg-gradient-to-r from-green-600 to-emerald-600">
               <tr>
                 <th className="px-6 py-4 text-left text-sm font-bold text-white uppercase tracking-wider">品种</th>
                 <th className="px-6 py-4 text-left text-sm font-bold text-white uppercase tracking-wider">规格</th>
@@ -154,7 +154,7 @@ const Prices: React.FC = () => {
             </thead>
             <tbody className="divide-y divide-gray-200">
               {sortedPrices.map((item) => (
-                <tr key={item.id} className="hover:bg-blue-50 transition-colors">
+                <tr key={item.id} className="hover:bg-green-50 transition-colors">
                   <td className="px-6 py-4 whitespace-nowrap">
                     <div className="text-base font-semibold text-gray-900">{item.herbName}</div>
                   </td>
@@ -162,7 +162,7 @@ const Prices: React.FC = () => {
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">{item.origin}</td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">{item.market}</td>
                   <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="text-base font-bold text-gray-900">
+                    <div className="text-base font-bold text-green-800">
                       {item.price} {item.unit}
                     </div>
                   </td>
