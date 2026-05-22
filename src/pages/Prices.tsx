@@ -56,15 +56,15 @@ const Prices: React.FC = () => {
         </div>
 
         {/* 图表和排行区域 */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
+        <div className="grid grid-cols-1 xl:grid-cols-4 gap-6 mb-6">
           {/* 历史价格走势图 */}
-          <div className="lg:col-span-2">
+          <div className="xl:col-span-2">
             {selectedHerbDetail && (
-              <div className="mb-4">
+              <div className="bg-white rounded-xl shadow-md p-6">
                 <div className="flex items-center gap-3 mb-4">
                   <label className="text-sm font-medium text-gray-700">选择药材:</label>
                   <select
-                    className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                    className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                     value={selectedHerb}
                     onChange={(e) => setSelectedHerb(e.target.value)}
                   >
@@ -84,28 +84,30 @@ const Prices: React.FC = () => {
             )}
           </div>
 
-          {/* 涨跌幅排行 */}
-          <div className="space-y-6">
-            <PriceRanking title="涨幅榜 TOP5" items={topGainers} type="up" />
-            <PriceRanking title="跌幅榜 TOP5" items={topLosers} type="down" />
+          {/* 涨幅榜和跌幅榜并列显示 */}
+          <div className="xl:col-span-2">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <PriceRanking title="涨幅榜 TOP5" items={topGainers} type="up" />
+              <PriceRanking title="跌幅榜 TOP5" items={topLosers} type="down" />
+            </div>
           </div>
         </div>
 
         {/* 筛选和价格表格 */}
-        <div className="bg-white rounded-lg shadow-sm p-6 mb-6">
+        <div className="bg-white rounded-xl shadow-md p-6 mb-6">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
             <div>
               <input
                 type="text"
                 placeholder="搜索药材品种..."
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
               />
             </div>
             <div>
               <select
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 value={selectedMarket}
                 onChange={(e) => setSelectedMarket(e.target.value)}
               >
@@ -119,7 +121,7 @@ const Prices: React.FC = () => {
             </div>
             <div>
               <select
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 value={sortBy}
                 onChange={(e) => setSortBy(e.target.value as any)}
               >
@@ -129,7 +131,7 @@ const Prices: React.FC = () => {
               </select>
             </div>
             <div>
-              <button className="w-full btn-primary">
+              <button className="w-full bg-gradient-to-r from-blue-500 to-indigo-600 text-white px-6 py-2 rounded-lg font-semibold hover:from-blue-600 hover:to-indigo-700 transition-all shadow-md">
                 导出数据
               </button>
             </div>
@@ -137,40 +139,40 @@ const Prices: React.FC = () => {
         </div>
 
         {/* 价格表格 */}
-        <div className="bg-white rounded-lg shadow-sm overflow-hidden">
+        <div className="bg-white rounded-xl shadow-md overflow-hidden">
           <table className="w-full">
-            <thead className="bg-gray-50">
+            <thead className="bg-gradient-to-r from-blue-500 to-indigo-600">
               <tr>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">品种</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">规格</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">产地</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">市场</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">价格</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">涨跌</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">更新时间</th>
+                <th className="px-6 py-4 text-left text-sm font-bold text-white uppercase tracking-wider">品种</th>
+                <th className="px-6 py-4 text-left text-sm font-bold text-white uppercase tracking-wider">规格</th>
+                <th className="px-6 py-4 text-left text-sm font-bold text-white uppercase tracking-wider">产地</th>
+                <th className="px-6 py-4 text-left text-sm font-bold text-white uppercase tracking-wider">市场</th>
+                <th className="px-6 py-4 text-left text-sm font-bold text-white uppercase tracking-wider">价格</th>
+                <th className="px-6 py-4 text-left text-sm font-bold text-white uppercase tracking-wider">涨跌</th>
+                <th className="px-6 py-4 text-left text-sm font-bold text-white uppercase tracking-wider">更新时间</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-200">
               {sortedPrices.map((item) => (
-                <tr key={item.id} className="hover:bg-gray-50">
+                <tr key={item.id} className="hover:bg-blue-50 transition-colors">
                   <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="text-sm font-medium text-gray-900">{item.herbName}</div>
+                    <div className="text-base font-semibold text-gray-900">{item.herbName}</div>
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{item.spec}</td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{item.origin}</td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{item.market}</td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">{item.spec}</td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">{item.origin}</td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">{item.market}</td>
                   <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="text-sm font-semibold text-gray-900">
+                    <div className="text-base font-bold text-gray-900">
                       {item.price} {item.unit}
                     </div>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
-                    <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
+                    <span className={`inline-flex px-3 py-1 text-sm font-bold rounded-full ${
                       item.trend === 'up'
-                        ? 'bg-green-100 text-green-800'
+                        ? 'bg-green-100 text-green-700'
                         : item.trend === 'down'
-                        ? 'bg-red-100 text-red-800'
-                        : 'bg-gray-100 text-gray-800'
+                        ? 'bg-red-100 text-red-700'
+                        : 'bg-gray-100 text-gray-700'
                     }`}>
                       {item.trend === 'up' ? '↑' : item.trend === 'down' ? '↓' : '→'}
                       {item.change !== 0 ? ` ${item.change > 0 ? '+' : ''}${item.change}` : ' 持平'}
