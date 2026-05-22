@@ -1,4 +1,4 @@
-import { Herb, PriceItem, NewsItem, Supplier, Demand, MarketIndex, VarietyIndex, HistoricalPrice, HerbPriceDetail, Shop, SupplyItem, PurchaseItem, HerbProfile, AuthenticityCheck, CultivationTechnique, HealthKnowledge, OriginDistribution, TraceabilityProduct, GAPCertifiedProduct, FreshCutProduct, HighQualityProduct } from '../types';
+import { Herb, PriceItem, NewsItem, Supplier, Demand, MarketIndex, VarietyIndex, HistoricalPrice, HerbPriceDetail, Shop, SupplyItem, PurchaseItem, HerbProfile, AuthenticityCheck, CultivationTechnique, HealthKnowledge, OriginDistribution, TraceabilityProduct, GAPCertifiedProduct, FreshCutProduct, HighQualityProduct, CompositeIndex, CategoryIndex, MarketIndexItem, VarietyIndexItem, SpecialtyIndex, PersonalIndex } from '../types';
 
 export const herbs: Herb[] = [
   {
@@ -1608,5 +1608,541 @@ export const highQualityProducts: HighQualityProduct[] = [
     unit: '元/kg',
     stock: 180,
     imageUrl: 'https://images.unsplash.com/photo-1595341888016-a392ef81b7de?w=400&h=300&fit=crop'
+  }
+];
+
+export const compositeIndices: CompositeIndex[] = [
+  {
+    id: 'composite-1',
+    name: '中药材综合指数',
+    value: 1582.6,
+    change: 12.5,
+    changePercent: 0.80,
+    baseValue: 1000,
+    baseDate: '2020-01-01',
+    updateTime: '2026-05-22 10:30',
+    trend: 'up',
+    history: [
+      { date: '2026-05-15', value: 1570.1 },
+      { date: '2026-05-16', value: 1572.3 },
+      { date: '2026-05-17', value: 1575.8 },
+      { date: '2026-05-18', value: 1578.2 },
+      { date: '2026-05-19', value: 1580.5 },
+      { date: '2026-05-20', value: 1581.0 },
+      { date: '2026-05-21', value: 1582.3 },
+      { date: '2026-05-22', value: 1582.6 }
+    ]
+  },
+  {
+    id: 'composite-2',
+    name: '康美·中国中药材价格指数',
+    value: 1625.3,
+    change: 8.2,
+    changePercent: 0.51,
+    baseValue: 1000,
+    baseDate: '2020-01-01',
+    updateTime: '2026-05-22 09:00',
+    trend: 'up',
+    history: [
+      { date: '2026-05-15', value: 1617.1 },
+      { date: '2026-05-16', value: 1619.5 },
+      { date: '2026-05-17', value: 1620.2 },
+      { date: '2026-05-18', value: 1622.8 },
+      { date: '2026-05-19', value: 1623.5 },
+      { date: '2026-05-20', value: 1624.1 },
+      { date: '2026-05-21', value: 1625.0 },
+      { date: '2026-05-22', value: 1625.3 }
+    ]
+  }
+];
+
+export const categoryIndices: CategoryIndex[] = [
+  {
+    id: 'cat-1',
+    name: '根茎类',
+    code: 'ROOT',
+    value: 1652.3,
+    change: 15.2,
+    changePercent: 0.93,
+    updateTime: '2026-05-22 10:00',
+    trend: 'up',
+    herbCount: 156,
+    description: '包括人参、三七、当归、黄芪、白术等'
+  },
+  {
+    id: 'cat-2',
+    name: '果实种子类',
+    code: 'FRUIT',
+    value: 1485.6,
+    change: -8.3,
+    changePercent: -0.56,
+    updateTime: '2026-05-22 10:00',
+    trend: 'down',
+    herbCount: 98,
+    description: '包括枸杞、苦杏仁、五味子等'
+  },
+  {
+    id: 'cat-3',
+    name: '花类',
+    code: 'FLOWER',
+    value: 1325.8,
+    change: 5.6,
+    changePercent: 0.42,
+    updateTime: '2026-05-22 10:00',
+    trend: 'up',
+    herbCount: 45,
+    description: '包括金银花、菊花、玫瑰花等'
+  },
+  {
+    id: 'cat-4',
+    name: '全草类',
+    code: 'HERB',
+    value: 1198.2,
+    change: 2.1,
+    changePercent: 0.18,
+    updateTime: '2026-05-22 10:00',
+    trend: 'up',
+    herbCount: 78,
+    description: '包括薄荷、益母草、淫羊藿等'
+  },
+  {
+    id: 'cat-5',
+    name: '树皮类',
+    code: 'BARK',
+    value: 1425.5,
+    change: -3.2,
+    changePercent: -0.22,
+    updateTime: '2026-05-22 10:00',
+    trend: 'down',
+    herbCount: 32,
+    description: '包括肉桂、厚朴、黄柏等'
+  },
+  {
+    id: 'cat-6',
+    name: '藤木类',
+    code: 'VINE',
+    value: 1385.9,
+    change: 6.8,
+    changePercent: 0.49,
+    updateTime: '2026-05-22 10:00',
+    trend: 'up',
+    herbCount: 28,
+    description: '包括钩藤、鸡血藤、海风藤等'
+  },
+  {
+    id: 'cat-7',
+    name: '树脂类',
+    code: 'RESIN',
+    value: 1580.3,
+    change: 12.5,
+    changePercent: 0.80,
+    updateTime: '2026-05-22 10:00',
+    trend: 'up',
+    herbCount: 15,
+    description: '包括乳香、没药、血竭等'
+  },
+  {
+    id: 'cat-8',
+    name: '菌藻类',
+    code: 'FUNGI',
+    value: 1295.6,
+    change: -5.2,
+    changePercent: -0.40,
+    updateTime: '2026-05-22 10:00',
+    trend: 'down',
+    herbCount: 22,
+    description: '包括茯苓、猪苓、冬虫夏草等'
+  },
+  {
+    id: 'cat-9',
+    name: '动物类',
+    code: 'ANIMAL',
+    value: 1785.2,
+    change: 25.6,
+    changePercent: 1.45,
+    updateTime: '2026-05-22 10:00',
+    trend: 'up',
+    herbCount: 45,
+    description: '包括鹿茸、海马、龟甲等'
+  },
+  {
+    id: 'cat-10',
+    name: '矿物类',
+    code: 'MINERAL',
+    value: 1156.8,
+    change: 1.2,
+    changePercent: 0.10,
+    updateTime: '2026-05-22 10:00',
+    trend: 'stable',
+    herbCount: 18,
+    description: '包括石膏、芒硝、朱砂等'
+  }
+];
+
+export const marketIndices: MarketIndexItem[] = [
+  {
+    id: 'market-1',
+    name: '亳州市场指数',
+    code: 'BZ',
+    value: 1625.3,
+    change: 12.8,
+    changePercent: 0.79,
+    updateTime: '2026-05-22 10:15',
+    trend: 'up',
+    region: '华中',
+    province: '安徽',
+    description: '全国最大的中药材集散中心'
+  },
+  {
+    id: 'market-2',
+    name: '安国市场指数',
+    code: 'AG',
+    value: 1582.6,
+    change: 8.5,
+    changePercent: 0.54,
+    updateTime: '2026-05-22 10:10',
+    trend: 'up',
+    region: '华北',
+    province: '河北',
+    description: '北方最大的中药材专业市场'
+  },
+  {
+    id: 'market-3',
+    name: '玉林市场指数',
+    code: 'YL',
+    value: 1525.8,
+    change: -5.2,
+    changePercent: -0.34,
+    updateTime: '2026-05-22 10:05',
+    trend: 'down',
+    region: '华南',
+    province: '广西',
+    description: '华南地区重要的中药材集散地'
+  },
+  {
+    id: 'market-4',
+    name: '成都市场指数',
+    code: 'CD',
+    value: 1485.3,
+    change: 6.8,
+    changePercent: 0.46,
+    updateTime: '2026-05-22 10:20',
+    trend: 'up',
+    region: '西南',
+    province: '四川',
+    description: '西南地区中药材重要集散中心'
+  },
+  {
+    id: 'market-5',
+    name: '普宁市场指数',
+    code: 'PN',
+    value: 1568.2,
+    change: -2.3,
+    changePercent: -0.15,
+    updateTime: '2026-05-22 10:25',
+    trend: 'down',
+    region: '华南',
+    province: '广东',
+    description: '华南地区重要的中药材交易市场'
+  },
+  {
+    id: 'market-6',
+    name: '昆明市场指数',
+    code: 'KM',
+    value: 1425.6,
+    change: 3.5,
+    changePercent: 0.25,
+    updateTime: '2026-05-22 10:30',
+    trend: 'up',
+    region: '西南',
+    province: '云南',
+    description: '云南地产药材重要集散地'
+  }
+];
+
+export const varietyIndices: VarietyIndexItem[] = [
+  {
+    id: 'variety-1',
+    herbId: '1',
+    herbName: '人参',
+    category: '根茎类',
+    efficacy: '补气药',
+    value: 1856.3,
+    change: 25.6,
+    changePercent: 1.40,
+    updateTime: '2026-05-22 10:00',
+    trend: 'up',
+    baseValue: 1000,
+    baseDate: '2020-01-01',
+    currentPrice: 380,
+    priceUnit: '元/kg',
+    history: [
+      { date: '2026-05-15', value: 1830.7 },
+      { date: '2026-05-16', value: 1835.2 },
+      { date: '2026-05-17', value: 1840.8 },
+      { date: '2026-05-18', value: 1845.3 },
+      { date: '2026-05-19', value: 1850.1 },
+      { date: '2026-05-20', value: 1852.5 },
+      { date: '2026-05-21', value: 1855.0 },
+      { date: '2026-05-22', value: 1856.3 }
+    ]
+  },
+  {
+    id: 'variety-2',
+    herbId: '2',
+    herbName: '当归',
+    category: '根茎类',
+    efficacy: '补血药',
+    value: 1256.8,
+    change: -15.3,
+    changePercent: -1.20,
+    updateTime: '2026-05-22 10:00',
+    trend: 'down',
+    baseValue: 1000,
+    baseDate: '2020-01-01',
+    currentPrice: 45,
+    priceUnit: '元/kg',
+    history: [
+      { date: '2026-05-15', value: 1272.1 },
+      { date: '2026-05-16', value: 1270.5 },
+      { date: '2026-05-17', value: 1268.2 },
+      { date: '2026-05-18', value: 1265.8 },
+      { date: '2026-05-19', value: 1262.5 },
+      { date: '2026-05-20', value: 1260.3 },
+      { date: '2026-05-21', value: 1258.5 },
+      { date: '2026-05-22', value: 1256.8 }
+    ]
+  },
+  {
+    id: 'variety-3',
+    herbId: '3',
+    herbName: '黄芪',
+    category: '根茎类',
+    efficacy: '补气药',
+    value: 1425.6,
+    change: 8.5,
+    changePercent: 0.60,
+    updateTime: '2026-05-22 10:00',
+    trend: 'up',
+    baseValue: 1000,
+    baseDate: '2020-01-01',
+    currentPrice: 28,
+    priceUnit: '元/kg',
+    history: [
+      { date: '2026-05-15', value: 1417.1 },
+      { date: '2026-05-16', value: 1419.3 },
+      { date: '2026-05-17', value: 1420.8 },
+      { date: '2026-05-18', value: 1422.5 },
+      { date: '2026-05-19', value: 1423.8 },
+      { date: '2026-05-20', value: 1424.5 },
+      { date: '2026-05-21', value: 1425.0 },
+      { date: '2026-05-22', value: 1425.6 }
+    ]
+  },
+  {
+    id: 'variety-4',
+    herbId: '4',
+    herbName: '枸杞',
+    category: '果实种子类',
+    efficacy: '补阴药',
+    value: 1385.2,
+    change: 5.8,
+    changePercent: 0.42,
+    updateTime: '2026-05-22 10:00',
+    trend: 'up',
+    baseValue: 1000,
+    baseDate: '2020-01-01',
+    currentPrice: 55,
+    priceUnit: '元/kg',
+    history: [
+      { date: '2026-05-15', value: 1379.4 },
+      { date: '2026-05-16', value: 1381.2 },
+      { date: '2026-05-17', value: 1382.5 },
+      { date: '2026-05-18', value: 1383.8 },
+      { date: '2026-05-19', value: 1384.2 },
+      { date: '2026-05-20', value: 1384.8 },
+      { date: '2026-05-21', value: 1385.0 },
+      { date: '2026-05-22', value: 1385.2 }
+    ]
+  },
+  {
+    id: 'variety-5',
+    herbId: '5',
+    herbName: '甘草',
+    category: '根茎类',
+    efficacy: '补气药',
+    value: 1256.3,
+    change: 3.2,
+    changePercent: 0.26,
+    updateTime: '2026-05-22 10:00',
+    trend: 'up',
+    baseValue: 1000,
+    baseDate: '2020-01-01',
+    currentPrice: 18,
+    priceUnit: '元/kg',
+    history: [
+      { date: '2026-05-15', value: 1253.1 },
+      { date: '2026-05-16', value: 1253.8 },
+      { date: '2026-05-17', value: 1254.5 },
+      { date: '2026-05-18', value: 1255.2 },
+      { date: '2026-05-19', value: 1255.8 },
+      { date: '2026-05-20', value: 1256.0 },
+      { date: '2026-05-21', value: 1256.2 },
+      { date: '2026-05-22', value: 1256.3 }
+    ]
+  },
+  {
+    id: 'variety-6',
+    herbId: '6',
+    herbName: '白术',
+    category: '根茎类',
+    efficacy: '补气药',
+    value: 1528.6,
+    change: -12.5,
+    changePercent: -0.81,
+    updateTime: '2026-05-22 10:00',
+    trend: 'down',
+    baseValue: 1000,
+    baseDate: '2020-01-01',
+    currentPrice: 32,
+    priceUnit: '元/kg',
+    history: [
+      { date: '2026-05-15', value: 1541.1 },
+      { date: '2026-05-16', value: 1538.5 },
+      { date: '2026-05-17', value: 1535.8 },
+      { date: '2026-05-18', value: 1533.2 },
+      { date: '2026-05-19', value: 1531.5 },
+      { date: '2026-05-20', value: 1530.2 },
+      { date: '2026-05-21', value: 1529.0 },
+      { date: '2026-05-22', value: 1528.6 }
+    ]
+  },
+  {
+    id: 'variety-7',
+    herbId: '7',
+    herbName: '白芍',
+    category: '根茎类',
+    efficacy: '补血药',
+    value: 1456.8,
+    change: -18.5,
+    changePercent: -1.25,
+    updateTime: '2026-05-22 10:00',
+    trend: 'down',
+    baseValue: 1000,
+    baseDate: '2020-01-01',
+    currentPrice: 38,
+    priceUnit: '元/kg',
+    history: [
+      { date: '2026-05-15', value: 1475.3 },
+      { date: '2026-05-16', value: 1470.8 },
+      { date: '2026-05-17', value: 1467.5 },
+      { date: '2026-05-18', value: 1464.2 },
+      { date: '2026-05-19', value: 1461.5 },
+      { date: '2026-05-20', value: 1459.5 },
+      { date: '2026-05-21', value: 1457.8 },
+      { date: '2026-05-22', value: 1456.8 }
+    ]
+  },
+  {
+    id: 'variety-8',
+    herbId: '8',
+    herbName: '茯苓',
+    category: '菌藻类',
+    efficacy: '利水渗湿药',
+    value: 1285.2,
+    change: 2.5,
+    changePercent: 0.19,
+    updateTime: '2026-05-22 10:00',
+    trend: 'up',
+    baseValue: 1000,
+    baseDate: '2020-01-01',
+    currentPrice: 25,
+    priceUnit: '元/kg',
+    history: [
+      { date: '2026-05-15', value: 1282.7 },
+      { date: '2026-05-16', value: 1283.5 },
+      { date: '2026-05-17', value: 1284.2 },
+      { date: '2026-05-18', value: 1284.8 },
+      { date: '2026-05-19', value: 1285.0 },
+      { date: '2026-05-20', value: 1285.1 },
+      { date: '2026-05-21', value: 1285.1 },
+      { date: '2026-05-22', value: 1285.2 }
+    ]
+  }
+];
+
+export const specialtyIndices: SpecialtyIndex[] = [
+  {
+    id: 'specialty-1',
+    name: '道地药材指数',
+    code: 'DAODI',
+    type: 'daodi',
+    description: '反映道地产区正宗药材的价格走势',
+    value: 1685.3,
+    change: 18.5,
+    changePercent: 1.11,
+    updateTime: '2026-05-22 10:00',
+    trend: 'up',
+    varietyCount: 86,
+    averagePremium: 15.5
+  },
+  {
+    id: 'specialty-2',
+    name: '药典合格指数',
+    code: 'QUALIFIED',
+    type: 'qualified',
+    description: '具有第三方质检报告的优质药材指数',
+    value: 1525.6,
+    change: 12.3,
+    changePercent: 0.81,
+    updateTime: '2026-05-22 10:00',
+    trend: 'up',
+    varietyCount: 125,
+    averagePremium: 8.2
+  },
+  {
+    id: 'specialty-3',
+    name: '进口药材指数',
+    code: 'IMPORTED',
+    type: 'imported',
+    description: '海外进口中药材价格波动指数',
+    value: 1458.2,
+    change: -5.8,
+    changePercent: -0.40,
+    updateTime: '2026-05-22 10:00',
+    trend: 'down',
+    varietyCount: 32
+  }
+];
+
+export const personalIndices: PersonalIndex[] = [
+  {
+    id: 'personal-1',
+    name: '我的补气药组合',
+    userId: 'user-1',
+    varieties: ['人参', '黄芪', '甘草', '白术'],
+    markets: ['亳州', '安国'],
+    regions: ['吉林', '内蒙古', '山西'],
+    weights: [0.4, 0.3, 0.2, 0.1],
+    alertThreshold: {
+      high: 1600,
+      low: 1400
+    },
+    createdAt: '2026-01-15',
+    updatedAt: '2026-05-20'
+  },
+  {
+    id: 'personal-2',
+    name: '贵细药材监控',
+    userId: 'user-1',
+    varieties: ['人参', '三七', '冬虫夏草', '鹿茸'],
+    markets: ['亳州', '安国', '玉林'],
+    regions: ['吉林', '云南', '西藏'],
+    weights: [0.3, 0.3, 0.2, 0.2],
+    alertThreshold: {
+      high: 2000
+    },
+    createdAt: '2026-02-20',
+    updatedAt: '2026-05-18'
   }
 ];

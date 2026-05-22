@@ -7,6 +7,7 @@ const Navbar: React.FC = () => {
 
   const navItems = [
     { path: '/', label: '首页' },
+    { path: '/market', label: '行情中心' },
     { path: '/prices', label: '价格行情' },
     { path: '/news', label: '资讯分析' },
     { path: '/trade', label: '供求交易' },

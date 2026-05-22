@@ -3,6 +3,7 @@ import { Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import Home from './pages/Home';
+import MarketCenter from './pages/MarketCenter';
 import Prices from './pages/Prices';
 import News from './pages/News';
 import Trade from './pages/Trade';
@@ -17,6 +18,7 @@ function App() {
       <main className="flex-1">
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/market" element={<MarketCenter />} />
           <Route path="/prices" element={<Prices />} />
           <Route path="/news" element={<News />} />
           <Route path="/trade" element={<Trade />} />

@@ -273,3 +273,98 @@ export interface HighQualityProduct {
   stock: number;
   imageUrl?: string;
 }
+
+export interface CompositeIndex {
+  id: string;
+  name: string;
+  value: number;
+  change: number;
+  changePercent: number;
+  baseValue: number;
+  baseDate: string;
+  updateTime: string;
+  trend: 'up' | 'down' | 'stable';
+  history: IndexHistory[];
+}
+
+export interface IndexHistory {
+  date: string;
+  value: number;
+  changePercent?: number;
+}
+
+export interface CategoryIndex {
+  id: string;
+  name: string;
+  code: string;
+  value: number;
+  change: number;
+  changePercent: number;
+  updateTime: string;
+  trend: 'up' | 'down' | 'stable';
+  herbCount: number;
+  description?: string;
+}
+
+export interface MarketIndexItem {
+  id: string;
+  name: string;
+  code: string;
+  value: number;
+  change: number;
+  changePercent: number;
+  updateTime: string;
+  trend: 'up' | 'down' | 'stable';
+  region: string;
+  province: string;
+  description?: string;
+}
+
+export interface VarietyIndexItem {
+  id: string;
+  herbId: string;
+  herbName: string;
+  category: string;
+  efficacy: string;
+  value: number;
+  change: number;
+  changePercent: number;
+  updateTime: string;
+  trend: 'up' | 'down' | 'stable';
+  baseValue: number;
+  baseDate: string;
+  history: IndexHistory[];
+  currentPrice?: number;
+  priceUnit?: string;
+}
+
+export interface SpecialtyIndex {
+  id: string;
+  name: string;
+  code: string;
+  type: 'daodi' | 'qualified' | 'imported';
+  description: string;
+  value: number;
+  change: number;
+  changePercent: number;
+  updateTime: string;
+  trend: 'up' | 'down' | 'stable';
+  varietyCount: number;
+  averagePremium?: number;
+}
+
+export interface PersonalIndex {
+  id: string;
+  name: string;
+  userId: string;
+  varieties: string[];
+  markets: string[];
+  regions: string[];
+  weights?: number[];
+  alertThreshold?: {
+    high?: number;
+    low?: number;
+  };
+  createdAt: string;
+  updatedAt: string;
+}
